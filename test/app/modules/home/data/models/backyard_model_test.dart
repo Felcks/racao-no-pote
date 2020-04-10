@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:racao_no_pote/app/modules/home/data/models/backyard_model.dart';
 import 'package:racao_no_pote/app/modules/home/data/models/element_model.dart';
 import 'package:racao_no_pote/app/modules/home/domain/entities/backyard.dart';
+import 'package:racao_no_pote/app/modules/home/domain/entities/cup.dart';
 import 'package:racao_no_pote/app/modules/home/domain/entities/element.dart';
 import 'package:timezone/data/latest.dart';
 import 'package:timezone/timezone.dart';
@@ -26,12 +27,13 @@ void main() {
 
     tBackyardModel = BackyardModel(
       food: tElementModel,
-      water: tElementModel
+      water: tElementModel,
     );
 
     tBackyard = Backyard(
       food: ElementModel.fromEntity(tElementModel),
-      water: ElementModel.fromEntity(tElementModel)
+      water: ElementModel.fromEntity(tElementModel),
+      cup: Cup(capacity: 50),
     );
   });
 
@@ -73,7 +75,7 @@ void main() {
     );
   });
 
-   group('fromEntity', () {
+  group('fromEntity', () {
     test(
       'should return a Backyard entity containing the proper data',
       () async {
