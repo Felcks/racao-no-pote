@@ -24,7 +24,7 @@ void main() {
   });
 
   test(
-    'should be a subclass of Backyard entity',
+    'should be a subclass of Cup entity',
     () async {
       // assert
       expect(tCupModel, isA<Cup>());

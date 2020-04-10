@@ -13,7 +13,6 @@ void main() {
   setUp(() {
     initializeTimeZones();
     final location = getLocation('Africa/Abidjan');
-
     tAnimalComplete = Animal(
         name: "Pandora",
         nickname: "Malucão",
@@ -39,11 +38,11 @@ void main() {
             Duration(days: 465)), //the right is 455 but 465 to be certain right
         weight: 10.4);
 
-        tAnimalFourYears = Animal(
+    tAnimalFourYears = Animal(
         name: "Pandora",
         nickname: "Malucão",
-        birthday: TZDateTime.now(location).subtract(
-            Duration(days: 1470)), //the right is 1461 but 1470 to be certain right
+        birthday: TZDateTime.now(location).subtract(Duration(
+            days: 1470)), //the right is 1461 but 1470 to be certain right
         weight: 10.4);
   });
 
@@ -124,7 +123,6 @@ void main() {
       expect(result, attributes);
     },
   );
-
 
   test(
     'should get proper map of attributes when has years of life',

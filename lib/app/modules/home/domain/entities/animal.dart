@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:timezone/timezone.dart';
 
-class Animal {
+class Animal extends Equatable {
   String name;
   String nickname;
   TZDateTime birthday;
@@ -12,7 +12,8 @@ class Animal {
       {@required this.name,
       this.nickname,
       @required this.birthday,
-      this.weight});
+      this.weight})
+      : super([name, nickname, birthday.toIso8601String(), weight]);
 
   Map<String, String> getAttributes() {
     return {
@@ -43,7 +44,7 @@ class Animal {
       difference = difference ~/ 30;
       timeUnit = "meses";
     }
-    
+
     return "$difference $timeUnit";
   }
 }

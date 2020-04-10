@@ -3,8 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:racao_no_pote/app/modules/home/domain/entities/backyard.dart';
 import 'package:racao_no_pote/app/modules/home/domain/entities/element.dart';
-import 'package:racao_no_pote/app/modules/home/domain/entities/food.dart';
-import 'package:racao_no_pote/app/modules/home/domain/entities/water.dart';
 import 'package:racao_no_pote/app/modules/home/domain/repositories/backyard_repository.dart';
 import 'package:racao_no_pote/app/modules/home/domain/usecases/get_current_backyard.dart';
 import 'package:timezone/data/latest.dart';
