@@ -4,9 +4,11 @@ import 'package:mockito/mockito.dart';
 import 'package:racao_no_pote/app/core/network/network_info.dart';
 import 'package:racao_no_pote/app/modules/home/data/data_sources/backyard_local_data_source.dart';
 import 'package:racao_no_pote/app/modules/home/data/data_sources/backyard_remote_data_source.dart';
+import 'package:racao_no_pote/app/modules/home/data/models/animal_model.dart';
 import 'package:racao_no_pote/app/modules/home/data/models/backyard_model.dart';
 import 'package:racao_no_pote/app/modules/home/data/models/element_model.dart';
 import 'package:racao_no_pote/app/modules/home/data/repositories/backyard_repository_impl.dart';
+import 'package:racao_no_pote/app/modules/home/domain/entities/animal.dart';
 import 'package:racao_no_pote/app/modules/home/domain/entities/backyard.dart';
 import 'package:racao_no_pote/app/modules/home/domain/entities/element.dart';
 import 'package:racao_no_pote/app/modules/home/domain/repositories/backyard_repository.dart';
@@ -31,6 +33,8 @@ void main() {
   Backyard tBackyard;
   ElementModel tElementModel;
   Element tElement;
+  AnimalModel tAnimalModel;
+  Animal tAnimal;
 
   setUp(() {
     mockLocalDataSource = MockLocalDataSource();
@@ -49,7 +53,10 @@ void main() {
         increment_date: TZDateTime.parse(detroit, "2020-04-08T05:37:57+0000"));
     tElement = tElementModel;
 
-    tBackyardModel = BackyardModel(food: tElementModel, water: tElementModel);
+    tAnimalModel = AnimalModel(name: "Pandora", weight: 10.4, birthday: TZDateTime.parse(detroit, "2020-04-08T09:37:57+0000"));
+    tAnimal = tAnimalModel;
+
+    tBackyardModel = BackyardModel(food: tElementModel, water: tElementModel, animal: tAnimalModel);
     tBackyard = tBackyardModel;
   });
 

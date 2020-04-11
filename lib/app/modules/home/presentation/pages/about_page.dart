@@ -39,20 +39,16 @@ class _AboutPageState extends ModularState<AboutPage, HomeController>
                   duration: Duration(milliseconds: 300),
                   curve: Curves.easeInOut);
             },
-            labelStyle: TextStyle(
-                //up to your taste
-                fontWeight: FontWeight.w700),
+            labelStyle: TextStyle(fontWeight: FontWeight.w700),
             indicatorSize: TabBarIndicatorSize.label, //makes it better
             labelColor: Colors.black, //Google's sweet blue
             unselectedLabelColor: Color(0xff5f6368), //niceish grey
             isScrollable: true, //up to your taste
             indicator: MD2Indicator(
-                //it begins here
-                indicatorHeight: 3,
-                indicatorColor: Colors.green,
-                indicatorSize:
-                    MD2IndicatorSize.full //3 different modes tiny-normal-full
-                ),
+              indicatorHeight: 3,
+              indicatorColor: Colors.green,
+              indicatorSize: MD2IndicatorSize.full,
+            ),
             tabs: <Widget>[
               Tab(
                 text: "Sobre",
@@ -77,40 +73,83 @@ class _AboutPageState extends ModularState<AboutPage, HomeController>
           Container(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Nome",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text("Pandora"),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "Idade",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 5),
-                  Text("7 meses"),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "Peso",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 5),
-                  Text("8 Kg"),
-                  SizedBox(
-                    height: 10,
-                  ),
-                ],
+              child: ListView.builder(
+                itemCount: controller.backyard.animal.getAttributes().length,
+                itemBuilder: (BuildContext context, int index) {
+                  String title = controller.backyard.animal
+                      .getAttributes()
+                      .keys
+                      .elementAt(index);
+                  String value = controller.backyard.animal
+                      .getAttributes()
+                      .values
+                      .elementAt(index);
+
+                  print(controller.backyard.animal.getAttributes().length);
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(value), 
+                      SizedBox(
+                        height: 15,
+                      ),
+                    ],
+                  );
+                },
               ),
+
+              // child: Column(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+
+              //       RaisedButton(
+              //     color: Colors.blue,
+              //     child: Text(
+              //       "Criar quintal!",
+              //       style: TextStyle(color: Colors.white),
+              //     ),
+              //     onPressed: () {
+              //       controller.createBackyard();
+              //     },
+              //   ),
+              //     Text(
+              //       "Nome",
+              //       style: TextStyle(fontWeight: FontWeight.bold),
+              //     ),
+              //     SizedBox(
+              //       height: 5,
+              //     ),
+              //     Text("Pandora"),
+              //     SizedBox(
+              //       height: 10,
+              //     ),
+              //     Text(
+              //       "Idade",
+              //       style: TextStyle(fontWeight: FontWeight.bold),
+              //     ),
+              //     SizedBox(height: 5),
+              //     Text("7 meses"),
+              //     SizedBox(
+              //       height: 10,
+              //     ),
+              //     Text(
+              //       "Peso",
+              //       style: TextStyle(fontWeight: FontWeight.bold),
+              //     ),
+              //     SizedBox(height: 5),
+              //     Text("8 Kg"),
+              //     SizedBox(
+              //       height: 10,
+              //     ),
+              //   ],
+              // ),
             ),
           ),
           Padding(

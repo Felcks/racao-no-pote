@@ -1,11 +1,11 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:racao_no_pote/app/modules/home/domain/entities/element.dart';
-import 'package:racao_no_pote/app/modules/home/domain/usecases/update_current_backyard.dart';
 import 'package:timezone/timezone.dart';
 
 import '../../../../core/usecases/usecase.dart';
 import '../../domain/entities/backyard.dart';
+import '../../domain/entities/element.dart';
+import '../../domain/usecases/create_backyard.dart';
 import '../../domain/usecases/get_current_backyard.dart';
 import '../../domain/usecases/update_current_backyard.dart';
 
@@ -16,6 +16,7 @@ class HomeController = _HomeControllerBase with _$HomeController;
 abstract class _HomeControllerBase with Store {
   final getCurrentBackyard = Modular.get<GetCurrentBackyard>();
   final updateCurrentBackyard = Modular.get<UpdateCurrentBackyard>();
+  final createBackyardUseCase = Modular.get<CreateBackyard>();
 
   @observable
   Backyard backyard;
@@ -39,15 +40,7 @@ abstract class _HomeControllerBase with Store {
 
   @action
   createBackyard() async {
-    final location = getLocation("Africa/Abidjan");
-    Element food = Element(
-        quantity: 0,
-        incrementDate: TZDateTime.now(location),
-        updateDate: TZDateTime.now(location));
-    Element water = food;
-
-    final mBackyard = Backyard(food: food, water: water);
-    await updateCurrentBackyard(Params(backyard: mBackyard));
+    await createBackyardUseCase(NoParams());
     fetchBackyard();
   }
 

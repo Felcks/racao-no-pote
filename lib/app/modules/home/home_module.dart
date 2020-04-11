@@ -1,5 +1,6 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:racao_no_pote/app/modules/home/domain/usecases/create_backyard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../main.dart';
@@ -26,6 +27,7 @@ class HomeModule extends ChildModule {
             remoteDataSource: i.get<BackyardRemoteDataSourceImpl>())),
         Bind((i) => GetCurrentBackyard(i.get<BackyardRepositoryImpl>())),
         Bind((i) => UpdateCurrentBackyard(i.get<BackyardRepositoryImpl>())),
+        Bind((i) => CreateBackyard(i.get<BackyardRepositoryImpl>())),
         Bind((i) => HomeController()),
       ];
 
