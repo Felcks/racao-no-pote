@@ -106,7 +106,9 @@ class _BackyardListPageState
       //   ],
       // ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Modular.to.pushNamed("/backyard_creation");
+        },
         child: Icon(Icons.add),
       ),
     );

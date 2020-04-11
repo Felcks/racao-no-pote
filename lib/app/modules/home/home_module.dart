@@ -1,6 +1,8 @@
+import 'package:racao_no_pote/app/modules/home/presentation/pages/backyard_creation/backyard_creation_controller.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:racao_no_pote/app/modules/home/domain/usecases/get_backyard_list.dart';
+import 'package:racao_no_pote/app/modules/home/presentation/pages/backyard_creation/backyard_creation_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../main.dart';
@@ -13,12 +15,13 @@ import 'domain/usecases/get_current_backyard.dart';
 import 'domain/usecases/update_current_backyard.dart';
 import 'presentation/controller/home_controller.dart';
 import 'presentation/pages/backyard_list_page/backyard_list_page_controller.dart';
-import 'presentation/pages/backyard_list_page/backyard_list_page_page.dart';
+import 'presentation/pages/backyard_list_page/backyard_list_page.dart';
 import 'presentation/pages/home_page.dart';
 
 class HomeModule extends ChildModule {
   @override
   List<Bind> get binds => [
+        Bind((i) => BackyardCreationController()),
         Bind((i) => BackyardListPageController()),
         Bind((i) => sp),
         Bind((i) => NetworkInfoImpl(DataConnectionChecker())),
@@ -40,6 +43,7 @@ class HomeModule extends ChildModule {
   List<Router> get routers => [
         Router(Modular.initialRoute, child: (_, args) => BackyardListPage()),
         Router("/backyard", child: (_, args) => HomePage()),
+        Router("/backyard_creation", child: (_, args) => BackyardCreationPage()),
       ];
 
   static Inject get to => Inject<HomeModule>.of();
