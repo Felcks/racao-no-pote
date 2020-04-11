@@ -31,7 +31,9 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
             Icons.arrow_back,
             color: Colors.black,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Modular.to.pop();
+          },
         ),
       ),
       body: Stack(
