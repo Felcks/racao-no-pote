@@ -45,7 +45,11 @@ void main() {
         birthday: TZDateTime.parse(detroit, "2020-04-08T09:37:57+0000"),
         weight: 10.4);
 
-    tBackyardModel = BackyardModel(food: tElementModel, water: tElementModel, animal: tAnimalModel, cup: tCupModel);
+    tBackyardModel = BackyardModel(
+        food: tElementModel,
+        water: tElementModel,
+        animal: tAnimalModel,
+        cup: tCupModel);
   });
 
   test(
@@ -83,6 +87,32 @@ void main() {
       final expectedJsonString = json.encode(tBackyardModel.toJson());
       verify(
           mockSharedPreferences.setString(CACHED_BACKYARD, expectedJsonString));
+    },
+  );
+
+  test(
+    'should return Backyard List from SharedPreferences when there is one or more in cache',
+    () async {
+      // arrange
+      when(mockSharedPreferences.getString(any))
+          .thenReturn(fixture('backyard_list.json'));
+      // act
+      final result = await localDataSource.getBackyardList();
+      // assert
+      verify(mockSharedPreferences.getString(CACHED_BACKYARD_LIST));
+      expect(result, equals([tBackyardModel]));
+    },
+  );
+
+  test(
+    'should return CacheException when there is no cache of BackyardList',
+    () async {
+      // arrange
+      when(mockSharedPreferences.getString(any)).thenReturn(null);
+      // act
+      final call = localDataSource.getBackyardList;
+      // assert
+      expect(() => call(), throwsA(isA<CacheException>()));
     },
   );
 }

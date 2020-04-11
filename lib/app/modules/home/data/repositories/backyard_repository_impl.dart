@@ -1,14 +1,14 @@
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
-import 'package:racao_no_pote/app/modules/home/data/models/backyard_model.dart';
 
-import '../../../../core/error/failure.dart';
 import '../../../../core/error/exception.dart';
+import '../../../../core/error/failure.dart';
 import '../../../../core/network/network_info.dart';
 import '../../domain/entities/backyard.dart';
 import '../../domain/repositories/backyard_repository.dart';
 import '../data_sources/backyard_local_data_source.dart';
 import '../data_sources/backyard_remote_data_source.dart';
+import '../models/backyard_model.dart';
 
 class BackyardRepositoryImpl extends BackyardRepository {
   final BackyardRemoteDataSource remoteDataSource;
@@ -33,12 +33,22 @@ class BackyardRepositoryImpl extends BackyardRepository {
   }
 
   @override
-  Future<Either<Failure, Backyard>> updateBackyard(Backyard backyard) async{
-    try{
+  Future<Either<Failure, Backyard>> updateBackyard(Backyard backyard) async {
+    try {
       localDataSource.cacheBackyard(BackyardModel.fromEntity(backyard));
       return Right(backyard);
+    } on Exception {
+      return Left(CacheFailure());
     }
-    on Exception{
+  }
+
+  @override
+  Future<Either<Failure, List<Backyard>>> getBackyardList() async {
+    networkInfo.isConnected;
+    try {
+      final backyardList = await localDataSource.getBackyardList();
+      return Right(backyardList);
+    } on CacheException {
       return Left(CacheFailure());
     }
   }

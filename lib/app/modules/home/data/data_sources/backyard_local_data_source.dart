@@ -13,10 +13,13 @@ abstract class BackyardLocalDataSource {
   /// Throws [NoLocalDataException] if no cached data is present.
   Future<BackyardModel> getLastBackyard();
 
+  Future<List<BackyardModel>> getBackyardList();
+
   Future<void> cacheBackyard(BackyardModel backyardToCache);
 }
 
 const CACHED_BACKYARD = 'CACHED_BACKYARD';
+const CACHED_BACKYARD_LIST = 'CACHED_BACKYARD_LIST';
 
 class BackyardLocalDataSourceImpl extends BackyardLocalDataSource {
   final SharedPreferences sharedPreferences;
@@ -25,7 +28,8 @@ class BackyardLocalDataSourceImpl extends BackyardLocalDataSource {
 
   @override
   Future<void> cacheBackyard(BackyardModel backyardToCache) {
-    return sharedPreferences.setString(CACHED_BACKYARD, json.encode(backyardToCache.toJson()));
+    return sharedPreferences.setString(
+        CACHED_BACKYARD, json.encode(backyardToCache.toJson()));
   }
 
   @override
@@ -35,5 +39,20 @@ class BackyardLocalDataSourceImpl extends BackyardLocalDataSource {
       return Future.value(BackyardModel.fromJson(json.decode(jsonString)));
     } else
       throw CacheException();
+  }
+
+  @override
+  Future<List<BackyardModel>> getBackyardList() {
+    final jsonString = sharedPreferences.getString(CACHED_BACKYARD_LIST);
+    if (jsonString != null) {
+      final List<BackyardModel> result = [];
+      json.decode(jsonString).forEach((value) {
+        result.add(BackyardModel.fromJson(value));
+      });
+
+      return Future.value(result);
+    } else {
+      throw CacheException();
+    }
   }
 }

@@ -53,10 +53,14 @@ void main() {
         increment_date: TZDateTime.parse(detroit, "2020-04-08T05:37:57+0000"));
     tElement = tElementModel;
 
-    tAnimalModel = AnimalModel(name: "Pandora", weight: 10.4, birthday: TZDateTime.parse(detroit, "2020-04-08T09:37:57+0000"));
+    tAnimalModel = AnimalModel(
+        name: "Pandora",
+        weight: 10.4,
+        birthday: TZDateTime.parse(detroit, "2020-04-08T09:37:57+0000"));
     tAnimal = tAnimalModel;
 
-    tBackyardModel = BackyardModel(food: tElementModel, water: tElementModel, animal: tAnimalModel);
+    tBackyardModel = BackyardModel(
+        food: tElementModel, water: tElementModel, animal: tAnimalModel);
     tBackyard = tBackyardModel;
   });
 
@@ -67,6 +71,19 @@ void main() {
       when(networkInfo.isConnected).thenAnswer((_) async => true);
       // act
       repository.getBackyard();
+      // assert
+      verify(networkInfo.isConnected);
+    },
+  );
+
+
+  test(
+    'should check if the device is online when get BackyardList',
+    () async {
+      // arrange
+      when(networkInfo.isConnected).thenAnswer((_) async => true);
+      // act
+      repository.getBackyardList();
       // assert
       verify(networkInfo.isConnected);
     },
@@ -116,5 +133,37 @@ void main() {
         verify(mockLocalDataSource.cacheBackyard(tBackyard));
       },
     );
+
+    test(
+      'should return list of backyard when cache data is present',
+      () async {
+        // arrange
+        final List<BackyardModel> expected = [tBackyard];
+        when(mockLocalDataSource.getBackyardList())
+            .thenAnswer((_) async => expected);
+        // act
+        final result = await repository.getBackyardList();
+        // assert
+        expect(result, equals(Right(expected)));
+        verify(mockLocalDataSource.getBackyardList());
+        verifyZeroInteractions(mockRemoteDataSource);
+      },
+    );
+
+
+    test(
+      'should throw CacheFailure when the cached data is not present on backyard List',
+      () async {
+        // arrange
+        when(mockLocalDataSource.getBackyardList()).thenThrow(CacheException());
+        // act
+        final result = await repository.getBackyardList();
+        // assert
+        expect(result, equals(Left(CacheFailure())));
+        verify(mockLocalDataSource.getBackyardList());
+        verifyZeroInteractions(mockRemoteDataSource);
+      },
+    );
+
   });
 }
