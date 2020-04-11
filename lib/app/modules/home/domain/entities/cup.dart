@@ -9,4 +9,8 @@ class Cup extends Equatable{
   String getCapacityText(){
     return "$capacity gramas";
   }
+
+  String getHalfCapacityText(){
+     return "${(capacity/2)} gramas";
+  }
 }
