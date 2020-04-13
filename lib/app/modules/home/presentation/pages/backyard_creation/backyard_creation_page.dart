@@ -55,7 +55,10 @@ class _BackyardCreationPageState
         actions: <Widget>[
           IconButton(
               onPressed: controller.isValid
-                  ? controller.creatingBackyard
+                  ? () async {
+                    controller.creatingBackyard();
+                    Modular.to.pop();
+                  }
                   : () {
                       controller.showErrors = true;
                     },
@@ -84,7 +87,7 @@ class _BackyardCreationPageState
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "Animal",
+                      "Pet",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.black,
@@ -262,14 +265,13 @@ class _BackyardCreationPageState
                             controller.showErrors == false) return Container();
 
                         return Padding(
-                            padding: EdgeInsets.only(left: 16, top: 8),
-                            child: Text(
-                              controller.validateBirthday(),
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.red[700]
-                              ),
-                            ));
+                          padding: EdgeInsets.only(left: 16, top: 8),
+                          child: Text(
+                            controller.validateBirthday(),
+                            style:
+                                TextStyle(fontSize: 12, color: Colors.red[700]),
+                          ),
+                        );
                       },
                     )
                   ],
@@ -340,10 +342,11 @@ class _BackyardCreationPageState
                             ],
                             onChanged: controller.backyard.changeCupQuantity,
                             decoration: InputDecoration(
-                              contentPadding: EdgeInsets.all(8),
-                              border: OutlineInputBorder(),
-                              errorText: controller.showErrors == true ? controller.validateCup() : null
-                            ),
+                                contentPadding: EdgeInsets.all(8),
+                                border: OutlineInputBorder(),
+                                errorText: controller.showErrors == true
+                                    ? controller.validateCup()
+                                    : null),
                           ),
                         ],
                       );
