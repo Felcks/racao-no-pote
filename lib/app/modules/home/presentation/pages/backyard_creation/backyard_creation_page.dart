@@ -17,6 +17,17 @@ class BackyardCreationPage extends StatefulWidget {
 
 class _BackyardCreationPageState
     extends ModularState<BackyardCreationPage, BackyardCreationController> {
+  FocusNode fcnNickName;
+  FocusNode fcWeight;
+
+  @override
+  void initState() {
+    super.initState();
+
+    fcnNickName = FocusNode();
+    fcWeight = FocusNode();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,6 +48,15 @@ class _BackyardCreationPageState
             Modular.to.pop();
           },
         ),
+        actions: <Widget>[
+          IconButton(
+              onPressed: controller.isValid
+                  ? controller.creatingBackyard
+                  : () {
+                      controller.showErrors = true;
+                    },
+              icon: Icon(Icons.done, color: Colors.black)),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -45,7 +65,7 @@ class _BackyardCreationPageState
             Container(
               padding: EdgeInsets.all(16),
               margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              height: 475,
+              height: 500,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.white,
@@ -81,14 +101,28 @@ class _BackyardCreationPageState
                     SizedBox(
                       height: 5,
                     ),
-                    TextField(
-                      onChanged: controller.backyard.changeName,
-                      maxLength: 10,
-                      maxLines: 1,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(8),
-                        border: OutlineInputBorder(),
-                      ),
+                    Observer(
+                      builder: (_) {
+                        return TextField(
+                          textCapitalization: TextCapitalization.words,
+                          onChanged: controller.backyard.changeName,
+                          onSubmitted: (value) {
+                            fcnNickName.requestFocus();
+                          },
+                          maxLength: 20,
+                          maxLines: 1,
+                          autofocus: true,
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.all(8),
+                              border: OutlineInputBorder(),
+                              errorText: controller.showErrors == true
+                                  ? controller.validateName()
+                                  : null),
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
                     ),
                     Text(
                       "Apelido",
@@ -102,16 +136,21 @@ class _BackyardCreationPageState
                       height: 5,
                     ),
                     TextField(
+                      textCapitalization: TextCapitalization.words,
                       onChanged: controller.backyard.changeNickName,
-                      maxLength: 10,
+                      maxLength: 20,
                       maxLines: 1,
+                      focusNode: fcnNickName,
+                      onSubmitted: (value) {
+                        fcWeight.requestFocus();
+                      },
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(8),
                         border: OutlineInputBorder(),
                       ),
                     ),
                     Text(
-                      "Peso (em gramas)",
+                      "Peso (em quilos)",
                       textAlign: TextAlign.start,
                       style: TextStyle(
                           color: Colors.black,
@@ -125,11 +164,12 @@ class _BackyardCreationPageState
                       expands: false,
                       maxLines: 1,
                       onChanged: controller.backyard.changeWeight,
+                      focusNode: fcWeight,
                       keyboardType:
                           TextInputType.numberWithOptions(decimal: true),
                       inputFormatters: [
                         DecimalTextInputFormatter(
-                            activatedNegativeValues: false, decimalRange: 1),
+                            activatedNegativeValues: false, decimalRange: 2),
                       ],
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(8),
@@ -207,6 +247,22 @@ class _BackyardCreationPageState
                       ),
                       color: Colors.white,
                     ),
+                    Observer(
+                      builder: (_) {
+                        if (controller.birthday != null ||
+                            controller.showErrors == false) return Container();
+
+                        return Padding(
+                            padding: EdgeInsets.only(left: 16, top: 8),
+                            child: Text(
+                              controller.validateBirthday(),
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.red[700]
+                              ),
+                            ));
+                      },
+                    )
                   ],
                 ),
               ),
@@ -233,48 +289,58 @@ class _BackyardCreationPageState
                         style: TextStyle(color: Colors.black, fontSize: 16),
                       ),
                       Spacer(),
-                      Switch(
-                        value: false,
-                        onChanged: (value) {},
+                      Observer(
+                        builder: (context) {
+                          return Switch(
+                            value: controller.backyard.isUsingCup,
+                            onChanged: controller.backyard.changeIsUsingCup,
+                          );
+                        },
                       )
                     ],
                   ),
-                  Text(
-                    "Quantidade de ração no copo em gramas",
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  TextField(
-                    expands: false,
-                    maxLines: 1,
-                    onChanged: controller.backyard.changeCupQuantity,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(8),
-                      border: OutlineInputBorder(),
-                    ),
+                  Observer(
+                    builder: (context) {
+                      if (controller.backyard.isUsingCup == false)
+                        return Container();
+
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Quantidade de ração no copo (em gramas)",
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          TextField(
+                            expands: false,
+                            maxLines: 1,
+                            keyboardType:
+                                TextInputType.numberWithOptions(decimal: true),
+                            inputFormatters: [
+                              DecimalTextInputFormatter(
+                                  activatedNegativeValues: false,
+                                  decimalRange: 2),
+                            ],
+                            onChanged: controller.backyard.changeCupQuantity,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.all(8),
+                              border: OutlineInputBorder(),
+                              errorText: controller.validateCup()
+                            ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ],
               ),
-            ),
-            Observer(
-              builder: (_) {
-                return Center(
-                  child: RaisedButton(
-                    onPressed: controller.isValid ? controller.creatingBackyard : null,
-                    color: Colors.blue,
-                    child: Text(
-                      "Criar quintal",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                );
-              },
             ),
           ],
         ),

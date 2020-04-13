@@ -16,11 +16,12 @@ abstract class _BackyardCreationControllerBase with Store {
   final createBackyard = Modular.get<CreateBackyard>();
   DateTime birthday;
 
+  @observable
+  bool showErrors = false;
+
   String validateName() {
     if (backyard.name == null || backyard.name.isEmpty) {
       return "Campo obrigatório";
-    } else if (backyard.name.length < 3) {
-      return "Campo precisa de 3 characteres";
     }
 
     return null;
@@ -31,14 +32,13 @@ abstract class _BackyardCreationControllerBase with Store {
   }
 
   String validateWeight() {
-    if (backyard.weight == null || backyard.weight.isEmpty) {
-      return "Campo obrigatório";
-    }
-
     return null;
   }
 
   String validateBirthday() {
+    if(backyard.birthday == null || backyard.birthday.isEmpty)
+      return "Campo obrigatório";
+
     return null;
   }
 
@@ -73,7 +73,7 @@ abstract class _BackyardCreationControllerBase with Store {
         name: backyard.name,
         nickName: backyard.nickname,
         birthday: TZDateTime.from(this.birthday, location),
-        weight: double.parse(backyard.weight),
+        weight: backyard.weight != null ? double.parse(backyard.weight) : null,
         capacity: backyard.cupQuantity != null ? int.parse(backyard.cupQuantity) : null,
       ),
     );

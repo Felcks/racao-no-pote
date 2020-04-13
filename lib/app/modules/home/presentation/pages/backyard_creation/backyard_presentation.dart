@@ -37,10 +37,6 @@ abstract class _BackyardPresentationBase with Store {
   changeIsUsingCup(bool value) => isUsingCup = value;
 
   _BackyardPresentationBase(){
-    initializeTimeZones();
-    final today = TZDateTime.now(getLocation("America/Sao_Paulo"));
-    birthday = '${today.day}/${today.month}/${today.year}';
-
     isUsingCup = false;
   }
 

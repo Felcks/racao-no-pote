@@ -23,6 +23,12 @@ class _BackyardListPageState
   }
 
   @override
+  void didChangeDependencies(){
+    super.didChangeDependencies();
+    controller.fetchBackyardList();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,

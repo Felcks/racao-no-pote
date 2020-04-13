@@ -48,8 +48,6 @@ class BackyardLocalDataSourceImpl extends BackyardLocalDataSource {
     await sharedPreferences.setString(
         CACHED_BACKYARD_LIST, json.encode(backyardJsonList));
 
-      print(backyardJsonList);
-
     return sharedPreferences.setInt(CACHED_BACKYARD, backyardToCache.id);
   }
 
