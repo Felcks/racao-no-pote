@@ -27,16 +27,45 @@ class BackyardLocalDataSourceImpl extends BackyardLocalDataSource {
   BackyardLocalDataSourceImpl({@required this.sharedPreferences});
 
   @override
-  Future<void> cacheBackyard(BackyardModel backyardToCache) {
-    return sharedPreferences.setString(
-        CACHED_BACKYARD, json.encode(backyardToCache.toJson()));
+  Future<void> cacheBackyard(BackyardModel backyardToCache) async {
+    List<BackyardModel> backyardList;
+    try {
+      backyardList = await getBackyardList();
+      bool isUpdate = false;
+
+      for(var i = 0; i < backyardList.length; i++){
+        if(backyardList[i].id == backyardToCache.id){
+          backyardList[i] = backyardToCache;
+          isUpdate = true;
+        }
+      }
+      if (isUpdate == false) backyardList.add(backyardToCache);
+    } on CacheException {
+      backyardList = [backyardToCache];
+    }
+
+    var backyardJsonList = backyardList.map((it) => it.toJson()).toList();
+    await sharedPreferences.setString(
+        CACHED_BACKYARD_LIST, json.encode(backyardJsonList));
+
+      print(backyardJsonList);
+
+    return sharedPreferences.setInt(CACHED_BACKYARD, backyardToCache.id);
   }
 
   @override
-  Future<BackyardModel> getLastBackyard() {
-    final jsonString = sharedPreferences.getString(CACHED_BACKYARD);
-    if (jsonString != null) {
-      return Future.value(BackyardModel.fromJson(json.decode(jsonString)));
+  Future<BackyardModel> getLastBackyard() async {
+    final backyardList = await getBackyardList();
+    int lastBackyardID = sharedPreferences.getInt(CACHED_BACKYARD);
+
+    if (backyardList != null && lastBackyardID != null) {
+      BackyardModel lastBackyard;
+      backyardList.forEach((value) {
+        if (value.id == lastBackyardID) {
+          lastBackyard = value;
+        }
+      });
+      return lastBackyard;
     } else
       throw CacheException();
   }

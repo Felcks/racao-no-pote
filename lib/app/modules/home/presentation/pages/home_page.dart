@@ -47,13 +47,19 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                 Positioned(
                   top: MediaQuery.of(context).size.height * 0.02,
                   left: 20,
-                  child: Text(
-                    "Pandora",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                    ),
-                    textAlign: TextAlign.center,
+                  child: Observer(
+                    builder: (_) {
+                      return Text(
+                        controller.backyard != null
+                            ? controller.backyard.animal.name
+                            : "",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24,
+                        ),
+                        textAlign: TextAlign.center,
+                      );
+                    },
                   ),
                 ),
                 Align(

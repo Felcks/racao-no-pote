@@ -57,12 +57,14 @@ void main() {
     'should return Backyard from SharedPreferences when there is one in the cache',
     () async {
       // arrange
+      when(mockSharedPreferences.getInt(any))
+          .thenReturn(1);
       when(mockSharedPreferences.getString(any))
-          .thenReturn(fixture('backyard.json'));
+          .thenReturn(fixture("backyard_list.json"));
       // act
       final result = await localDataSource.getLastBackyard();
       // assert
-      verify(mockSharedPreferences.getString(CACHED_BACKYARD));
+      verify(mockSharedPreferences.getInt(CACHED_BACKYARD));
       expect(result, equals(tBackyardModel));
     },
   );
@@ -71,7 +73,7 @@ void main() {
     'should return CacheException when there is no cache',
     () async {
       // arrange
-      when(mockSharedPreferences.getString(any)).thenReturn(null);
+      when(mockSharedPreferences.getInt(any)).thenReturn(null);
       // act
       final call = localDataSource.getLastBackyard;
       // assert
@@ -82,12 +84,17 @@ void main() {
   test(
     'should call SharedPreferences to cache the data',
     () async {
+      // arrange
+      when(mockSharedPreferences.getString(any))
+          .thenReturn(fixture("backyard_list.json"));
+         when(mockSharedPreferences.setString(any, any))
+          .thenAnswer((_) async => true);
       // act
-      localDataSource.cacheBackyard(tBackyardModel);
+      await localDataSource.cacheBackyard(tBackyardModel);
       // assert
-      final expectedJsonString = json.encode(tBackyardModel.toJson());
+      final expectedCachedID = tBackyardModel.id;
       verify(
-          mockSharedPreferences.setString(CACHED_BACKYARD, expectedJsonString));
+          mockSharedPreferences.setInt(CACHED_BACKYARD, expectedCachedID));
     },
   );
 
