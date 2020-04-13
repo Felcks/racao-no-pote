@@ -8,14 +8,16 @@ import 'package:meta/meta.dart';
 
 class BackyardModel extends Backyard {
   BackyardModel(
-      {@required ElementModel food,
+      {@required int id,
+      @required ElementModel food,
       @required ElementModel water,
       @required AnimalModel animal,
       CupModel cup})
-      : super(food: food, water: water, animal: animal, cup: cup);
+      : super(id: id, food: food, water: water, animal: animal, cup: cup);
 
   factory BackyardModel.fromJson(Map<String, dynamic> json) {
     return BackyardModel(
+      id: json['id'],
       food: ElementModel.fromJson(json['food']),
       water: ElementModel.fromJson(json['water']),
       animal: AnimalModel.fromJson(json['animal']),
@@ -24,14 +26,14 @@ class BackyardModel extends Backyard {
   }
 
   factory BackyardModel.fromEntity(Backyard backyard) {
-    
     CupModel cupModel;
-    if(backyard.cup != null)
+    if (backyard.cup != null)
       cupModel = CupModel.fromEntity(backyard.cup);
     else
       cupModel = null;
 
     return BackyardModel(
+      id: backyard.id,
       food: ElementModel.fromEntity(backyard.food),
       water: ElementModel.fromEntity(backyard.water),
       animal: AnimalModel.fromEntity(backyard.animal),
@@ -41,6 +43,7 @@ class BackyardModel extends Backyard {
 
   Map<String, dynamic> toJson() {
     return {
+      "id": id,
       "food": (food as ElementModel).toJson(),
       "water": (water as ElementModel).toJson(),
       "animal": (animal as AnimalModel).toJson(),

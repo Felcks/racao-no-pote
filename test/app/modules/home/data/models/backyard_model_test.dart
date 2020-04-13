@@ -23,8 +23,8 @@ void main() {
   AnimalModel tAnimalModel;
   CupModel tCupModel;
 
-   BackyardModel tBackyardModelWithoutCup;
-   BackyardModel tBackyardWithoutCup;
+  BackyardModel tBackyardModelWithoutCup;
+  BackyardModel tBackyardWithoutCup;
 
   setUp(() {
     tElementModel = ElementModel(
@@ -41,6 +41,7 @@ void main() {
         weight: 10.4);
 
     tBackyardModel = BackyardModel(
+        id: 1,
         food: tElementModel,
         water: tElementModel,
         animal: tAnimalModel,
@@ -49,12 +50,8 @@ void main() {
     tBackyard = tBackyardModel;
 
     tBackyardModelWithoutCup = BackyardModel(
-       food: tElementModel,
-        water: tElementModel,
-        animal: tAnimalModel
-    );
+        id: 1, food: tElementModel, water: tElementModel, animal: tAnimalModel);
     tBackyardWithoutCup = tBackyardModelWithoutCup;
-
   });
 
   test(
@@ -107,7 +104,7 @@ void main() {
       },
     );
 
-     test(
+    test(
       'should return a JSON map containing the proper data without cup',
       () async {
         // arrange

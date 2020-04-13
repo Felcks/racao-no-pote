@@ -32,7 +32,7 @@ class CreateBackyard extends UseCase<Backyard, BackyardParams> {
         birthday: params.birthday,
         weight: params.weight);
     final mBackyard =
-        Backyard(food: food, water: water, animal: animal, cup: cup);
+        Backyard(id: 1, food: food, water: water, animal: animal, cup: cup);
     return repository.updateBackyard(mBackyard);
   }
 }

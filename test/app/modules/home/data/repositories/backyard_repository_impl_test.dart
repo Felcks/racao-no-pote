@@ -60,7 +60,7 @@ void main() {
     tAnimal = tAnimalModel;
 
     tBackyardModel = BackyardModel(
-        food: tElementModel, water: tElementModel, animal: tAnimalModel);
+        id: 1, food: tElementModel, water: tElementModel, animal: tAnimalModel);
     tBackyard = tBackyardModel;
   });
 
@@ -75,7 +75,6 @@ void main() {
       verify(networkInfo.isConnected);
     },
   );
-
 
   test(
     'should check if the device is online when get BackyardList',
@@ -150,7 +149,6 @@ void main() {
       },
     );
 
-
     test(
       'should throw CacheFailure when the cached data is not present on backyard List',
       () async {
@@ -164,6 +162,5 @@ void main() {
         verifyZeroInteractions(mockRemoteDataSource);
       },
     );
-
   });
 }

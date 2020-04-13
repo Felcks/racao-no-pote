@@ -43,7 +43,7 @@ void main() {
       weight: 10.4);
 
   final Backyard tBackyard =
-      Backyard(food: tFood, water: tWater, animal: tAnimal, cup: tCup);
+      Backyard(id: 1, food: tFood, water: tWater, animal: tAnimal, cup: tCup);
 
   test(
     'should return backyard from the repository',

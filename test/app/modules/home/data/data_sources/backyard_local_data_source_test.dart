@@ -46,6 +46,7 @@ void main() {
         weight: 10.4);
 
     tBackyardModel = BackyardModel(
+        id: 1,
         food: tElementModel,
         water: tElementModel,
         animal: tAnimalModel,
