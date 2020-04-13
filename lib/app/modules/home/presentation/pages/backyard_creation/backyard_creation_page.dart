@@ -266,7 +266,7 @@ class _BackyardCreationPageState
               builder: (_) {
                 return Center(
                   child: RaisedButton(
-                    onPressed: controller.isValid ? () {} : null,
+                    onPressed: controller.isValid ? controller.creatingBackyard : null,
                     color: Colors.blue,
                     child: Text(
                       "Criar quintal",

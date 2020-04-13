@@ -53,7 +53,10 @@ void main() {
       when(backyardRepository.updateBackyard(any))
           .thenAnswer((_) async => Right(tBackyard));
       // act
-      await usecase(NoParams());
+      await usecase(BackyardParams(
+        name: "Pandora",
+        birthday: TZDateTime.parse(detroit, "2020-04-08T09:37:57+0000"),
+      ));
       // assert
       verify(backyardRepository.updateBackyard(any));
       verifyNoMoreInteractions(backyardRepository);

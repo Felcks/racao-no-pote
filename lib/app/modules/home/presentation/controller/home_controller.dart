@@ -39,8 +39,8 @@ abstract class _HomeControllerBase with Store {
 
   @action
   createBackyard() async {
-    await createBackyardUseCase(NoParams());
-    fetchBackyard();
+    // await createBackyardUseCase(BackyardParams());
+    // fetchBackyard();
   }
 
   @action
