@@ -6,7 +6,7 @@ import 'cup.dart';
 import 'element.dart';
 
 class Backyard extends Equatable {
-  final int id;
+  int id;
   final Element food;
   final Element water;
   final Animal animal;

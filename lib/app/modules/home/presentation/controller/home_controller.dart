@@ -32,7 +32,6 @@ abstract class _HomeControllerBase with Store {
     final result = await getCurrentBackyard(NoParams());
     backyard = result.fold((failure) {
       newBackyard = true;
-      print(result);
       return null;
     }, (backyard) => this.backyard = backyard);
   }

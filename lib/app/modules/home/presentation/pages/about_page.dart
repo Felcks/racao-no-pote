@@ -66,20 +66,26 @@ class _AboutPageState extends ModularState<AboutPage, HomeController>
           ),
         ),
       ),
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: (index) {
-          _tabController.animateTo(index,
-              duration: Duration(milliseconds: 300));
-        },
-        children: [
-          AnimalInfoWidget(controller.backyard.animal),
-          BackyardInfoWidget(controller.backyard),
-          ActionInfoWidget(controller)
-        ],
-      ),
+      body: getBody(),
     );
   }
 
- 
+  Widget getBody() {
+    if (controller.backyard == null)
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+
+    return PageView(
+      controller: _pageController,
+      onPageChanged: (index) {
+        _tabController.animateTo(index, duration: Duration(milliseconds: 300));
+      },
+      children: [
+        AnimalInfoWidget(controller.backyard.animal),
+        BackyardInfoWidget(controller.backyard),
+        ActionInfoWidget(controller)
+      ],
+    );
+  }
 }

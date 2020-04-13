@@ -18,7 +18,6 @@ class AnimalInfoWidget extends StatelessWidget {
             String title = animal.getAttributes().keys.elementAt(index);
             String value = animal.getAttributes().values.elementAt(index);
 
-            print(animal.getAttributes().length);
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

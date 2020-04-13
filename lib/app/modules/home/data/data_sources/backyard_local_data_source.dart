@@ -31,6 +31,11 @@ class BackyardLocalDataSourceImpl extends BackyardLocalDataSource {
     List<BackyardModel> backyardList;
     try {
       backyardList = await getBackyardList();
+
+      if(backyardToCache.id == 0){
+        backyardToCache.id = (backyardList.length + 1);
+      }
+
       bool isUpdate = false;
 
       for(var i = 0; i < backyardList.length; i++){

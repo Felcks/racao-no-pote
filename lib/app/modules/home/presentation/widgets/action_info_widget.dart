@@ -55,53 +55,63 @@ class ActionInfoWidget extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            Text(
-              "Colocar ração por copo",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                RaisedButton(
-                  color: Colors.green,
-                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 4),
-                  child: Column(children: [
-                    Text(
-                      "Copo cheio",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    Text(
-                      "(${controller.backyard.cup.getCapacityText()})",
-                      style: TextStyle(color: Colors.white),
-                    )
-                  ]),
-                  onPressed: () {
-                    controller.incrementFoodQuantity(10);
-                  },
-                ),
-                RaisedButton(
-                  color: Colors.green,
-                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 4),
-                  child: Column(children: [
-                    Text(
-                      "Meio copo",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    Text(
-                      "(${controller.backyard.cup.getHalfCapacityText()})",
-                      style: TextStyle(color: Colors.white),
-                    )
-                  ]),
-                  onPressed: () {
-                    controller.incrementFoodQuantity(10);
-                  },
-                ),
-              ],
-            ),
+            getFoodPerCupOptions(),
           ],
         ),
       ),
+    );
+  }
+
+  Widget getFoodPerCupOptions() {
+    if (controller.backyard.cup == null) return Container();
+
+    return Column(
+      children: <Widget>[
+        Text(
+          "Colocar ração por copo",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            RaisedButton(
+              color: Colors.green,
+              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 4),
+              child: Column(children: [
+                Text(
+                  "Copo cheio",
+                  style: TextStyle(color: Colors.white),
+                ),
+                Text(
+                  "(${controller.backyard.cup.getCapacityText()})",
+                  style: TextStyle(color: Colors.white),
+                )
+              ]),
+              onPressed: () {
+                controller.incrementFoodQuantity(10);
+              },
+            ),
+            RaisedButton(
+              color: Colors.green,
+              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 4),
+              child: Column(children: [
+                Text(
+                  "Meio copo",
+                  style: TextStyle(color: Colors.white),
+                ),
+                Text(
+                  "(${controller.backyard.cup.getHalfCapacityText()})",
+                  style: TextStyle(color: Colors.white),
+                )
+              ]),
+              onPressed: () {
+                controller.incrementFoodQuantity(10);
+              },
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

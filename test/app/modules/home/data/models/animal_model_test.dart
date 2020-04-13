@@ -46,8 +46,6 @@ void main() {
             json.decode(fixture('animal.json'));
         // act
         final result = AnimalModel.fromJson(jsonMap);
-        print(result.getAttributes());
-        print(tAnimalModel.getAttributes());
         // assert
         expect(result, equals(tAnimalModel));
       },

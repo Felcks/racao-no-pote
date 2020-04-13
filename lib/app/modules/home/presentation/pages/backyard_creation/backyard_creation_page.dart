@@ -17,15 +17,19 @@ class BackyardCreationPage extends StatefulWidget {
 
 class _BackyardCreationPageState
     extends ModularState<BackyardCreationPage, BackyardCreationController> {
+  FocusNode fcnName;
   FocusNode fcnNickName;
-  FocusNode fcWeight;
+  FocusNode fcnWeight;
+  FocusNode fcnCupQuantity;
 
   @override
   void initState() {
     super.initState();
 
+    fcnName = FocusNode();
     fcnNickName = FocusNode();
-    fcWeight = FocusNode();
+    fcnWeight = FocusNode();
+    fcnCupQuantity = FocusNode();
   }
 
   @override
@@ -112,6 +116,7 @@ class _BackyardCreationPageState
                           maxLength: 20,
                           maxLines: 1,
                           autofocus: true,
+                          focusNode: fcnName,
                           decoration: InputDecoration(
                               contentPadding: EdgeInsets.all(8),
                               border: OutlineInputBorder(),
@@ -142,7 +147,7 @@ class _BackyardCreationPageState
                       maxLines: 1,
                       focusNode: fcnNickName,
                       onSubmitted: (value) {
-                        fcWeight.requestFocus();
+                        fcnWeight.requestFocus();
                       },
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(8),
@@ -164,7 +169,7 @@ class _BackyardCreationPageState
                       expands: false,
                       maxLines: 1,
                       onChanged: controller.backyard.changeWeight,
-                      focusNode: fcWeight,
+                      focusNode: fcnWeight,
                       keyboardType:
                           TextInputType.numberWithOptions(decimal: true),
                       inputFormatters: [
@@ -195,6 +200,10 @@ class _BackyardCreationPageState
                           borderRadius: BorderRadius.circular(5.0)),
                       elevation: 2.0,
                       onPressed: () {
+                        fcnName.unfocus();
+                        fcnNickName.unfocus();
+                        fcnWeight.unfocus();
+                        fcnCupQuantity.unfocus();
                         DatePicker.showDatePicker(context,
                             theme: DatePickerTheme(
                               containerHeight: 210.0,
@@ -308,7 +317,7 @@ class _BackyardCreationPageState
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            "Quantidade de ração no copo (em gramas)",
+                            "Quanta ração cabe no copo? (em gramas)",
                             textAlign: TextAlign.start,
                             style: TextStyle(
                                 color: Colors.black,
@@ -321,6 +330,7 @@ class _BackyardCreationPageState
                           TextField(
                             expands: false,
                             maxLines: 1,
+                            focusNode: fcnCupQuantity,
                             keyboardType:
                                 TextInputType.numberWithOptions(decimal: true),
                             inputFormatters: [
@@ -332,7 +342,7 @@ class _BackyardCreationPageState
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.all(8),
                               border: OutlineInputBorder(),
-                              errorText: controller.validateCup()
+                              errorText: controller.showErrors == true ? controller.validateCup() : null
                             ),
                           ),
                         ],
