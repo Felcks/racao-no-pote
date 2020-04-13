@@ -22,6 +22,7 @@ class CreateBackyard extends UseCase<Backyard, BackyardParams> {
     final location = getLocation("Africa/Abidjan");
     Element food = Element(
         quantity: 0,
+        maxQuantity: params.maxFoodQuantity,
         incrementDate: TZDateTime.now(location),
         updateDate: TZDateTime.now(location));
     Element water = food;
@@ -43,12 +44,14 @@ class BackyardParams extends Equatable {
   TZDateTime birthday;
   double weight;
   int capacity;
+  int maxFoodQuantity;
 
   BackyardParams({
     @required this.name,
     this.nickName,
     @required this.birthday,
     this.weight,
-    this.capacity
+    this.capacity,
+    @required this.maxFoodQuantity
   });
 }

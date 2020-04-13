@@ -75,6 +75,7 @@ abstract class _BackyardCreationControllerBase with Store {
         birthday: TZDateTime.from(this.birthday, location),
         weight: backyard.weight != null ? double.parse(backyard.weight) : null,
         capacity: backyard.cupQuantity != null ? int.parse(backyard.cupQuantity) : null,
+        maxFoodQuantity: 210,
       ),
     );
 

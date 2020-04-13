@@ -4,14 +4,16 @@ import 'package:meta/meta.dart';
 
 class Element extends Equatable {
   int quantity;
+  int maxQuantity;
   TZDateTime updateDate;
   TZDateTime incrementDate;
 
   Element(
       {@required this.quantity,
+      @required this.maxQuantity,
       @required this.updateDate,
       @required this.incrementDate})
-      : super([quantity, updateDate.toIso8601String(), incrementDate.toIso8601String()]);
+      : super([quantity, maxQuantity, updateDate.toIso8601String(), incrementDate.toIso8601String()]);
 
   String get updateDateFormatted {
     final location = getLocation("America/Sao_Paulo");

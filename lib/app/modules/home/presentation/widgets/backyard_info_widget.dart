@@ -18,38 +18,15 @@ class BackyardInfoWidget extends StatelessWidget {
           Align(
             alignment: Alignment.topCenter,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Observer(
-                      builder: (_) {
-                        return getElementWidget(
-                            context, backyard?.food, "Comida");
-                      },
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Observer(
-                      builder: (_) {
-                        return getElementWidget(
-                            context, backyard?.water, "Água");
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  getElementWidget(context, backyard?.food, "Comida"),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  getElementWidget(context, backyard?.water, "Água"),
+                ]),
           ),
         ],
       ),
@@ -82,11 +59,11 @@ class BackyardInfoWidget extends StatelessWidget {
               tickMarkShape: RoundSliderTickMarkShape(),
               activeTickMarkColor: Colors.indigo[700],
               inactiveTickMarkColor: Colors.indigo[100],
-              showValueIndicator: ShowValueIndicator.never,
+              showValueIndicator: ShowValueIndicator.always,
               valueIndicatorShape: PaddleSliderValueIndicatorShape(),
               valueIndicatorColor: Colors.indigoAccent,
               valueIndicatorTextStyle: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
             child: Slider(

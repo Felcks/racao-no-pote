@@ -49,6 +49,7 @@ void main() {
     final detroit = getLocation('Africa/Abidjan');
     tElementModel = ElementModel(
         quantity: 0,
+        max_quantity: 210,
         update_date: TZDateTime.parse(detroit, "2020-04-08T09:37:57+0000"),
         increment_date: TZDateTime.parse(detroit, "2020-04-08T05:37:57+0000"));
     tElement = tElementModel;

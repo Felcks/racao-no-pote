@@ -3,11 +3,13 @@
         "id": 1,
         "food": {
             "quantity": 0,
+            "max_quantity": 210,
             "update_date": "2020-04-08T09:37:57.000+0000",
             "increment_date": "2020-04-08T05:37:57.000+0000"
         },
         "water": {
             "quantity": 0,
+            "max_quantity": 210,
             "update_date": "2020-04-08T09:37:57.000+0000",
             "increment_date": "2020-04-08T05:37:57.000+0000"
         },

@@ -34,6 +34,7 @@ void main() {
 
     tElementModel = ElementModel(
         quantity: 0,
+        max_quantity: 210,
         update_date: TZDateTime.parse(detroit, "2020-04-08T09:37:57+0000"),
         increment_date: TZDateTime.parse(detroit, "2020-04-08T05:37:57+0000"));
 
@@ -57,8 +58,7 @@ void main() {
     'should return Backyard from SharedPreferences when there is one in the cache',
     () async {
       // arrange
-      when(mockSharedPreferences.getInt(any))
-          .thenReturn(1);
+      when(mockSharedPreferences.getInt(any)).thenReturn(1);
       when(mockSharedPreferences.getString(any))
           .thenReturn(fixture("backyard_list.json"));
       // act
@@ -87,14 +87,13 @@ void main() {
       // arrange
       when(mockSharedPreferences.getString(any))
           .thenReturn(fixture("backyard_list.json"));
-         when(mockSharedPreferences.setString(any, any))
+      when(mockSharedPreferences.setString(any, any))
           .thenAnswer((_) async => true);
       // act
       await localDataSource.cacheBackyard(tBackyardModel);
       // assert
       final expectedCachedID = tBackyardModel.id;
-      verify(
-          mockSharedPreferences.setInt(CACHED_BACKYARD, expectedCachedID));
+      verify(mockSharedPreferences.setInt(CACHED_BACKYARD, expectedCachedID));
     },
   );
 

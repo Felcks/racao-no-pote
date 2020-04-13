@@ -28,10 +28,12 @@ void main() {
   final detroit = getLocation('America/Detroit');
   final Element tFood = Element(
       quantity: 0,
+      maxQuantity: 210,
       updateDate: TZDateTime.now(detroit),
       incrementDate: TZDateTime.now(detroit));
   final Element tWater = Element(
       quantity: 0,
+      maxQuantity: 210,
       updateDate: TZDateTime.now(detroit),
       incrementDate: TZDateTime.now(detroit));
 
@@ -55,6 +57,7 @@ void main() {
       // act
       await usecase(BackyardParams(
         name: "Pandora",
+        maxFoodQuantity: 210,
         birthday: TZDateTime.parse(detroit, "2020-04-08T09:37:57+0000"),
       ));
       // assert

@@ -27,10 +27,12 @@ void main() {
   final detroit = getLocation('America/Detroit');
   final Element tFood = Element(
       quantity: 0,
+      maxQuantity: 210,
       updateDate: TZDateTime.now(detroit),
       incrementDate: TZDateTime.now(detroit));
   final Element tWater = Element(
       quantity: 0,
+      maxQuantity: 210,
       updateDate: TZDateTime.now(detroit),
       incrementDate: TZDateTime.now(detroit));
 
