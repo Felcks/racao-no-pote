@@ -23,6 +23,9 @@ void main() {
   AnimalModel tAnimalModel;
   CupModel tCupModel;
 
+   BackyardModel tBackyardModelWithoutCup;
+   BackyardModel tBackyardWithoutCup;
+
   setUp(() {
     tElementModel = ElementModel(
         quantity: 0,
@@ -43,11 +46,15 @@ void main() {
         animal: tAnimalModel,
         cup: tCupModel);
 
-    tBackyard = Backyard(
-        food: tElementModel,
+    tBackyard = tBackyardModel;
+
+    tBackyardModelWithoutCup = BackyardModel(
+       food: tElementModel,
         water: tElementModel,
-        cup: tCupModel,
-        animal: tAnimalModel);
+        animal: tAnimalModel
+    );
+    tBackyardWithoutCup = tBackyardModelWithoutCup;
+
   });
 
   test(
@@ -71,6 +78,19 @@ void main() {
         expect(result, tBackyardModel);
       },
     );
+
+    test(
+      'should return a valid model when JSON has no cup',
+      () async {
+        // arrange
+        final Map<String, dynamic> jsonMap =
+            json.decode(fixture('backyard_without_cup.json'));
+        // act
+        final result = BackyardModel.fromJson(jsonMap);
+        // assert
+        expect(result, tBackyardModelWithoutCup);
+      },
+    );
   });
 
   group('toJson', () {
@@ -83,6 +103,19 @@ void main() {
         // assert
         final Map<String, dynamic> expectedJsonMap =
             json.decode(fixture('backyard.json'));
+        expect(result, expectedJsonMap);
+      },
+    );
+
+     test(
+      'should return a JSON map containing the proper data without cup',
+      () async {
+        // arrange
+        // act
+        final result = tBackyardModelWithoutCup.toJson();
+        // assert
+        final Map<String, dynamic> expectedJsonMap =
+            json.decode(fixture('backyard_without_cup.json'));
         expect(result, expectedJsonMap);
       },
     );

@@ -41,8 +41,9 @@ class HomeModule extends ChildModule {
 
   @override
   List<Router> get routers => [
-        Router(Modular.initialRoute, child: (_, args) => BackyardListPage()),
+        // Router(Modular.initialRoute, child: (_, args) => BackyardListPage()),
         Router("/backyard", child: (_, args) => HomePage()),
+        Router(Modular.initialRoute, child: (_, args) => HomePage()),
         Router("/backyard_creation", child: (_, args) => BackyardCreationPage()),
       ];
 

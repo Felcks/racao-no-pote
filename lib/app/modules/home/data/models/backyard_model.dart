@@ -19,7 +19,7 @@ class BackyardModel extends Backyard {
       food: ElementModel.fromJson(json['food']),
       water: ElementModel.fromJson(json['water']),
       animal: AnimalModel.fromJson(json['animal']),
-      cup: CupModel.fromJson(json['cup']),
+      cup: json['cup'] != null ? CupModel.fromJson(json['cup']) : null,
     );
   }
 
