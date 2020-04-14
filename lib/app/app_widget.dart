@@ -13,11 +13,14 @@ class AppWidget extends StatelessWidget {
         primaryColor: Color(0xff4CAF50),
         primaryColorDark: Color(0xff388E3C),
         accentColor: Colors.teal,
-        textTheme: GoogleFonts.sarabunTextTheme(Theme.of(context).textTheme),
+        textTheme: GoogleFonts.sarabunTextTheme(Theme.of(context).textTheme).copyWith(),
         iconTheme: IconThemeData(
           color: Colors.teal
         ),
         appBarTheme: AppBarTheme(
+          textTheme: GoogleFonts.sarabunTextTheme(Theme.of(context).textTheme).copyWith(
+            title: TextStyle(color: Colors.teal, fontSize: 20)
+          ),
           actionsIconTheme: IconThemeData(
             color: Colors.teal
           ),
