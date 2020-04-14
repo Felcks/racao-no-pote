@@ -29,7 +29,7 @@ class ActionInfoWidget extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
-                    controller.incrementFoodQuantity(10);
+                    controller.incrementFoodQuantity(50);
                   },
                 ),
                 Spacer(),
@@ -39,16 +39,20 @@ class ActionInfoWidget extends StatelessWidget {
                     "100g",
                     style: TextStyle(color: Colors.white),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    controller.incrementFoodQuantity(100);
+                  },
                 ),
                 Spacer(),
                 RaisedButton(
                   color: Colors.green,
                   child: Text(
-                    "135g",
+                    "150g",
                     style: TextStyle(color: Colors.white),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    controller.incrementFoodQuantity(150);
+                  },
                 ),
               ],
             ),
@@ -89,7 +93,7 @@ class ActionInfoWidget extends StatelessWidget {
                 )
               ]),
               onPressed: () {
-                controller.incrementFoodQuantity(10);
+                controller.incrementFoodQuantity(controller.backyard.cup.capacity.toDouble());
               },
             ),
             RaisedButton(
@@ -106,7 +110,7 @@ class ActionInfoWidget extends StatelessWidget {
                 )
               ]),
               onPressed: () {
-                controller.incrementFoodQuantity(10);
+                controller.incrementFoodQuantity((controller.backyard.cup.capacity/2).toDouble());
               },
             ),
           ],

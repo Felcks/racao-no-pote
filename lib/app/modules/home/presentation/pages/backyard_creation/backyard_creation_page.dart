@@ -21,6 +21,7 @@ class _BackyardCreationPageState
   FocusNode fcnNickName;
   FocusNode fcnWeight;
   FocusNode fcnCupQuantity;
+  FocusNode fcnFoodQuantity;
 
   @override
   void initState() {
@@ -30,6 +31,7 @@ class _BackyardCreationPageState
     fcnNickName = FocusNode();
     fcnWeight = FocusNode();
     fcnCupQuantity = FocusNode();
+    fcnFoodQuantity = FocusNode();
   }
 
   @override
@@ -56,9 +58,9 @@ class _BackyardCreationPageState
           IconButton(
               onPressed: controller.isValid
                   ? () async {
-                    controller.creatingBackyard();
-                    Modular.to.pop();
-                  }
+                      controller.creatingBackyard();
+                      Modular.to.pop();
+                    }
                   : () {
                       controller.showErrors = true;
                     },
@@ -118,7 +120,6 @@ class _BackyardCreationPageState
                           },
                           maxLength: 20,
                           maxLines: 1,
-                          autofocus: true,
                           focusNode: fcnName,
                           decoration: InputDecoration(
                               contentPadding: EdgeInsets.all(8),
@@ -207,6 +208,7 @@ class _BackyardCreationPageState
                         fcnNickName.unfocus();
                         fcnWeight.unfocus();
                         fcnCupQuantity.unfocus();
+                        fcnFoodQuantity.unfocus();
                         DatePicker.showDatePicker(context,
                             theme: DatePickerTheme(
                               containerHeight: 210.0,
@@ -276,6 +278,59 @@ class _BackyardCreationPageState
                     )
                   ],
                 ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(24),
+              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Alimentação",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Quantidade de comida diária (em gramas)",
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Observer(
+                    builder: (_) {
+                      return TextField(
+                        expands: false,
+                        maxLines: 1,
+                        onChanged: controller.backyard.changeFoodQuantity,
+                        focusNode: fcnFoodQuantity,
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                        inputFormatters: [
+                          DecimalTextInputFormatter(
+                              activatedNegativeValues: false, decimalRange: 2),
+                        ],
+                        decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(8),
+                            border: OutlineInputBorder(),
+                            errorText: controller.showErrors == true
+                                ? controller.validateFoodQuantity()
+                                : null),
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
             Container(

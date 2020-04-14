@@ -51,6 +51,14 @@ abstract class _BackyardCreationControllerBase with Store {
     return null;
   }
 
+  String validateFoodQuantity() {
+    if(backyard.foodQuantity == null || backyard.foodQuantity.isEmpty){
+      return "Campo obrigatório";
+    }
+
+    return null;
+  }
+
   void confirmDateTime(DateTime date) {
     this.birthday = date;
     backyard.changeBirthday('${date.day}/${date.month}/${date.year}');
@@ -62,10 +70,12 @@ abstract class _BackyardCreationControllerBase with Store {
         validateNickName() == null &&
         validateWeight() == null &&
         validateBirthday() == null &&
-        validateCup() == null;
+        validateCup() == null &&
+        validateFoodQuantity() == null;
   }
 
   void creatingBackyard() async {
+    print("bbb");
     initializeTimeZones();
     final location = getLocation("Africa/Abidjan");
     final result = await createBackyard(
@@ -75,7 +85,7 @@ abstract class _BackyardCreationControllerBase with Store {
         birthday: TZDateTime.from(this.birthday, location),
         weight: backyard.weight != null ? double.parse(backyard.weight) : null,
         capacity: backyard.cupQuantity != null ? int.parse(backyard.cupQuantity) : null,
-        maxFoodQuantity: 210,
+        maxFoodQuantity: backyard.foodQuantity != null ? int.parse(backyard.foodQuantity) : null,
       ),
     );
 

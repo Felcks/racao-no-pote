@@ -111,6 +111,24 @@ mixin _$BackyardPresentation on _BackyardPresentationBase, Store {
     }, _$isUsingCupAtom, name: '${_$isUsingCupAtom.name}_set');
   }
 
+  final _$foodQuantityAtom =
+      Atom(name: '_BackyardPresentationBase.foodQuantity');
+
+  @override
+  String get foodQuantity {
+    _$foodQuantityAtom.context.enforceReadPolicy(_$foodQuantityAtom);
+    _$foodQuantityAtom.reportObserved();
+    return super.foodQuantity;
+  }
+
+  @override
+  set foodQuantity(String value) {
+    _$foodQuantityAtom.context.conditionallyRunInAction(() {
+      super.foodQuantity = value;
+      _$foodQuantityAtom.reportChanged();
+    }, _$foodQuantityAtom, name: '${_$foodQuantityAtom.name}_set');
+  }
+
   final _$_BackyardPresentationBaseActionController =
       ActionController(name: '_BackyardPresentationBase');
 
@@ -181,9 +199,20 @@ mixin _$BackyardPresentation on _BackyardPresentationBase, Store {
   }
 
   @override
+  dynamic changeFoodQuantity(String value) {
+    final _$actionInfo =
+        _$_BackyardPresentationBaseActionController.startAction();
+    try {
+      return super.changeFoodQuantity(value);
+    } finally {
+      _$_BackyardPresentationBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     final string =
-        'name: ${name.toString()},nickname: ${nickname.toString()},birthday: ${birthday.toString()},weight: ${weight.toString()},cupQuantity: ${cupQuantity.toString()},isUsingCup: ${isUsingCup.toString()}';
+        'name: ${name.toString()},nickname: ${nickname.toString()},birthday: ${birthday.toString()},weight: ${weight.toString()},cupQuantity: ${cupQuantity.toString()},isUsingCup: ${isUsingCup.toString()},foodQuantity: ${foodQuantity.toString()}';
     return '{$string}';
   }
 }

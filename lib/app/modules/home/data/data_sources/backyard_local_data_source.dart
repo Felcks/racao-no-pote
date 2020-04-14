@@ -30,6 +30,7 @@ class BackyardLocalDataSourceImpl extends BackyardLocalDataSource {
   Future<void> cacheBackyard(BackyardModel backyardToCache) async {
     List<BackyardModel> backyardList;
     try {
+      print("aaa");
       backyardList = await getBackyardList();
 
       if(backyardToCache.id == 0){
@@ -46,6 +47,7 @@ class BackyardLocalDataSourceImpl extends BackyardLocalDataSource {
       }
       if (isUpdate == false) backyardList.add(backyardToCache);
     } on CacheException {
+      backyardToCache.id = 1;
       backyardList = [backyardToCache];
     }
 

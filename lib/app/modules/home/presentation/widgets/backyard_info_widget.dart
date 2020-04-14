@@ -75,7 +75,7 @@ class BackyardInfoWidget extends StatelessWidget {
               },
               divisions: 4,
               min: 0,
-              max: 165,
+              max: element.maxQuantity.toDouble(),
             ),
           ),
         ],

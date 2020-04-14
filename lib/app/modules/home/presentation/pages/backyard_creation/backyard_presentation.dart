@@ -36,6 +36,11 @@ abstract class _BackyardPresentationBase with Store {
   @action
   changeIsUsingCup(bool value) => isUsingCup = value;
 
+  @observable
+  String foodQuantity;
+  @action
+  changeFoodQuantity(String value) => foodQuantity = value;
+
   _BackyardPresentationBase(){
     isUsingCup = false;
   }
