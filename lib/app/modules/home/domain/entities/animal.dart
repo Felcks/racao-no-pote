@@ -38,8 +38,10 @@ class Animal extends Equatable {
     if (difference > 730) {
       difference = difference ~/ 365;
       timeUnit = "anos";
-    } else if (difference > 365) {
+    } else if (difference > 395) {
       return "${difference ~/ 365} ano e ${(difference % 365) ~/ 30} meses";
+    } else if (difference > 365) {
+      return "${difference ~/ 365} ano";
     } else if (difference > 30) {
       difference = difference ~/ 30;
       timeUnit = "meses";

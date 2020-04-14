@@ -8,6 +8,7 @@ void main() {
   Animal tAnimalRequired;
   Animal tAnimalSevenMonths;
   Animal tAnimalOneYearAndThreeMonths;
+  Animal tAnimalOneYear;
   Animal tAnimalFourYears;
 
   setUp(() {
@@ -28,31 +29,44 @@ void main() {
         name: "Pandora",
         nickname: "Malucão",
         birthday: TZDateTime.now(location).subtract(
-            Duration(days: 220)), //the right is 210 but 220 be cerntain right
+          Duration(days: 220),
+        ), //the right is 210 but 220 be cerntain right
         weight: 10.4);
 
     tAnimalOneYearAndThreeMonths = Animal(
         name: "Pandora",
         nickname: "Malucão",
         birthday: TZDateTime.now(location).subtract(
-            Duration(days: 465)), //the right is 455 but 465 to be certain right
+          Duration(days: 465),
+        ), //the right is 455 but 465 to be certain right
+        weight: 10.4);
+
+    tAnimalOneYear = Animal(
+        name: "Pandora",
+        nickname: "Malucão",
+        birthday: TZDateTime.now(location).subtract(
+          Duration(days: 366),
+        ), //the right is 455 but 465 to be certain right
         weight: 10.4);
 
     tAnimalFourYears = Animal(
         name: "Pandora",
         nickname: "Malucão",
-        birthday: TZDateTime.now(location).subtract(Duration(
-            days: 1470)), //the right is 1461 but 1470 to be certain right
+        birthday: TZDateTime.now(location).subtract(
+          Duration(days: 1470),
+        ), //the right is 1461 but 1470 to be certain right
         weight: 10.4);
   });
 
   test(
-    'should be different class when compare complete and required',
+    'should be different class when compare complete and others',
     () async {
-      // arrange
-      // act
       // assert
       expect(tAnimalComplete, isNot(equals(tAnimalRequired)));
+      expect(tAnimalComplete, isNot(equals(tAnimalSevenMonths)));
+      expect(tAnimalComplete, isNot(equals(tAnimalOneYearAndThreeMonths)));
+      expect(tAnimalComplete, isNot(equals(tAnimalOneYear)));
+      expect(tAnimalComplete, isNot(equals(tAnimalFourYears)));
     },
   );
 
@@ -119,6 +133,23 @@ void main() {
       };
       // act
       final result = tAnimalOneYearAndThreeMonths.getAttributes();
+      // assert
+      expect(result, attributes);
+    },
+  );
+
+  test(
+    'should get proper map of attributes when has one year and zero months of life',
+    () async {
+      // arrange
+      Map<String, String> attributes = {
+        "Nome": "Pandora",
+        "Apelido": "Malucão",
+        "Idade": "1 ano",
+        "Peso": "10.4 Kg"
+      };
+      // act
+      final result = tAnimalOneYear.getAttributes();
       // assert
       expect(result, attributes);
     },

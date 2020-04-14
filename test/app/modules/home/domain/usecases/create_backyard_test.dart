@@ -7,10 +7,8 @@ import 'package:racao_no_pote/app/modules/home/domain/entities/cup.dart';
 import 'package:racao_no_pote/app/modules/home/domain/entities/element.dart';
 import 'package:racao_no_pote/app/modules/home/domain/repositories/backyard_repository.dart';
 import 'package:racao_no_pote/app/modules/home/domain/usecases/create_backyard.dart';
-import 'package:racao_no_pote/app/modules/home/domain/usecases/update_current_backyard.dart';
 import 'package:timezone/data/latest.dart';
 import 'package:timezone/timezone.dart';
-import 'package:racao_no_pote/app/core/usecases/usecase.dart';
 
 class MockBackyardRepository extends Mock implements BackyardRepository {}
 
@@ -19,11 +17,10 @@ void main() {
   BackyardRepository backyardRepository;
 
   setUp(() {
+    initializeTimeZones();
     backyardRepository = MockBackyardRepository();
     usecase = CreateBackyard(backyardRepository);
   });
-
-  initializeTimeZones();
 
   final detroit = getLocation('America/Detroit');
   final Element tFood = Element(

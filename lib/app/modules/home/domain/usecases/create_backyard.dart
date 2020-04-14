@@ -38,7 +38,7 @@ class CreateBackyard extends UseCase<Backyard, BackyardParams> {
   }
 }
 
-class BackyardParams extends Equatable {
+class BackyardParams {
   String name;
   String nickName;
   TZDateTime birthday;
