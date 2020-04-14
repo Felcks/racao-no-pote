@@ -16,16 +16,16 @@ class BackyardInfoWidget extends StatelessWidget {
       child: Stack(
         children: [
           Align(
-            alignment: Alignment.topCenter,
+            alignment: Alignment.topRight,
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   getElementWidget(context, backyard?.food, "Comida"),
                   SizedBox(
                     height: 10,
                   ),
-                  getElementWidget(context, backyard?.water, "Água"),
+                  // getElementWidget(context, backyard?.water, "Água"),
                 ]),
           ),
         ],
@@ -40,44 +40,46 @@ class BackyardInfoWidget extends StatelessWidget {
         child: CircularProgressIndicator(),
       );
     } else {
-      return Stack(
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(name),
-          ),
-          SliderTheme(
-            data: SliderTheme.of(context).copyWith(
-              activeTrackColor: Colors.indigo[700],
-              inactiveTrackColor: Colors.indigo[100],
-              trackShape: RoundedRectSliderTrackShape(),
-              trackHeight: 4.0,
-              thumbShape: RoundSliderThumbShape(enabledThumbRadius: 0.0),
-              thumbColor: Colors.indigoAccent,
-              overlayColor: Colors.indigo.withAlpha(32),
-              overlayShape: RoundSliderOverlayShape(overlayRadius: 28.0),
-              tickMarkShape: RoundSliderTickMarkShape(),
-              activeTickMarkColor: Colors.indigo[700],
-              inactiveTickMarkColor: Colors.indigo[100],
-              showValueIndicator: ShowValueIndicator.always,
-              valueIndicatorShape: PaddleSliderValueIndicatorShape(),
-              valueIndicatorColor: Colors.indigoAccent,
-              valueIndicatorTextStyle: TextStyle(
-                color: Colors.black,
+          Text(name, style: TextStyle(fontWeight: FontWeight.bold),),
+          Expanded(
+            child: SliderTheme(
+              data: SliderTheme.of(context).copyWith(
+                activeTrackColor: Colors.teal,
+                inactiveTrackColor: Colors.teal[100],
+                trackShape: RoundedRectSliderTrackShape(),
+                trackHeight: 4.0,
+                thumbShape: RoundSliderThumbShape(enabledThumbRadius: 0.0),
+                thumbColor: Colors.teal,
+                overlayColor: Colors.indigo.withAlpha(32),
+                overlayShape: RoundSliderOverlayShape(overlayRadius: 28.0),
+                tickMarkShape: RoundSliderTickMarkShape(),
+                activeTickMarkColor: Colors.teal,
+                inactiveTickMarkColor: Colors.teal[100],
+                showValueIndicator: ShowValueIndicator.always,
+                valueIndicatorShape: PaddleSliderValueIndicatorShape(),
+                valueIndicatorColor: Colors.tealAccent,
+                valueIndicatorTextStyle: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+              child: Slider(
+                value: element.quantity < element.maxQuantity
+                    ? element.quantity.toDouble()
+                    : element.maxQuantity.toDouble(),
+                onChanged: (value) {
+                  // setState(() {
+                  //   controller.updateElementQuantity(element, value);
+                  // });
+                },
+                divisions: 1,
+                min: 0,
+                max: element.maxQuantity.toDouble(),
               ),
             ),
-            child: Slider(
-              value: element.quantity.toDouble(),
-              onChanged: (value) {
-                // setState(() {
-                //   controller.updateElementQuantity(element, value);
-                // });
-              },
-              divisions: 4,
-              min: 0,
-              max: element.maxQuantity.toDouble(),
-            ),
-          ),
+          )
         ],
       );
     }

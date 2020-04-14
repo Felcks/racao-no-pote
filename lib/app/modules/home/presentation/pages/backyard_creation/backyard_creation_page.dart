@@ -53,16 +53,21 @@ class _BackyardCreationPageState
           },
         ),
         actions: <Widget>[
-          IconButton(
-              onPressed: controller.isValid
-                  ? () {
-                      controller.creatingBackyard();
-                      Modular.to.pop();
-                    }
-                  : () {
-                      controller.showErrors = true;
-                    },
-              icon: Icon(Icons.done)),
+          Observer(
+            builder: (_) {
+              return IconButton(
+                  onPressed: controller.isValid
+                      ? () {
+                          controller.creatingBackyard();
+                          Modular.to.pop();
+                        }
+                      : () {
+                          print(controller.isValid);
+                          controller.showErrors = true;
+                        },
+                  icon: Icon(Icons.done));
+            },
+          )
         ],
       ),
       body: SingleChildScrollView(

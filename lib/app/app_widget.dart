@@ -10,8 +10,8 @@ class AppWidget extends StatelessWidget {
       title: 'Ração no Pote',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        //primaryColor: Color(0xff4CAF50),
-        //primaryColorDark: Color(0xff388E3C),
+        // primaryColor: Color(0xff4CAF50),
+        // primaryColorDark: Color(0xff388E3C),
         primarySwatch: Colors.teal,
         textTheme: GoogleFonts.sarabunTextTheme(Theme.of(context).textTheme).copyWith(),
         iconTheme: IconThemeData(
@@ -22,7 +22,12 @@ class AppWidget extends StatelessWidget {
             title: TextStyle(color: Colors.teal, fontSize: 20)
           ),
           iconTheme: IconThemeData()
-        )
+        ),
+        buttonTheme: ButtonThemeData(
+          buttonColor: Colors.teal
+          
+        ),
+        buttonColor:  Colors.teal
       ),
       initialRoute: '/',
       onGenerateRoute: Modular.generateRoute,

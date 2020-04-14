@@ -36,7 +36,6 @@ class _BackyardListPageState
         elevation: 0,
         title: Text(
           widget.title,
-          style: TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.white,
       ),

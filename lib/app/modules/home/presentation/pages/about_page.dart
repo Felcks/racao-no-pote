@@ -49,7 +49,7 @@ class _AboutPageState extends ModularState<AboutPage, HomeController>
             isScrollable: true, //up to your taste
             indicator: MD2Indicator(
               indicatorHeight: 3,
-              indicatorColor: Colors.green,
+              indicatorColor: Theme.of(context).accentColor,
               indicatorSize: MD2IndicatorSize.full,
             ),
             tabs: <Widget>[

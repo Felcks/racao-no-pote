@@ -23,7 +23,6 @@ class ActionInfoWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 RaisedButton(
-                  color: Colors.green,
                   child: Text(
                     "50g",
                     style: TextStyle(color: Colors.white),
@@ -34,7 +33,6 @@ class ActionInfoWidget extends StatelessWidget {
                 ),
                 Spacer(),
                 RaisedButton(
-                  color: Colors.green,
                   child: Text(
                     "100g",
                     style: TextStyle(color: Colors.white),
@@ -45,7 +43,6 @@ class ActionInfoWidget extends StatelessWidget {
                 ),
                 Spacer(),
                 RaisedButton(
-                  color: Colors.green,
                   child: Text(
                     "150g",
                     style: TextStyle(color: Colors.white),
@@ -80,7 +77,6 @@ class ActionInfoWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             RaisedButton(
-              color: Colors.green,
               padding: EdgeInsets.symmetric(horizontal: 24, vertical: 4),
               child: Column(children: [
                 Text(
@@ -97,7 +93,6 @@ class ActionInfoWidget extends StatelessWidget {
               },
             ),
             RaisedButton(
-              color: Colors.green,
               padding: EdgeInsets.symmetric(horizontal: 24, vertical: 4),
               child: Column(children: [
                 Text(
