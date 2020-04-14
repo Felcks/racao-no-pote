@@ -75,7 +75,6 @@ abstract class _BackyardCreationControllerBase with Store {
   }
 
   void creatingBackyard() async {
-    print("bbb");
     initializeTimeZones();
     final location = getLocation("Africa/Abidjan");
     final result = await createBackyard(

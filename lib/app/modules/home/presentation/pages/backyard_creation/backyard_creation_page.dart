@@ -55,7 +55,7 @@ class _BackyardCreationPageState
         actions: <Widget>[
           IconButton(
               onPressed: controller.isValid
-                  ? () async {
+                  ? () {
                       controller.creatingBackyard();
                       Modular.to.pop();
                     }
@@ -261,8 +261,8 @@ class _BackyardCreationPageState
                     ),
                     Observer(
                       builder: (_) {
-                        if (controller.birthday != null ||
-                            controller.showErrors == false) return Container();
+                        if (controller.showErrors == false ||
+                            controller.birthday != null) return Container();
 
                         return Padding(
                           padding: EdgeInsets.only(left: 16, top: 8),

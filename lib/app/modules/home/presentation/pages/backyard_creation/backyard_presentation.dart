@@ -42,7 +42,7 @@ abstract class _BackyardPresentationBase with Store {
   changeFoodQuantity(String value) => foodQuantity = value;
 
   _BackyardPresentationBase(){
-    isUsingCup = false;
+    changeIsUsingCup(false);
   }
 
 }
