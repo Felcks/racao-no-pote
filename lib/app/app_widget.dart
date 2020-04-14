@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:racao_no_pote/main.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppWidget extends StatelessWidget {
   @override
@@ -10,7 +10,21 @@ class AppWidget extends StatelessWidget {
       title: 'Ração no Pote',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Color(0xff4CAF50),
+        primaryColorDark: Color(0xff388E3C),
+        accentColor: Colors.teal,
+        textTheme: GoogleFonts.sarabunTextTheme(Theme.of(context).textTheme),
+        iconTheme: IconThemeData(
+          color: Colors.teal
+        ),
+        appBarTheme: AppBarTheme(
+          actionsIconTheme: IconThemeData(
+            color: Colors.teal
+          ),
+          iconTheme: IconThemeData(
+            color: Colors.teal
+          )
+        )
       ),
       initialRoute: '/',
       onGenerateRoute: Modular.generateRoute,

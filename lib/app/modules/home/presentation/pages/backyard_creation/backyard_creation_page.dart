@@ -48,7 +48,6 @@ class _BackyardCreationPageState
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            color: Colors.black,
           ),
           onPressed: () {
             Modular.to.pop();
@@ -64,7 +63,7 @@ class _BackyardCreationPageState
                   : () {
                       controller.showErrors = true;
                     },
-              icon: Icon(Icons.done, color: Colors.black)),
+              icon: Icon(Icons.done)),
         ],
       ),
       body: SingleChildScrollView(
