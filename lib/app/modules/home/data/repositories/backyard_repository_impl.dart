@@ -35,7 +35,7 @@ class BackyardRepositoryImpl extends BackyardRepository {
   @override
   Future<Either<Failure, Backyard>> updateBackyard(Backyard backyard) async {
     try {
-      await localDataSource.cacheBackyard(BackyardModel.fromEntity(backyard));
+      await localDataSource.updateBackyard(BackyardModel.fromEntity(backyard));
       return Right(backyard);
     } on Exception {
       return Left(CacheFailure());

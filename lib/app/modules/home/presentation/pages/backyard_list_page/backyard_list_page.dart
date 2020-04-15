@@ -25,6 +25,7 @@ class _BackyardListPageState
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    checkHasSelectedBackyard();
   }
 
   @override
@@ -35,10 +36,10 @@ class _BackyardListPageState
   }
 
   void checkHasSelectedBackyard() async {
-    await controller.checkHasSelectedBackyard();
-    if (controller.hasSelectedBackyard == true) {
-      Modular.to.pushNamed("/backyard");
-    }
+    // await controller.checkHasSelectedBackyard();
+    // if (controller.hasSelectedBackyard == true) {
+    //   Modular.to.pushNamed("/backyard");
+    // }
   }
 
   @override
@@ -55,7 +56,7 @@ class _BackyardListPageState
       body: Observer(
         builder: (_) {
 
-          if (controller.backyardList == null || controller.hasSelectedBackyard == true) {
+          if (controller.backyardList == null) {
             return Center(
               child: CircularProgressIndicator(),
             );

@@ -16,8 +16,9 @@ abstract class BackyardLocalDataSource {
   Future<List<BackyardModel>> getBackyardList();
 
   Future<BackyardModel> cacheBackyard(BackyardModel backyardToCache);
+  Future<BackyardModel> updateBackyard(BackyardModel backyardToCache);
 
-  Future<bool> cacheLastBackyard(int id); 
+  Future<bool> cacheLastBackyard(int id);
 }
 
 const CACHED_BACKYARD = 'CACHED_BACKYARD';
@@ -30,10 +31,7 @@ class BackyardLocalDataSourceImpl extends BackyardLocalDataSource {
 
   @override
   Future<BackyardModel> cacheBackyard(BackyardModel backyardToCache) async {
-
-    if(backyardToCache.id != null)
-      throw AlreadyCreatedException();
-
+    if (backyardToCache.id != null) throw AlreadyCreatedException();
 
     List<BackyardModel> backyardList;
     try {
@@ -57,7 +55,32 @@ class BackyardLocalDataSourceImpl extends BackyardLocalDataSource {
     await sharedPreferences.setString(
         CACHED_BACKYARD_LIST, json.encode(backyardJsonList));
 
-    return backyardToCache; 
+    return backyardToCache;
+  }
+
+  @override
+  Future<BackyardModel> updateBackyard(BackyardModel backyardToCache) async {
+    if(backyardToCache.id == null)
+      throw Exception();
+
+    List<BackyardModel> backyardList = await getBackyardList();
+    bool foundElement = false;
+
+    for (var i = 0; i < backyardList.length; i++) {
+      if (backyardList[i].id == backyardToCache.id) {
+        backyardList[i] = backyardToCache;
+        foundElement = true;
+      }
+    }
+
+    if(foundElement == false)
+      throw Exception();
+
+    var backyardJsonList = backyardList.map((it) => it.toJson()).toList();
+    await sharedPreferences.setString(
+        CACHED_BACKYARD_LIST, json.encode(backyardJsonList));
+
+    return backyardToCache;
   }
 
   @override
