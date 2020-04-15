@@ -44,18 +44,15 @@ void main() {
       birthday: TZDateTime.parse(detroit, "2020-04-08T09:37:57+0000"),
       weight: 10.4);
 
-  final Backyard tBackyard =
-      Backyard(id: null, food: tFood, water: tWater, animal: tAnimal, cup: tCup);
-  
-  final Backyard tBackyardResult =
-      Backyard(id: 1, food: tFood, water: tWater, animal: tAnimal, cup: tCup);
+  final Backyard tBackyard = Backyard(
+      id: null, food: tFood, water: tWater, animal: tAnimal, cup: tCup);
 
   test(
     'should call repository with correct params',
     () async {
       // arrange
       when(backyardRepository.createBackyard(any))
-          .thenAnswer((_) async => Right(tBackyardResult));
+          .thenAnswer((_) async => Right(tBackyard));
       // act
       final result = await usecase(BackyardParams(
         name: "Pandora",
@@ -63,6 +60,13 @@ void main() {
         birthday: TZDateTime.parse(detroit, "2020-04-08T09:37:57+0000"),
       ));
       // assert
+      Backyard backyardResult;
+      result.fold((failure) {}, (value) {
+        backyardResult = value;
+      });
+      expect(backyardResult.animal.name, tBackyard.animal.name);
+      expect(backyardResult.animal.birthday, tBackyard.animal.birthday);
+      expect(backyardResult.food.maxQuantity, tBackyard.food.maxQuantity);
       verify(backyardRepository.createBackyard(any));
       verifyNoMoreInteractions(backyardRepository);
     },

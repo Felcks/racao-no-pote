@@ -15,7 +15,9 @@ abstract class BackyardLocalDataSource {
 
   Future<List<BackyardModel>> getBackyardList();
 
-  Future<void> cacheBackyard(BackyardModel backyardToCache);
+  Future<BackyardModel> cacheBackyard(BackyardModel backyardToCache);
+
+  Future<bool> cacheLastBackyard(int id); 
 }
 
 const CACHED_BACKYARD = 'CACHED_BACKYARD';
@@ -27,24 +29,25 @@ class BackyardLocalDataSourceImpl extends BackyardLocalDataSource {
   BackyardLocalDataSourceImpl({@required this.sharedPreferences});
 
   @override
-  Future<void> cacheBackyard(BackyardModel backyardToCache) async {
+  Future<BackyardModel> cacheBackyard(BackyardModel backyardToCache) async {
+
+    if(backyardToCache.id != null)
+      throw AlreadyCreatedException();
+
+
     List<BackyardModel> backyardList;
     try {
       backyardList = await getBackyardList();
+      backyardToCache.id = (backyardList.length + 1);
+      backyardList.add(backyardToCache);
+      //bool isUpdate = false;
 
-      if(backyardToCache.id == 0 || backyardToCache.id == null){
-        backyardToCache.id = (backyardList.length + 1);
-      }
-
-      bool isUpdate = false;
-
-      for(var i = 0; i < backyardList.length; i++){
-        if(backyardList[i].id == backyardToCache.id){
-          backyardList[i] = backyardToCache;
-          isUpdate = true;
-        }
-      }
-      if (isUpdate == false) backyardList.add(backyardToCache);
+      // for(var i = 0; i < backyardList.length; i++){
+      //   if(backyardList[i].id == backyardToCache.id){
+      //     backyardList[i] = backyardToCache;
+      //     isUpdate = true;
+      //   }
+      // }
     } on CacheException {
       backyardToCache.id = 1;
       backyardList = [backyardToCache];
@@ -54,7 +57,7 @@ class BackyardLocalDataSourceImpl extends BackyardLocalDataSource {
     await sharedPreferences.setString(
         CACHED_BACKYARD_LIST, json.encode(backyardJsonList));
 
-    return sharedPreferences.setInt(CACHED_BACKYARD, backyardToCache.id);
+    return backyardToCache; 
   }
 
   @override
@@ -87,5 +90,10 @@ class BackyardLocalDataSourceImpl extends BackyardLocalDataSource {
     } else {
       throw CacheException();
     }
+  }
+
+  @override
+  Future<bool> cacheLastBackyard(int id) async {
+    return sharedPreferences.setInt(CACHED_BACKYARD, id);
   }
 }
