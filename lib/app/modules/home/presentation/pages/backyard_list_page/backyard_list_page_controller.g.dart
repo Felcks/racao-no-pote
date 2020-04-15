@@ -27,19 +27,18 @@ mixin _$BackyardListPageController on _BackyardListPageControllerBase, Store {
     }, _$backyardListAtom, name: '${_$backyardListAtom.name}_set');
   }
 
-  final _$updateBackyardAsyncAction = AsyncAction('updateBackyard');
-
-  @override
-  Future updateBackyard(Backyard backyard) {
-    return _$updateBackyardAsyncAction
-        .run(() => super.updateBackyard(backyard));
-  }
-
   final _$fetchBackyardListAsyncAction = AsyncAction('fetchBackyardList');
 
   @override
   Future fetchBackyardList() {
     return _$fetchBackyardListAsyncAction.run(() => super.fetchBackyardList());
+  }
+
+  final _$selectBackyardAsyncAction = AsyncAction('selectBackyard');
+
+  @override
+  Future<bool> selectBackyard(int id) {
+    return _$selectBackyardAsyncAction.run(() => super.selectBackyard(id));
   }
 
   @override

@@ -17,6 +17,35 @@ abstract class _BackyardCreationControllerBase with Store {
   @observable
   bool showErrors = false;
 
+  @computed
+  bool get isValid {
+    return validateName() == null &&
+        validateNickName() == null &&
+        validateWeight() == null &&
+        validateBirthday() == null &&
+        validateCup() == null &&
+        validateFoodQuantity() == null;
+  }
+
+  Future<bool> creatingBackyard() async {
+    final result = await createBackyard(
+      BackyardParams(
+        name: backyard.name,
+        nickName: backyard.nickname,
+        birthday: this.birthday,
+        weight: backyard.weight != null ? double.parse(backyard.weight) : null,
+        capacity: backyard.cupQuantity != null
+            ? int.parse(backyard.cupQuantity)
+            : null,
+        maxFoodQuantity: backyard.foodQuantity != null
+            ? int.parse(backyard.foodQuantity)
+            : null,
+      ),
+    );
+
+    return result.isRight();
+  }
+
   String validateName() {
     if (backyard.name == null || backyard.name.isEmpty) {
       return "Campo obrigatório";
@@ -60,34 +89,5 @@ abstract class _BackyardCreationControllerBase with Store {
   void confirmDateTime(DateTime date) {
     this.birthday = date;
     backyard.changeBirthday('${date.day}/${date.month}/${date.year}');
-  }
-
-  @computed
-  bool get isValid {
-    return validateName() == null &&
-        validateNickName() == null &&
-        validateWeight() == null &&
-        validateBirthday() == null &&
-        validateCup() == null &&
-        validateFoodQuantity() == null;
-  }
-
-  Future<bool> creatingBackyard() async {
-    final result = await createBackyard(
-      BackyardParams(
-        name: backyard.name,
-        nickName: backyard.nickname,
-        birthday: this.birthday,
-        weight: backyard.weight != null ? double.parse(backyard.weight) : null,
-        capacity: backyard.cupQuantity != null
-            ? int.parse(backyard.cupQuantity)
-            : null,
-        maxFoodQuantity: backyard.foodQuantity != null
-            ? int.parse(backyard.foodQuantity)
-            : null,
-      ),
-    );
-
-    return result.isRight();
   }
 }

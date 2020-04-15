@@ -112,8 +112,9 @@ class _BackyardListPageState
                                   splashColor:
                                       Colors.grey[350].withOpacity(0.2),
                                   onTap: () async {
-                                    await controller.updateBackyard(backyard);
-                                    Modular.to.pushNamed("/backyard");
+                                    final result = await controller.selectBackyard(backyard.id);
+                                    if(result)
+                                      Modular.to.pushNamed("/backyard");
                                   },
                                 ),
                               ),

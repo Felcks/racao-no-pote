@@ -33,6 +33,7 @@ class _AboutPageState extends ModularState<AboutPage, HomeController>
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
+        automaticallyImplyLeading: false,
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(40),
           child: TabBar(
@@ -46,7 +47,7 @@ class _AboutPageState extends ModularState<AboutPage, HomeController>
             indicatorSize: TabBarIndicatorSize.label, //makes it better
             labelColor: Colors.black, //Google's sweet blue
             unselectedLabelColor: Color(0xff5f6368), //niceish grey
-            isScrollable: true, //up to your taste
+            isScrollable: false,
             indicator: MD2Indicator(
               indicatorHeight: 3,
               indicatorColor: Theme.of(context).accentColor,
@@ -72,8 +73,14 @@ class _AboutPageState extends ModularState<AboutPage, HomeController>
 
   Widget getBody() {
     if (controller.backyard == null)
-      return Center(
-        child: CircularProgressIndicator(),
+      return Stack(
+        children: <Widget>[
+          Positioned(
+            top: 150,
+            left: 400/2 - 25,
+            child:  CircularProgressIndicator()
+          )
+        ],
       );
 
     return PageView(

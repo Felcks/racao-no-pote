@@ -64,4 +64,9 @@ class BackyardRepositoryImpl extends BackyardRepository {
       return Left(AlreadyCreatedFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> saveLastBackyard(int id) async {
+    return Right(await localDataSource.cacheLastBackyard(id));
+  }
 }
