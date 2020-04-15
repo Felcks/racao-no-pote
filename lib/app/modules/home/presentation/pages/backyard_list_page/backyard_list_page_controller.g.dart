@@ -27,6 +27,26 @@ mixin _$BackyardListPageController on _BackyardListPageControllerBase, Store {
     }, _$backyardListAtom, name: '${_$backyardListAtom.name}_set');
   }
 
+  final _$hasSelectedBackyardAtom =
+      Atom(name: '_BackyardListPageControllerBase.hasSelectedBackyard');
+
+  @override
+  bool get hasSelectedBackyard {
+    _$hasSelectedBackyardAtom.context
+        .enforceReadPolicy(_$hasSelectedBackyardAtom);
+    _$hasSelectedBackyardAtom.reportObserved();
+    return super.hasSelectedBackyard;
+  }
+
+  @override
+  set hasSelectedBackyard(bool value) {
+    _$hasSelectedBackyardAtom.context.conditionallyRunInAction(() {
+      super.hasSelectedBackyard = value;
+      _$hasSelectedBackyardAtom.reportChanged();
+    }, _$hasSelectedBackyardAtom,
+        name: '${_$hasSelectedBackyardAtom.name}_set');
+  }
+
   final _$fetchBackyardListAsyncAction = AsyncAction('fetchBackyardList');
 
   @override
@@ -41,9 +61,19 @@ mixin _$BackyardListPageController on _BackyardListPageControllerBase, Store {
     return _$chooseBackyardAsyncAction.run(() => super.chooseBackyard(id));
   }
 
+  final _$checkHasSelectedBackyardAsyncAction =
+      AsyncAction('checkHasSelectedBackyard');
+
+  @override
+  Future checkHasSelectedBackyard() {
+    return _$checkHasSelectedBackyardAsyncAction
+        .run(() => super.checkHasSelectedBackyard());
+  }
+
   @override
   String toString() {
-    final string = 'backyardList: ${backyardList.toString()}';
+    final string =
+        'backyardList: ${backyardList.toString()},hasSelectedBackyard: ${hasSelectedBackyard.toString()}';
     return '{$string}';
   }
 }

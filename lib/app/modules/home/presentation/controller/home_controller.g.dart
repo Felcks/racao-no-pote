@@ -33,6 +33,14 @@ mixin _$HomeController on _HomeControllerBase, Store {
     return _$fetchBackyardAsyncAction.run(() => super.fetchBackyard());
   }
 
+  final _$unselectMyBackyardAsyncAction = AsyncAction('unselectMyBackyard');
+
+  @override
+  Future unselectMyBackyard() {
+    return _$unselectMyBackyardAsyncAction
+        .run(() => super.unselectMyBackyard());
+  }
+
   final _$_HomeControllerBaseActionController =
       ActionController(name: '_HomeControllerBase');
 

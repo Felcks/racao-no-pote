@@ -1,5 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:racao_no_pote/app/modules/home/domain/usecases/view_backyard.dart';
 
 import '../../../../../core/usecases/usecase.dart';
 import '../../../domain/entities/backyard.dart';
@@ -14,13 +15,13 @@ class BackyardListPageController = _BackyardListPageControllerBase
 abstract class _BackyardListPageControllerBase with Store {
   final listBackyard = Modular.get<ListBackyard>();
   final selectBackyard = Modular.get<SelectBackyard>();
+  final viewBackyard = Modular.get<ViewBackyard>();
 
   @observable
   ObservableList<Backyard> backyardList;
 
-  _BackyardListPageControllerBase() {
-    fetchBackyardList();
-  }
+  @observable
+  bool hasSelectedBackyard = true;
 
   @action
   fetchBackyardList() async {
@@ -35,5 +36,15 @@ abstract class _BackyardListPageControllerBase with Store {
   Future<bool> chooseBackyard(int id) async {
     final result = await selectBackyard(IDParams(id));
     return result.isRight();
+  }
+
+  @action
+  checkHasSelectedBackyard() async {
+    final result = await viewBackyard(NoParams());
+    if(result.isRight()){
+      hasSelectedBackyard = true;
+    } else{
+      hasSelectedBackyard = false;
+    }
   }
 }

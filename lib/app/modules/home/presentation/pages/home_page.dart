@@ -17,7 +17,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends ModularState<HomePage, HomeController> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,8 +29,9 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
             Icons.arrow_back,
             color: Colors.black,
           ),
-          onPressed: () {
-            Modular.to.pop();
+          onPressed: () async {
+            final result = await controller.unselectMyBackyard();
+            if (result) Modular.to.pop();
           },
         ),
       ),

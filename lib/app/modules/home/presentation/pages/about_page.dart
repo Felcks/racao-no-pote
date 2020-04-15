@@ -58,7 +58,7 @@ class _AboutPageState extends ModularState<AboutPage, HomeController>
                 text: "Sobre",
               ),
               Tab(
-                text: "Quintal",
+                text: "Hoje",
               ),
               Tab(
                 text: "Ações",

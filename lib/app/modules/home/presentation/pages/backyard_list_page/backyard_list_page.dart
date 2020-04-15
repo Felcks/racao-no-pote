@@ -23,9 +23,22 @@ class _BackyardListPageState
   }
 
   @override
-  void didChangeDependencies(){
+  void didChangeDependencies() {
     super.didChangeDependencies();
     controller.fetchBackyardList();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkHasSelectedBackyard();
+  }
+
+  void checkHasSelectedBackyard() async {
+    await controller.checkHasSelectedBackyard();
+    if (controller.hasSelectedBackyard == true) {
+      Modular.to.pushNamed("/backyard");
+    }
   }
 
   @override
@@ -41,7 +54,8 @@ class _BackyardListPageState
       ),
       body: Observer(
         builder: (_) {
-          if (controller.backyardList == null) {
+
+          if (controller.backyardList == null || controller.hasSelectedBackyard == true) {
             return Center(
               child: CircularProgressIndicator(),
             );
@@ -112,8 +126,9 @@ class _BackyardListPageState
                                   splashColor:
                                       Colors.grey[350].withOpacity(0.2),
                                   onTap: () async {
-                                    final result = await controller.chooseBackyard(backyard.id);
-                                    if(result)
+                                    final result = await controller
+                                        .chooseBackyard(backyard.id);
+                                    if (result)
                                       Modular.to.pushNamed("/backyard");
                                   },
                                 ),
