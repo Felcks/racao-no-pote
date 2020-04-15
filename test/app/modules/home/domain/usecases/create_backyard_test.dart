@@ -15,11 +15,14 @@ class MockBackyardRepository extends Mock implements BackyardRepository {}
 void main() {
   CreateBackyard usecase;
   BackyardRepository backyardRepository;
+  Location location;
+
+  initializeTimeZones();
 
   setUp(() {
-    initializeTimeZones();
     backyardRepository = MockBackyardRepository();
-    usecase = CreateBackyard(backyardRepository);
+    location = getLocation("Africa/Abidjan");
+    usecase = CreateBackyard(backyardRepository, location);
   });
 
   final detroit = getLocation('America/Detroit');
@@ -38,27 +41,29 @@ void main() {
 
   Animal tAnimal = Animal(
       name: "Pandora",
-      nickname: "Malucão",
       birthday: TZDateTime.parse(detroit, "2020-04-08T09:37:57+0000"),
       weight: 10.4);
 
   final Backyard tBackyard =
+      Backyard(id: null, food: tFood, water: tWater, animal: tAnimal, cup: tCup);
+  
+  final Backyard tBackyardResult =
       Backyard(id: 1, food: tFood, water: tWater, animal: tAnimal, cup: tCup);
 
   test(
-    'should call repository',
+    'should call repository with correct params',
     () async {
       // arrange
-      when(backyardRepository.updateBackyard(any))
-          .thenAnswer((_) async => Right(tBackyard));
+      when(backyardRepository.createBackyard(any))
+          .thenAnswer((_) async => Right(tBackyardResult));
       // act
-      await usecase(BackyardParams(
+      final result = await usecase(BackyardParams(
         name: "Pandora",
         maxFoodQuantity: 210,
         birthday: TZDateTime.parse(detroit, "2020-04-08T09:37:57+0000"),
       ));
       // assert
-      verify(backyardRepository.updateBackyard(any));
+      verify(backyardRepository.createBackyard(any));
       verifyNoMoreInteractions(backyardRepository);
     },
   );

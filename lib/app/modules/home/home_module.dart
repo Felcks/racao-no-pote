@@ -1,3 +1,4 @@
+import 'package:racao_no_pote/app/core/device/location_manager.dart';
 import 'package:racao_no_pote/app/modules/home/presentation/pages/backyard_creation/backyard_creation_controller.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -34,7 +35,7 @@ class HomeModule extends ChildModule {
             remoteDataSource: i.get<BackyardRemoteDataSourceImpl>())),
         Bind((i) => GetCurrentBackyard(i.get<BackyardRepositoryImpl>())),
         Bind((i) => UpdateCurrentBackyard(i.get<BackyardRepositoryImpl>())),
-        Bind((i) => CreateBackyard(i.get<BackyardRepositoryImpl>())),
+        Bind((i) => CreateBackyard(i.get<BackyardRepositoryImpl>(), i.get<LocationManager>().defaultLocation)),
         Bind((i) => GetBackyardList(i.get<BackyardRepositoryImpl>())),
         Bind((i) => HomeController()),
       ];

@@ -14,27 +14,35 @@ import '../repositories/backyard_repository.dart';
 
 class CreateBackyard extends UseCase<Backyard, BackyardParams> {
   final BackyardRepository repository;
+  final Location defaultLocation;
 
-  CreateBackyard(this.repository);
+  CreateBackyard(this.repository, this.defaultLocation);
 
   @override
   Future<Either<Failure, Backyard>> call(BackyardParams params) {
-    final location = getLocation("Africa/Abidjan");
-    Element food = Element(
+    final mBackyard = Backyard(
+      id: 0,
+      food: Element(
         quantity: 0,
         maxQuantity: params.maxFoodQuantity,
-        incrementDate: TZDateTime.now(location),
-        updateDate: TZDateTime.now(location));
-    Element water = food;
-    Cup cup = params.capacity != null ? Cup(capacity: params.capacity) : null;
-    Animal animal = Animal(
-        name: params.name,
-        nickname: params.nickName,
-        birthday: params.birthday,
-        weight: params.weight);
-    final mBackyard =
-        Backyard(id: 0, food: food, water: water, animal: animal, cup: cup);
-    return repository.updateBackyard(mBackyard);
+        incrementDate: TZDateTime.now(defaultLocation),
+        updateDate: TZDateTime.now(defaultLocation),
+      ),
+      water: Element(
+        quantity: 0,
+        maxQuantity: params.maxFoodQuantity,
+        incrementDate: TZDateTime.now(defaultLocation),
+        updateDate: TZDateTime.now(defaultLocation),
+      ),
+      cup: params.capacity != null ? Cup(capacity: params.capacity) : null,
+      animal: Animal(
+          name: params.name,
+          nickname: params.nickName,
+          birthday: params.birthday,
+          weight: params.weight),
+    );
+
+    return repository.createBackyard(mBackyard);
   }
 }
 
@@ -46,12 +54,11 @@ class BackyardParams {
   int capacity;
   int maxFoodQuantity;
 
-  BackyardParams({
-    @required this.name,
-    this.nickName,
-    @required this.birthday,
-    this.weight,
-    this.capacity,
-    @required this.maxFoodQuantity
-  });
+  BackyardParams(
+      {@required this.name,
+      this.nickName,
+      @required this.birthday,
+      this.weight,
+      this.capacity,
+      @required this.maxFoodQuantity});
 }

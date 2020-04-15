@@ -32,7 +32,7 @@ class BackyardLocalDataSourceImpl extends BackyardLocalDataSource {
     try {
       backyardList = await getBackyardList();
 
-      if(backyardToCache.id == 0){
+      if(backyardToCache.id == 0 || backyardToCache.id == null){
         backyardToCache.id = (backyardList.length + 1);
       }
 
