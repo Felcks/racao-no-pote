@@ -34,6 +34,12 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
             if (result) Modular.to.pop();
           },
         ),
+        // actions: <Widget>[
+        //   IconButton(
+        //     onPressed: (){},
+        //     icon: Icon(Icons.settings),
+        //   )
+        // ],
       ),
       body: Stack(
         children: [

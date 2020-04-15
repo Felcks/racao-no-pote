@@ -15,21 +15,23 @@ class ResetBackyardWhenDayPassed extends UseCase<bool, NoParams> {
   Future<Either<Failure, bool>> call(NoParams noParams) async {
     final backyard = await repository.getBackyard();
     backyard.fold((failure) {
-      return failure;
-    }, (success) {
+      return Left(failure);
+    }, (success) async {
       final currentTime = TZDateTime.now(userLocation);
-      final backyardTime = TZDateTime.parse(userLocation, success.food.updateDate.toIso8601String());
+      final backyardTime = TZDateTime.parse(
+          userLocation, success.food.updateDate.toIso8601String());
 
       Duration difference = currentTime.difference(backyardTime);
-      print(difference.inDays);
-      if(difference.inDays > 0){
+      if (difference.inDays > 0) {
         success.food.updateDate = currentTime;
         success.food.quantity = 0;
         success.water.updateDate = currentTime;
-        repository.updateBackyard(success);
+        await repository.updateBackyard(success);
       }
 
-        return Future.value(true);
+      return Future.value(Right(true));
     });
+
+    return Future.value(Right(backyard.isRight()));
   }
 }

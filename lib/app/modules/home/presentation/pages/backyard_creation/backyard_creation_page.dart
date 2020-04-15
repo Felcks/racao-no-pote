@@ -62,7 +62,6 @@ class _BackyardCreationPageState
                           if (result) Modular.to.pop();
                         }
                       : () {
-                          print(controller.isValid);
                           controller.showErrors = true;
                         },
                   icon: Icon(Icons.done));

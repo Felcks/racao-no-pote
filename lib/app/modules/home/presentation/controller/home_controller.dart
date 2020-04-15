@@ -27,7 +27,7 @@ abstract class _HomeControllerBase with Store {
   }
 
   checkBackyard() async {
-    await resetBackyardWhenDayPassed(NoParams());
+    final result = await resetBackyardWhenDayPassed(NoParams());
     fetchBackyard();
   }
 
