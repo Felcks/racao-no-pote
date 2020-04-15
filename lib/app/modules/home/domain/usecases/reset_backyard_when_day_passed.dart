@@ -20,9 +20,12 @@ class ResetBackyardWhenDayPassed extends UseCase<bool, NoParams> {
       final currentTime = TZDateTime.now(userLocation);
       final backyardTime = TZDateTime.parse(
           userLocation, success.food.updateDate.toIso8601String());
+      final dayStartTime = TZDateTime(userLocation, currentTime.year, currentTime.month, currentTime.day);
 
-      Duration difference = currentTime.difference(backyardTime);
-      if (difference.inDays > 0) {
+      Duration differenceCurrentAndBackyard = currentTime.difference(backyardTime);
+      Duration differenceCurrentAndDayStartTime = currentTime.difference(dayStartTime);
+
+      if (differenceCurrentAndBackyard > differenceCurrentAndDayStartTime) {
         success.food.updateDate = currentTime;
         success.food.quantity = 0;
         success.water.updateDate = currentTime;
