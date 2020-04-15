@@ -34,11 +34,11 @@ mixin _$BackyardListPageController on _BackyardListPageControllerBase, Store {
     return _$fetchBackyardListAsyncAction.run(() => super.fetchBackyardList());
   }
 
-  final _$selectBackyardAsyncAction = AsyncAction('selectBackyard');
+  final _$chooseBackyardAsyncAction = AsyncAction('chooseBackyard');
 
   @override
-  Future<bool> selectBackyard(int id) {
-    return _$selectBackyardAsyncAction.run(() => super.selectBackyard(id));
+  Future<bool> chooseBackyard(int id) {
+    return _$chooseBackyardAsyncAction.run(() => super.chooseBackyard(id));
   }
 
   @override

@@ -10,7 +10,7 @@ class BackyardCreationController = _BackyardCreationControllerBase
     with _$BackyardCreationController;
 
 abstract class _BackyardCreationControllerBase with Store {
-  var backyard = BackyardPresentation();
+  final backyard = BackyardPresentation();
   final createBackyard = Modular.get<CreateBackyard>();
   DateTime birthday;
 

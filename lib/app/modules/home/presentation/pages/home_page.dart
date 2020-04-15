@@ -65,26 +65,6 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                   alignment: Alignment.center,
                   child: Image.asset("assets/dog.jpg", scale: 5),
                 ),
-                // RaisedButton(
-                //   color: Colors.blue,
-                //   child: Text(
-                //     "Criar quintal!",
-                //     style: TextStyle(color: Colors.white),
-                //   ),
-                //   onPressed: () {
-                //     controller.createBackyard();
-                //   },
-                // ),
-                // RaisedButton(
-                //   color: Colors.blue,
-                //   child: Text(
-                //     "Atualizar quintal!",
-                //     style: TextStyle(color: Colors.white),
-                //   ),
-                //   onPressed: () {
-                //     controller.updateBackyard();
-                //   },
-                // ),
               ],
             ),
           ),

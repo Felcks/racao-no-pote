@@ -4,8 +4,6 @@ import 'package:mobx/mobx.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../../domain/entities/backyard.dart';
 import '../../domain/entities/element.dart';
-import '../../domain/usecases/create_backyard.dart';
-import '../../domain/usecases/update_backyard.dart';
 import '../../domain/usecases/view_backyard.dart';
 
 part 'home_controller.g.dart';
@@ -13,14 +11,10 @@ part 'home_controller.g.dart';
 class HomeController = _HomeControllerBase with _$HomeController;
 
 abstract class _HomeControllerBase with Store {
-  final getCurrentBackyard = Modular.get<ViewBackyard>();
-  final createBackyardUseCase = Modular.get<CreateBackyard>();
+  final viewBackyard = Modular.get<ViewBackyard>();
 
   @observable
   Backyard backyard;
-
-  @observable
-  bool newBackyard = false;
 
   _HomeControllerBase() {
     fetchBackyard();
@@ -28,31 +22,19 @@ abstract class _HomeControllerBase with Store {
 
   @action
   fetchBackyard() async {
-    final result = await getCurrentBackyard(NoParams());
+    final result = await viewBackyard(NoParams());
+
     backyard = result.fold((failure) {
-      newBackyard = true;
       return null;
     }, (backyard) => this.backyard = backyard);
   }
 
   @action
-  createBackyard() async {
-    // await createBackyardUseCase(BackyardParams());
-    // fetchBackyard();
-  }
-
-  @action
-  updateBackyard() async {
-    //await updateCurrentBackyard(Params(backyard: backyard));
-    fetchBackyard();
-  }
-
-  @action
-  updateElementQuantity(Element element, double value){
+  updateElementQuantity(Element element, double value) {
     element.quantity = value.toInt();
   }
 
-  incrementFoodQuantity(double value){
+  incrementFoodQuantity(double value) {
     this.updateElementQuantity(backyard.food, backyard.food.quantity + value);
   }
 }

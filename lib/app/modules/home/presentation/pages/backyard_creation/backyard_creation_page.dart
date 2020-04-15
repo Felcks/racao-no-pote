@@ -59,7 +59,6 @@ class _BackyardCreationPageState
                   onPressed: controller.isValid
                       ? () async {
                           final result = await controller.creatingBackyard();
-                          print(result);
                           if (result) Modular.to.pop();
                         }
                       : () {

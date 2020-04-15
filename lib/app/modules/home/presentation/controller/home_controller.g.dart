@@ -26,42 +26,11 @@ mixin _$HomeController on _HomeControllerBase, Store {
     }, _$backyardAtom, name: '${_$backyardAtom.name}_set');
   }
 
-  final _$newBackyardAtom = Atom(name: '_HomeControllerBase.newBackyard');
-
-  @override
-  bool get newBackyard {
-    _$newBackyardAtom.context.enforceReadPolicy(_$newBackyardAtom);
-    _$newBackyardAtom.reportObserved();
-    return super.newBackyard;
-  }
-
-  @override
-  set newBackyard(bool value) {
-    _$newBackyardAtom.context.conditionallyRunInAction(() {
-      super.newBackyard = value;
-      _$newBackyardAtom.reportChanged();
-    }, _$newBackyardAtom, name: '${_$newBackyardAtom.name}_set');
-  }
-
   final _$fetchBackyardAsyncAction = AsyncAction('fetchBackyard');
 
   @override
   Future fetchBackyard() {
     return _$fetchBackyardAsyncAction.run(() => super.fetchBackyard());
-  }
-
-  final _$createBackyardAsyncAction = AsyncAction('createBackyard');
-
-  @override
-  Future createBackyard() {
-    return _$createBackyardAsyncAction.run(() => super.createBackyard());
-  }
-
-  final _$updateBackyardAsyncAction = AsyncAction('updateBackyard');
-
-  @override
-  Future updateBackyard() {
-    return _$updateBackyardAsyncAction.run(() => super.updateBackyard());
   }
 
   final _$_HomeControllerBaseActionController =
@@ -79,8 +48,7 @@ mixin _$HomeController on _HomeControllerBase, Store {
 
   @override
   String toString() {
-    final string =
-        'backyard: ${backyard.toString()},newBackyard: ${newBackyard.toString()}';
+    final string = 'backyard: ${backyard.toString()}';
     return '{$string}';
   }
 }
