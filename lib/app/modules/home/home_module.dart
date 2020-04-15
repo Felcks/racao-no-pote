@@ -1,5 +1,6 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:racao_no_pote/app/modules/home/domain/usecases/reset_backyard_when_day_passed.dart';
 import 'package:racao_no_pote/app/modules/home/domain/usecases/unselect_backyard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -41,6 +42,7 @@ class HomeModule extends ChildModule {
         Bind((i) => UnselectBackyard(i.get<BackyardRepositoryImpl>())),
         Bind((i) => UpdateBackyard(i.get<BackyardRepositoryImpl>())),
         Bind((i) => ViewBackyard(i.get<BackyardRepositoryImpl>())),
+        Bind((i) => ResetBackyardWhenDayPassed(i.get<BackyardRepositoryImpl>(), i.get<LocationManager>().userLocation)),
         Bind((i) => HomeController()),
       ];
 

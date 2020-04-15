@@ -25,12 +25,12 @@ class _BackyardListPageState
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    controller.fetchBackyardList();
   }
 
   @override
   void initState() {
     super.initState();
+    controller.fetchBackyardList();
     checkHasSelectedBackyard();
   }
 

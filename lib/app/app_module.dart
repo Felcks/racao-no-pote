@@ -9,7 +9,7 @@ class AppModule extends MainModule {
   @override
   List<Bind> get binds => [
         Bind((i) => AppController()),
-        Bind((i) => LocationManager(defaultLocationName: "Africa/Abidjan"))
+        Bind((i) => LocationManager(defaultLocationName: "Africa/Abidjan", userLocationName: "America/Sao_Paulo"))
       ];
 
   @override

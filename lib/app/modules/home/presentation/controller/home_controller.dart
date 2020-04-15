@@ -1,5 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:racao_no_pote/app/modules/home/domain/usecases/reset_backyard_when_day_passed.dart';
 
 import '../../../../core/usecases/usecase.dart';
 import '../../domain/entities/backyard.dart';
@@ -14,11 +15,17 @@ class HomeController = _HomeControllerBase with _$HomeController;
 abstract class _HomeControllerBase with Store {
   final viewBackyard = Modular.get<ViewBackyard>();
   final unselectBackyard = Modular.get<UnselectBackyard>();
+  final resetBackyardWhenDayPassed = Modular.get<ResetBackyardWhenDayPassed>();
 
   @observable
   Backyard backyard;
 
   _HomeControllerBase() {
+    checkBackyard();
+  }
+
+  checkBackyard() async {
+    await resetBackyardWhenDayPassed(NoParams());
     fetchBackyard();
   }
 
