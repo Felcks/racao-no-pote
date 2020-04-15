@@ -46,6 +46,7 @@ class CreateBackyard extends UseCase<Backyard, BackyardParams> {
   }
 }
 
+//Esse Params aqui deveria ter uma referencia para a classe da camada de apresentação e não esse frankestein
 class BackyardParams {
   String name;
   String nickName;
