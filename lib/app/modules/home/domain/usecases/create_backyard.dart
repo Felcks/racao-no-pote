@@ -21,7 +21,7 @@ class CreateBackyard extends UseCase<Backyard, BackyardParams> {
   @override
   Future<Either<Failure, Backyard>> call(BackyardParams params) {
     final mBackyard = Backyard(
-      id: 0,
+      id: null,
       food: Element(
         quantity: 0,
         maxQuantity: params.maxFoodQuantity,
@@ -38,7 +38,7 @@ class CreateBackyard extends UseCase<Backyard, BackyardParams> {
       animal: Animal(
           name: params.name,
           nickname: params.nickName,
-          birthday: params.birthday,
+          birthday: TZDateTime.from(params.birthday, defaultLocation),
           weight: params.weight),
     );
 
@@ -49,7 +49,7 @@ class CreateBackyard extends UseCase<Backyard, BackyardParams> {
 class BackyardParams {
   String name;
   String nickName;
-  TZDateTime birthday;
+  DateTime birthday;
   double weight;
   int capacity;
   int maxFoodQuantity;

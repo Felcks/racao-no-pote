@@ -57,9 +57,10 @@ class _BackyardCreationPageState
             builder: (_) {
               return IconButton(
                   onPressed: controller.isValid
-                      ? () {
-                          controller.creatingBackyard();
-                          Modular.to.pop();
+                      ? () async {
+                          final result = await controller.creatingBackyard();
+                          print(result);
+                          if (result) Modular.to.pop();
                         }
                       : () {
                           print(controller.isValid);

@@ -1,7 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:timezone/timezone.dart';
-import 'package:timezone/data/latest.dart';
 
 import '../../../domain/usecases/create_backyard.dart';
 import 'backyard_presentation.dart';
@@ -36,7 +34,7 @@ abstract class _BackyardCreationControllerBase with Store {
   }
 
   String validateBirthday() {
-    if(backyard.birthday == null || backyard.birthday.isEmpty)
+    if (backyard.birthday == null || backyard.birthday.isEmpty)
       return "Campo obrigatório";
 
     return null;
@@ -52,7 +50,7 @@ abstract class _BackyardCreationControllerBase with Store {
   }
 
   String validateFoodQuantity() {
-    if(backyard.foodQuantity == null || backyard.foodQuantity.isEmpty){
+    if (backyard.foodQuantity == null || backyard.foodQuantity.isEmpty) {
       return "Campo obrigatório";
     }
 
@@ -74,24 +72,22 @@ abstract class _BackyardCreationControllerBase with Store {
         validateFoodQuantity() == null;
   }
 
-  void creatingBackyard() async {
-    initializeTimeZones();
-    final location = getLocation("Africa/Abidjan");
+  Future<bool> creatingBackyard() async {
     final result = await createBackyard(
       BackyardParams(
         name: backyard.name,
         nickName: backyard.nickname,
-        birthday: TZDateTime.from(this.birthday, location),
+        birthday: this.birthday,
         weight: backyard.weight != null ? double.parse(backyard.weight) : null,
-        capacity: backyard.cupQuantity != null ? int.parse(backyard.cupQuantity) : null,
-        maxFoodQuantity: backyard.foodQuantity != null ? int.parse(backyard.foodQuantity) : null,
+        capacity: backyard.cupQuantity != null
+            ? int.parse(backyard.cupQuantity)
+            : null,
+        maxFoodQuantity: backyard.foodQuantity != null
+            ? int.parse(backyard.foodQuantity)
+            : null,
       ),
     );
 
-    result.fold((failure) {
-      print("Fail");
-    }, (success) {
-      print("sucess");
-    });
+    return result.isRight();
   }
 }
