@@ -6,11 +6,11 @@ import 'package:racao_no_pote/app/modules/home/domain/repositories/backyard_repo
 import '../../../../core/usecases/usecase.dart';
 import '../entities/backyard.dart';
 
-class GetBackyardList extends UseCase<List<Backyard>, NoParams>{
+class ListBackyard extends UseCase<List<Backyard>, NoParams>{
 
   final BackyardRepository backyardRepository;
 
-  GetBackyardList(this.backyardRepository);
+  ListBackyard(this.backyardRepository);
 
   @override
   Future<Either<Failure, List<Backyard>>> call(NoParams params) {

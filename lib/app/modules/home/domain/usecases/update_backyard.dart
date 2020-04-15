@@ -8,10 +8,10 @@ import '../../../../core/usecases/usecase.dart';
 import '../entities/backyard.dart';
 import '../repositories/backyard_repository.dart';
 
-class UpdateCurrentBackyard extends UseCase<Backyard, Params> {
+class UpdateBackyard extends UseCase<Backyard, Params> {
   final BackyardRepository repository;
 
-  UpdateCurrentBackyard(this.repository);
+  UpdateBackyard(this.repository);
 
   @override
   Future<Either<Failure, Backyard>> call(Params params) {

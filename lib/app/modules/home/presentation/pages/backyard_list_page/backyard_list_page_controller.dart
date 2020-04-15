@@ -1,10 +1,10 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import '../../../domain/usecases/select_backyard.dart';
 
 import '../../../../../core/usecases/usecase.dart';
 import '../../../domain/entities/backyard.dart';
-import '../../../domain/usecases/get_backyard_list.dart';
-import '../../../domain/usecases/save_last_backyard.dart';
+import '../../../domain/usecases/list_backyard.dart';
 
 part 'backyard_list_page_controller.g.dart';
 
@@ -12,8 +12,8 @@ class BackyardListPageController = _BackyardListPageControllerBase
     with _$BackyardListPageController;
 
 abstract class _BackyardListPageControllerBase with Store {
-  final getBackyardList = Modular.get<GetBackyardList>();
-  final saveLastBackyard = Modular.get<SaveLastBackyard>();
+  final getBackyardList = Modular.get<ListBackyard>();
+  final saveLastBackyard = Modular.get<SelectBackyard>();
 
   @observable
   ObservableList<Backyard> backyardList;

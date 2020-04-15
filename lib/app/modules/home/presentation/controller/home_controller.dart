@@ -5,16 +5,15 @@ import '../../../../core/usecases/usecase.dart';
 import '../../domain/entities/backyard.dart';
 import '../../domain/entities/element.dart';
 import '../../domain/usecases/create_backyard.dart';
-import '../../domain/usecases/get_current_backyard.dart';
-import '../../domain/usecases/update_current_backyard.dart';
+import '../../domain/usecases/update_backyard.dart';
+import '../../domain/usecases/view_backyard.dart';
 
 part 'home_controller.g.dart';
 
 class HomeController = _HomeControllerBase with _$HomeController;
 
 abstract class _HomeControllerBase with Store {
-  final getCurrentBackyard = Modular.get<GetCurrentBackyard>();
-  final updateCurrentBackyard = Modular.get<UpdateCurrentBackyard>();
+  final getCurrentBackyard = Modular.get<ViewBackyard>();
   final createBackyardUseCase = Modular.get<CreateBackyard>();
 
   @observable
@@ -44,7 +43,7 @@ abstract class _HomeControllerBase with Store {
 
   @action
   updateBackyard() async {
-    await updateCurrentBackyard(Params(backyard: backyard));
+    //await updateCurrentBackyard(Params(backyard: backyard));
     fetchBackyard();
   }
 

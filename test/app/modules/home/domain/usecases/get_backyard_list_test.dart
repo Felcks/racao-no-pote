@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:racao_no_pote/app/modules/home/domain/repositories/backyard_repository.dart';
-import 'package:racao_no_pote/app/modules/home/domain/usecases/get_backyard_list.dart';
+import 'package:racao_no_pote/app/modules/home/domain/usecases/list_backyard.dart';
 import 'package:racao_no_pote/app/modules/home/domain/entities/animal.dart';
 import 'package:racao_no_pote/app/modules/home/domain/entities/backyard.dart';
 import 'package:racao_no_pote/app/modules/home/domain/entities/cup.dart';
@@ -15,12 +15,12 @@ import 'package:timezone/timezone.dart';
 class MockBackyardRepository extends Mock implements BackyardRepository {}
 
 void main() {
-  GetBackyardList usecase;
+  ListBackyard usecase;
   BackyardRepository mockBackyardRepository;
 
   setUp((){
     mockBackyardRepository = MockBackyardRepository();
-    usecase = GetBackyardList(mockBackyardRepository);
+    usecase = ListBackyard(mockBackyardRepository);
   });
 
    initializeTimeZones();

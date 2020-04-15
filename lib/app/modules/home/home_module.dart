@@ -1,23 +1,23 @@
-import 'package:racao_no_pote/app/core/device/location_manager.dart';
-import 'package:racao_no_pote/app/modules/home/domain/usecases/save_last_backyard.dart';
-import 'package:racao_no_pote/app/modules/home/presentation/pages/backyard_creation/backyard_creation_controller.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:racao_no_pote/app/modules/home/domain/usecases/get_backyard_list.dart';
-import 'package:racao_no_pote/app/modules/home/presentation/pages/backyard_creation/backyard_creation_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../main.dart';
+import '../../core/device/location_manager.dart';
 import '../../core/network/network_info.dart';
 import 'data/data_sources/backyard_local_data_source.dart';
 import 'data/data_sources/backyard_remote_data_source.dart';
 import 'data/repositories/backyard_repository_impl.dart';
 import 'domain/usecases/create_backyard.dart';
-import 'domain/usecases/get_current_backyard.dart';
-import 'domain/usecases/update_current_backyard.dart';
+import 'domain/usecases/list_backyard.dart';
+import 'domain/usecases/select_backyard.dart';
+import 'domain/usecases/update_backyard.dart';
+import 'domain/usecases/view_backyard.dart';
 import 'presentation/controller/home_controller.dart';
-import 'presentation/pages/backyard_list_page/backyard_list_page_controller.dart';
+import 'presentation/pages/backyard_creation/backyard_creation_controller.dart';
+import 'presentation/pages/backyard_creation/backyard_creation_page.dart';
 import 'presentation/pages/backyard_list_page/backyard_list_page.dart';
+import 'presentation/pages/backyard_list_page/backyard_list_page_controller.dart';
 import 'presentation/pages/home_page.dart';
 
 class HomeModule extends ChildModule {
@@ -34,11 +34,11 @@ class HomeModule extends ChildModule {
             networkInfo: i.get<NetworkInfoImpl>(),
             localDataSource: i.get<BackyardLocalDataSourceImpl>(),
             remoteDataSource: i.get<BackyardRemoteDataSourceImpl>())),
-        Bind((i) => GetCurrentBackyard(i.get<BackyardRepositoryImpl>())),
-        Bind((i) => UpdateCurrentBackyard(i.get<BackyardRepositoryImpl>())),
         Bind((i) => CreateBackyard(i.get<BackyardRepositoryImpl>(), i.get<LocationManager>().defaultLocation)),
-        Bind((i) => GetBackyardList(i.get<BackyardRepositoryImpl>())),
-        Bind((i) => SaveLastBackyard(i.get<BackyardRepositoryImpl>())),
+        Bind((i) => ListBackyard(i.get<BackyardRepositoryImpl>())),
+        Bind((i) => SelectBackyard(i.get<BackyardRepositoryImpl>())),
+        Bind((i) => UpdateBackyard(i.get<BackyardRepositoryImpl>())),
+        Bind((i) => ViewBackyard(i.get<BackyardRepositoryImpl>())),
         Bind((i) => HomeController()),
       ];
 
