@@ -164,16 +164,31 @@ void main() {
       },
     );
 
-    group('create backyard', (){
+    group('create backyard', () {
       test(
-        'should return backyard with id when cache is successful',
-        ()async {
+        'should return backyard when create is successful',
+        () async {
           // arrange
-          //when(mockLocalDataSource.cacheBackyard(backyardToCache))
+          when(mockLocalDataSource.cacheBackyard(tBackyardModel))
+              .thenAnswer((_) async => tBackyardModel);
           // act
-          
+          final result = await repository.createBackyard(tBackyardModel);
           // assert
-          
+          expect(result, Right(tBackyardModel));
+          verify(mockLocalDataSource.cacheBackyard(tBackyardModel));
+        },
+      );
+
+      test(
+        'should throw AlreadyCreatedFailure when dataSource throws AlreadyCreatedException',
+        () async {
+          // arrange
+          when(mockLocalDataSource.cacheBackyard(tBackyardModel))
+              .thenThrow(AlreadyCreatedException());
+          // act
+          final result = await repository.createBackyard(tBackyardModel);
+          // assert
+          expect(result, Left(AlreadyCreatedFailure()));
         },
       );
     });

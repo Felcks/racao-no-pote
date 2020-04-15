@@ -55,13 +55,13 @@ class BackyardRepositoryImpl extends BackyardRepository {
 
   @override
   Future<Either<Failure, Backyard>> createBackyard(Backyard backyard) async {
-    if (backyard.id != null) return Left(AlreadyCreatedFailure());
-
     try {
       await localDataSource.cacheBackyard(BackyardModel.fromEntity(backyard));
       return Right(backyard);
-    } on Exception {
+    } on CacheException {
       return Left(CacheFailure());
+    } on AlreadyCreatedException {
+      return Left(AlreadyCreatedFailure());
     }
   }
 }
