@@ -35,7 +35,7 @@ class _BackyardListPageState
     checkHasSelectedBackyard();
   }
 
-  void checkHasSelectedBackyard() async {
+  void checkHasSelectedBackyard() {
     // await controller.checkHasSelectedBackyard();
     // if (controller.hasSelectedBackyard == true) {
     //   Modular.to.pushNamed("/backyard");
