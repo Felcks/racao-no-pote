@@ -18,30 +18,29 @@ void main() {
   Location location;
 
   initializeTimeZones();
+  location = getLocation("Africa/Abidjan");
 
   setUp(() {
     backyardRepository = MockBackyardRepository();
-    location = getLocation("Africa/Abidjan");
     usecase = CreateBackyard(backyardRepository, location);
   });
 
-  final detroit = getLocation('America/Detroit');
   final Element tFood = Element(
       quantity: 0,
       maxQuantity: 210,
-      updateDate: TZDateTime.now(detroit),
-      incrementDate: TZDateTime.now(detroit));
+      updateDate: TZDateTime.now(location),
+      incrementDate: TZDateTime.now(location));
   final Element tWater = Element(
       quantity: 0,
       maxQuantity: 210,
-      updateDate: TZDateTime.now(detroit),
-      incrementDate: TZDateTime.now(detroit));
+      updateDate: TZDateTime.now(location),
+      incrementDate: TZDateTime.now(location));
 
   Cup tCup = Cup(capacity: 50);
 
   Animal tAnimal = Animal(
       name: "Pandora",
-      birthday: TZDateTime.parse(detroit, "2020-04-08T09:37:57+0000"),
+      birthday: TZDateTime.parse(location, "2020-04-08T09:37:57+0000"),
       weight: 10.4);
 
   final Backyard tBackyard = Backyard(
@@ -57,7 +56,7 @@ void main() {
       final result = await usecase(BackyardParams(
         name: "Pandora",
         maxFoodQuantity: 210,
-        birthday: TZDateTime.parse(detroit, "2020-04-08T09:37:57+0000"),
+        birthday: TZDateTime.parse(location, "2020-04-08T09:37:57+0000"),
       ));
       // assert
       Backyard backyardResult;

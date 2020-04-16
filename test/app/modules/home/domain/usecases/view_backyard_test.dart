@@ -24,7 +24,7 @@ void main() {
 
   initializeTimeZones();
 
-  final detroit = getLocation('America/Detroit');
+  final detroit = getLocation('Africa/Abidjan');
   final Element tFood = Element(
       quantity: 0,
       maxQuantity: 210,

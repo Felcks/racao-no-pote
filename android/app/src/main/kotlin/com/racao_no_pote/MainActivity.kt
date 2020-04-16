@@ -1,4 +1,4 @@
-package com.example.racao_no_pote
+package com.racao_no_pote
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
