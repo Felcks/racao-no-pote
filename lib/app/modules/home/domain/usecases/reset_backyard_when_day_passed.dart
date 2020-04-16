@@ -5,15 +5,15 @@ import 'package:timezone/timezone.dart';
 
 import '../repositories/backyard_repository.dart';
 
-class ResetBackyardWhenDayPassed extends UseCase<bool, NoParams> {
+class ResetBackyardWhenDayPassed extends UseCase<bool, Params> {
   final BackyardRepository repository;
   final Location userLocation;
 
   ResetBackyardWhenDayPassed(this.repository, this.userLocation);
 
   @override
-  Future<Either<Failure, bool>> call(NoParams noParams) async {
-    final backyard = await repository.getBackyard();
+  Future<Either<Failure, bool>> call(Params params) async {
+    final backyard = await repository.getBackyard(params.backyardID);
     backyard.fold((failure) {
       return Left(failure);
     }, (success) async {
@@ -37,4 +37,9 @@ class ResetBackyardWhenDayPassed extends UseCase<bool, NoParams> {
 
     return Future.value(Right(backyard.isRight()));
   }
+}
+
+class Params {
+  final int backyardID;
+  Params(this.backyardID);
 }

@@ -1,7 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:racao_no_pote/app/core/device/location_manager.dart';
-import 'package:timezone/browser.dart';
+import 'package:timezone/timezone.dart';
 
 import '../../../../core/usecases/usecase.dart';
 import '../../domain/entities/backyard.dart';
@@ -30,17 +30,17 @@ abstract class _HomeControllerBase with Store {
   }
 
   checkBackyard() async {
-    final result = await resetBackyardWhenDayPassed(NoParams());
+    //final result = await resetBackyardWhenDayPassed(NoParams());
     fetchBackyard();
   }
 
   @action
   fetchBackyard() async {
-    final result = await viewBackyard(NoParams());
+    //final result = await viewBackyard(NoParams());
 
-    backyard = result.fold((failure) {
-      return null;
-    }, (backyard) => this.backyard = backyard);
+    // backyard = result.fold((failure) {
+    //   return null;
+    // }, (backyard) => this.backyard = backyard);
   }
 
   @action
@@ -52,7 +52,7 @@ abstract class _HomeControllerBase with Store {
   @action
   updateElementQuantity(Element element, double value) {
     element.quantity = value.toInt();
-    updatebackyard(Params(backyard: backyard));
+    //updatebackyard(Params(backyard: backyard));
   }
 
   incrementFoodQuantity(double value) {

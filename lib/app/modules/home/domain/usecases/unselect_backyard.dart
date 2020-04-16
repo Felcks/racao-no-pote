@@ -10,6 +10,6 @@ class UnselectBackyard extends UseCase<bool, NoParams> {
 
   @override
   Future<Either<Failure, bool>> call(NoParams params) {
-    return repository.saveLastBackyard(null);
+    return repository.updateCachedBackyardID(null);
   }
 }

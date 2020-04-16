@@ -7,18 +7,34 @@ import '../../../../core/error/exception.dart';
 import '../models/backyard_model.dart';
 
 abstract class BackyardLocalDataSource {
-  /// Gets the cached [BackyardModel] which was gotten the last time
+  /// Gets the [BackyardModel] that has the passed [id]
+  /// the user had no internet connection.
+  ///
+  /// Throws [NoLocalDataException] if no cached data is present.
+  Future<BackyardModel> getBackyard(int id);
+
+  /// Gets the [List<BackyardModel>] that is cached
+  /// the user had no internet connection.
+  ///
+  /// Throws [NoLocalDataException] if no cached data is present.
+  Future<List<BackyardModel>> getBackyardList();
+
+  /// Caches the [id] of backyard
   /// the user had an internet connection.
   ///
   /// Throws [NoLocalDataException] if no cached data is present.
-  Future<BackyardModel> getLastBackyard();
+  Future<bool> cacheBackyardID(int id);
 
-  Future<List<BackyardModel>> getBackyardList();
+  /// Gets the cached [id] which was chached
+  /// the user had an internet connection.
+  ///
+  /// Returns null if there is no cached data
+  Future<int> getCachedBackyardID();
+
+  
 
   Future<BackyardModel> cacheBackyard(BackyardModel backyardToCache);
   Future<BackyardModel> updateBackyard(BackyardModel backyardToCache);
-
-  Future<bool> cacheLastBackyard(int id);
 }
 
 const CACHED_BACKYARD = 'CACHED_BACKYARD';
@@ -38,14 +54,6 @@ class BackyardLocalDataSourceImpl extends BackyardLocalDataSource {
       backyardList = await getBackyardList();
       backyardToCache.id = (backyardList.length + 1);
       backyardList.add(backyardToCache);
-      //bool isUpdate = false;
-
-      // for(var i = 0; i < backyardList.length; i++){
-      //   if(backyardList[i].id == backyardToCache.id){
-      //     backyardList[i] = backyardToCache;
-      //     isUpdate = true;
-      //   }
-      // }
     } on CacheException {
       backyardToCache.id = 1;
       backyardList = [backyardToCache];
@@ -60,8 +68,7 @@ class BackyardLocalDataSourceImpl extends BackyardLocalDataSource {
 
   @override
   Future<BackyardModel> updateBackyard(BackyardModel backyardToCache) async {
-    if(backyardToCache.id == null)
-      throw Exception();
+    if (backyardToCache.id == null) throw Exception();
 
     List<BackyardModel> backyardList = await getBackyardList();
     bool foundElement = false;
@@ -73,8 +80,7 @@ class BackyardLocalDataSourceImpl extends BackyardLocalDataSource {
       }
     }
 
-    if(foundElement == false)
-      throw Exception();
+    if (foundElement == false) throw Exception();
 
     var backyardJsonList = backyardList.map((it) => it.toJson()).toList();
     await sharedPreferences.setString(
@@ -84,14 +90,13 @@ class BackyardLocalDataSourceImpl extends BackyardLocalDataSource {
   }
 
   @override
-  Future<BackyardModel> getLastBackyard() async {
+  Future<BackyardModel> getBackyard(int backyardID) async {
     final backyardList = await getBackyardList();
-    int lastBackyardID = sharedPreferences.getInt(CACHED_BACKYARD);
 
-    if (backyardList != null && lastBackyardID != null) {
+    if (backyardList != null && backyardID != null) {
       BackyardModel lastBackyard;
       backyardList.forEach((value) {
-        if (value.id == lastBackyardID) {
+        if (value.id == backyardID) {
           lastBackyard = value;
         }
       });
@@ -116,7 +121,17 @@ class BackyardLocalDataSourceImpl extends BackyardLocalDataSource {
   }
 
   @override
-  Future<bool> cacheLastBackyard(int id) async {
+  Future<bool> cacheBackyardID(int id) async {
     return sharedPreferences.setInt(CACHED_BACKYARD, id);
+  }
+
+  @override
+  Future<int> getCachedBackyardID() {
+    int id = sharedPreferences.getInt(CACHED_BACKYARD);
+    if (id != null) {
+      return Future.value(id);
+    } else {
+      throw CacheException();
+    }
   }
 }

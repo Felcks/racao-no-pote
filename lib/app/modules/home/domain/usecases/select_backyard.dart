@@ -11,12 +11,12 @@ class SelectBackyard extends UseCase<bool, Params> {
 
   @override
   Future<Either<Failure, bool>> call(Params params) {
-    return repository.saveLastBackyard(params.id);
+    return repository.updateCachedBackyardID(params.backyardID);
   }
 }
 
 class Params{
-  final int id;
+  final int backyardID;
 
-  Params({@required this.id});
+  Params({@required this.backyardID});
 }
