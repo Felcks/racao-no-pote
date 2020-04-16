@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/entities/animal.dart';
-
 class AnimalInfoWidget extends StatelessWidget {
-  final Animal animal;
+  final Map<String, String> animalAttributes;
 
-  AnimalInfoWidget(this.animal);
+  AnimalInfoWidget(this.animalAttributes);
 
   @override
   Widget build(BuildContext context) {
@@ -13,10 +11,10 @@ class AnimalInfoWidget extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
         child: ListView.builder(
-          itemCount: animal.getAttributes().length,
+          itemCount: animalAttributes.length,
           itemBuilder: (BuildContext context, int index) {
-            String title = animal.getAttributes().keys.elementAt(index);
-            String value = animal.getAttributes().values.elementAt(index);
+            String title = animalAttributes.keys.elementAt(index);
+            String value = animalAttributes.values.elementAt(index);
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,

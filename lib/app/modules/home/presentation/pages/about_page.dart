@@ -89,7 +89,7 @@ class _AboutPageState extends ModularState<AboutPage, HomeController>
         _tabController.animateTo(index, duration: Duration(milliseconds: 300));
       },
       children: [
-        AnimalInfoWidget(controller.backyard.animal),
+        AnimalInfoWidget(controller.backyard.animal.getAttributes(controller.currentDate, controller.currentLocation)),
         BackyardInfoWidget(controller.backyard),
         ActionInfoWidget(controller)
       ],

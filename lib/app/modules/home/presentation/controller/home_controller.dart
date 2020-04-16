@@ -1,5 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:racao_no_pote/app/core/device/location_manager.dart';
+import 'package:timezone/browser.dart';
 
 import '../../../../core/usecases/usecase.dart';
 import '../../domain/entities/backyard.dart';
@@ -18,6 +20,7 @@ abstract class _HomeControllerBase with Store {
   final unselectBackyard = Modular.get<UnselectBackyard>();
   final resetBackyardWhenDayPassed = Modular.get<ResetBackyardWhenDayPassed>();
   final updatebackyard = Modular.get<UpdateBackyard>();
+  final _defaultLocation = Modular.get<LocationManager>().defaultLocation;
 
   @observable
   Backyard backyard;
@@ -55,4 +58,8 @@ abstract class _HomeControllerBase with Store {
   incrementFoodQuantity(double value) {
     this.updateElementQuantity(backyard.food, backyard.food.quantity + value);
   }
+
+  TZDateTime get currentDate => TZDateTime.now(_defaultLocation);
+
+  Location get currentLocation => _defaultLocation;
 }

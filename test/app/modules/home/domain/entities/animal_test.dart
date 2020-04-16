@@ -6,14 +6,15 @@ import 'package:timezone/data/latest.dart';
 void main() {
   Animal tAnimalComplete;
   Animal tAnimalRequired;
-  Animal tAnimalSevenMonths;
-  Animal tAnimalOneYearAndThreeMonths;
-  Animal tAnimalOneYear;
-  Animal tAnimalFourYears;
+  Animal tAnimalStartOfYear;
+  Animal tAnimalEndOfYear;
+
+  initializeTimeZones();
+  final location = getLocation('Africa/Abidjan');
 
   setUp(() {
-    initializeTimeZones();
-    final location = getLocation('Africa/Abidjan');
+    TZDateTime nowDateTime = TZDateTime.now(location);
+
     tAnimalComplete = Animal(
         name: "Pandora",
         nickname: "Malucão",
@@ -25,36 +26,16 @@ void main() {
       birthday: TZDateTime.now(location),
     );
 
-    tAnimalSevenMonths = Animal(
+    tAnimalStartOfYear = Animal(
         name: "Pandora",
         nickname: "Malucão",
-        birthday: TZDateTime.now(location).subtract(
-          Duration(days: 220),
-        ), //the right is 210 but 220 be cerntain right
+        birthday: TZDateTime(location, 2012, 01, 01),
         weight: 10.4);
 
-    tAnimalOneYearAndThreeMonths = Animal(
+    tAnimalEndOfYear = Animal(
         name: "Pandora",
         nickname: "Malucão",
-        birthday: TZDateTime.now(location).subtract(
-          Duration(days: 465),
-        ), //the right is 455 but 465 to be certain right
-        weight: 10.4);
-
-    tAnimalOneYear = Animal(
-        name: "Pandora",
-        nickname: "Malucão",
-        birthday: TZDateTime.now(location).subtract(
-          Duration(days: 366),
-        ), //the right is 455 but 465 to be certain right
-        weight: 10.4);
-
-    tAnimalFourYears = Animal(
-        name: "Pandora",
-        nickname: "Malucão",
-        birthday: TZDateTime.now(location).subtract(
-          Duration(days: 1470),
-        ), //the right is 1461 but 1470 to be certain right
+        birthday: TZDateTime(location, 2012, 12, 01),
         weight: 10.4);
   });
 
@@ -63,10 +44,8 @@ void main() {
     () async {
       // assert
       expect(tAnimalComplete, isNot(equals(tAnimalRequired)));
-      expect(tAnimalComplete, isNot(equals(tAnimalSevenMonths)));
-      expect(tAnimalComplete, isNot(equals(tAnimalOneYearAndThreeMonths)));
-      expect(tAnimalComplete, isNot(equals(tAnimalOneYear)));
-      expect(tAnimalComplete, isNot(equals(tAnimalFourYears)));
+      expect(tAnimalComplete, isNot(equals(tAnimalStartOfYear)));
+      expect(tAnimalComplete, isNot(equals(tAnimalEndOfYear)));
     },
   );
 
@@ -81,7 +60,8 @@ void main() {
         "Peso": "10.4 Kg"
       };
       // act
-      final result = tAnimalComplete.getAttributes();
+      final result =
+          tAnimalComplete.getAttributes(TZDateTime.now(location), location);
       // assert
       expect(result, attributes);
     },
@@ -98,79 +78,238 @@ void main() {
         "Peso": "-"
       };
       // act
-      final result = tAnimalRequired.getAttributes();
+      final result =
+          tAnimalRequired.getAttributes(TZDateTime.now(location), location);
       // assert
       expect(result, attributes);
     },
   );
 
-  test(
-    'should get proper map of attributes when has months of life',
-    () async {
-      // arrange
-      Map<String, String> attributes = {
-        "Nome": "Pandora",
-        "Apelido": "Malucão",
-        "Idade": "7 meses",
-        "Peso": "10.4 Kg"
-      };
-      // act
-      final result = tAnimalSevenMonths.getAttributes();
-      // assert
-      expect(result, attributes);
-    },
-  );
+  group('getAge', () {
+    group('birth on start of year', () {
+      test(
+        'should get proper age when has one month of life',
+        () async {
+          // arrange
+          Map<String, String> attributes = {
+            "Nome": "Pandora",
+            "Apelido": "Malucão",
+            "Idade": "1 mês",
+            "Peso": "10.4 Kg"
+          };
+          // act
+          final result = tAnimalStartOfYear.getAttributes(
+              TZDateTime(location, 2012, 02, 01, 2), location);
+          // assert
+          expect(result, attributes);
+        },
+      );
 
-  test(
-    'should get proper map of attributes when has one year and months of life',
-    () async {
-      // arrange
-      Map<String, String> attributes = {
-        "Nome": "Pandora",
-        "Apelido": "Malucão",
-        "Idade": "1 ano e 3 meses",
-        "Peso": "10.4 Kg"
-      };
-      // act
-      final result = tAnimalOneYearAndThreeMonths.getAttributes();
-      // assert
-      expect(result, attributes);
-    },
-  );
 
-  test(
-    'should get proper map of attributes when has one year and zero months of life',
-    () async {
-      // arrange
-      Map<String, String> attributes = {
-        "Nome": "Pandora",
-        "Apelido": "Malucão",
-        "Idade": "1 ano",
-        "Peso": "10.4 Kg"
-      };
-      // act
-      final result = tAnimalOneYear.getAttributes();
-      // assert
-      expect(result, attributes);
-    },
-  );
+      test(
+        'should get proper age when has months of life',
+        () async {
+          // arrange
+          Map<String, String> attributes = {
+            "Nome": "Pandora",
+            "Apelido": "Malucão",
+            "Idade": "7 meses",
+            "Peso": "10.4 Kg"
+          };
+          // act
+          final result = tAnimalStartOfYear.getAttributes(
+              TZDateTime(location, 2012, 08, 01, 2), location);
+          // assert
+          expect(result, attributes);
+        },
+      );
 
-  test(
-    'should get proper map of attributes when has years of life',
-    () async {
-      // arrange
-      Map<String, String> attributes = {
-        "Nome": "Pandora",
-        "Apelido": "Malucão",
-        "Idade": "4 anos",
-        "Peso": "10.4 Kg"
-      };
-      // act
-      final result = tAnimalFourYears.getAttributes();
-      // assert
-      expect(result, attributes);
-    },
-  );
+
+      test(
+        'should get proper age when has one year and zero months of life',
+        () async {
+          // arrange
+          Map<String, String> attributes = {
+            "Nome": "Pandora",
+            "Apelido": "Malucão",
+            "Idade": "1 ano",
+            "Peso": "10.4 Kg"
+          };
+          // act
+          final result = tAnimalStartOfYear.getAttributes(
+              TZDateTime(location, 2013, 01, 01, 2), location);
+          // assert
+          expect(result, attributes);
+        },
+      );
+
+      test(
+        'should get proper age when has one year and months of life',
+        () async {
+          // arrange
+          Map<String, String> attributes = {
+            "Nome": "Pandora",
+            "Apelido": "Malucão",
+            "Idade": "1 ano e 3 meses",
+            "Peso": "10.4 Kg"
+          };
+          // act
+          final result = tAnimalStartOfYear.getAttributes(
+              TZDateTime(location, 2013, 04, 01, 2), location);
+          // assert
+          expect(result, attributes);
+        },
+      );
+
+      test(
+        'should get proper age when has almost one year',
+        () async {
+          // arrange
+          Map<String, String> attributes = {
+            "Nome": "Pandora",
+            "Apelido": "Malucão",
+            "Idade": "11 meses",
+            "Peso": "10.4 Kg"
+          };
+          // act
+          final result = tAnimalStartOfYear.getAttributes(
+              TZDateTime(location, 2012, 12, 31, 23), location);
+          // assert
+          expect(result, attributes);
+        },
+      );
+
+      test(
+        'should get proper age when has years of life',
+        () async {
+          // arrange
+          Map<String, String> attributes = {
+            "Nome": "Pandora",
+            "Apelido": "Malucão",
+            "Idade": "4 anos",
+            "Peso": "10.4 Kg"
+          };
+          // act
+          final result = tAnimalStartOfYear.getAttributes(
+              TZDateTime(location, 2016, 01, 01, 02), location);
+          // assert
+          expect(result, attributes);
+        },
+      );
+    });
+
+    group('birth on end of year', () {
+      test(
+        'should get proper age when has one month of life',
+        () async {
+          // arrange
+          Map<String, String> attributes = {
+            "Nome": "Pandora",
+            "Apelido": "Malucão",
+            "Idade": "1 mês",
+            "Peso": "10.4 Kg"
+          };
+          // act
+          final result = tAnimalEndOfYear.getAttributes(
+              TZDateTime(location, 2013, 01, 01, 2), location);
+          // assert
+          expect(result, attributes);
+        },
+      );
+
+
+      test(
+        'should get proper age when has months of life',
+        () async {
+          // arrange
+          Map<String, String> attributes = {
+            "Nome": "Pandora",
+            "Apelido": "Malucão",
+            "Idade": "7 meses",
+            "Peso": "10.4 Kg"
+          };
+          // act
+          final result = tAnimalEndOfYear.getAttributes(
+              TZDateTime(location, 2013, 07, 01, 2), location);
+          // assert
+          expect(result, attributes);
+        },
+      );
+
+
+      test(
+        'should get proper age when has one year and zero months of life',
+        () async {
+          // arrange
+          Map<String, String> attributes = {
+            "Nome": "Pandora",
+            "Apelido": "Malucão",
+            "Idade": "1 ano",
+            "Peso": "10.4 Kg"
+          };
+          // act
+          final result = tAnimalEndOfYear.getAttributes(
+              TZDateTime(location, 2013, 12, 01, 2), location);
+          // assert
+          expect(result, attributes);
+        },
+      );
+
+      test(
+        'should get proper age when has one year and months of life',
+        () async {
+          // arrange
+          Map<String, String> attributes = {
+            "Nome": "Pandora",
+            "Apelido": "Malucão",
+            "Idade": "1 ano e 3 meses",
+            "Peso": "10.4 Kg"
+          };
+          // act
+          final result = tAnimalEndOfYear.getAttributes(
+              TZDateTime(location, 2014, 03, 01, 2), location);
+          // assert
+          expect(result, attributes);
+        },
+      );
+
+      test(
+        'should get proper age when has almost one year',
+        () async {
+          // arrange
+          Map<String, String> attributes = {
+            "Nome": "Pandora",
+            "Apelido": "Malucão",
+            "Idade": "11 meses",
+            "Peso": "10.4 Kg"
+          };
+          // act
+          final result = tAnimalEndOfYear.getAttributes(
+              TZDateTime(location, 2013, 11, 30, 23), location);
+          // assert
+          expect(result, attributes);
+        },
+      );
+
+      test(
+        'should get proper age when has years of life',
+        () async {
+          // arrange
+          Map<String, String> attributes = {
+            "Nome": "Pandora",
+            "Apelido": "Malucão",
+            "Idade": "4 anos",
+            "Peso": "10.4 Kg"
+          };
+          // act
+          final result = tAnimalEndOfYear.getAttributes(
+              TZDateTime(location, 2016, 12, 01, 02), location);
+          // assert
+          expect(result, attributes);
+        },
+      );
+    });
+  });
 
   test(
     'should get correct weight text when filled',
