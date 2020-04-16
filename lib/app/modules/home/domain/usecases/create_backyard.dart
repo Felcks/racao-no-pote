@@ -11,54 +11,21 @@ import '../../../../core/usecases/usecase.dart';
 import '../entities/backyard.dart';
 import '../repositories/backyard_repository.dart';
 
-class CreateBackyard extends UseCase<Backyard, BackyardParams> {
+class CreateBackyard extends UseCase<Backyard, Params> {
   final BackyardRepository repository;
-  final Location defaultLocation;
 
-  CreateBackyard(this.repository, this.defaultLocation);
+  CreateBackyard(this.repository);
 
   @override
-  Future<Either<Failure, Backyard>> call(BackyardParams params) {
-    final mBackyard = Backyard(
-      id: null,
-      food: Element(
-        quantity: 0,
-        maxQuantity: params.maxFoodQuantity,
-        incrementDate: TZDateTime.now(defaultLocation),
-        updateDate: TZDateTime.now(defaultLocation),
-      ),
-      water: Element(
-        quantity: 0,
-        maxQuantity: params.maxFoodQuantity,
-        incrementDate: TZDateTime.now(defaultLocation),
-        updateDate: TZDateTime.now(defaultLocation),
-      ),
-      cup: params.capacity != null ? Cup(capacity: params.capacity) : null,
-      animal: Animal(
-          name: params.name,
-          nickname: params.nickName,
-          birthday: TZDateTime.from(params.birthday, defaultLocation),
-          weight: params.weight),
-    );
-
-    return repository.createBackyard(mBackyard);
+  Future<Either<Failure, Backyard>> call(Params params) {
+    params.backyard.id = null;
+    return repository.createBackyard(params.backyard);
   }
 }
 
-//Esse Params aqui deveria ter uma referencia para a classe da camada de apresentação e não esse frankestein
-class BackyardParams {
-  String name;
-  String nickName;
-  DateTime birthday;
-  double weight;
-  int capacity;
-  int maxFoodQuantity;
+class Params extends Equatable {
+  final Backyard backyard;
 
-  BackyardParams(
-      {@required this.name,
-      this.nickName,
-      @required this.birthday,
-      this.weight,
-      this.capacity,
-      @required this.maxFoodQuantity});
+  Params({@required this.backyard}) : super([backyard]);
 }
+

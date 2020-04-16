@@ -1,6 +1,12 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:timezone/timezone.dart';
 
+import '../../../../../core/device/location_manager.dart';
+import '../../../domain/entities/animal.dart';
+import '../../../domain/entities/backyard.dart';
+import '../../../domain/entities/cup.dart';
+import '../../../domain/entities/element.dart';
 import '../../../domain/usecases/create_backyard.dart';
 import 'backyard_presentation.dart';
 
@@ -12,6 +18,8 @@ class BackyardCreationController = _BackyardCreationControllerBase
 abstract class _BackyardCreationControllerBase with Store {
   final backyard = BackyardPresentation();
   final createBackyard = Modular.get<CreateBackyard>();
+  final defaultLocation = Modular.get<LocationManager>().defaultLocation;
+
   DateTime birthday;
 
   @observable
@@ -28,20 +36,31 @@ abstract class _BackyardCreationControllerBase with Store {
   }
 
   Future<bool> creatingBackyard() async {
-    final result = await createBackyard(
-      BackyardParams(
-        name: backyard.name,
-        nickName: backyard.nickname,
-        birthday: this.birthday,
-        weight: backyard.weight != null ? double.parse(backyard.weight) : null,
-        capacity: backyard.cupQuantity != null
-            ? int.parse(backyard.cupQuantity)
-            : null,
-        maxFoodQuantity: backyard.foodQuantity != null
-            ? int.parse(backyard.foodQuantity)
-            : null,
+    final mBackyard = Backyard(
+      id: null,
+      food: Element(
+        quantity: 0,
+        maxQuantity: int.parse(backyard.foodQuantity),
+        incrementDate: TZDateTime.now(defaultLocation),
+        updateDate: TZDateTime.now(defaultLocation),
       ),
+      water: Element(
+        quantity: 0,
+        maxQuantity: int.parse(backyard.foodQuantity),
+        incrementDate: TZDateTime.now(defaultLocation),
+        updateDate: TZDateTime.now(defaultLocation),
+      ),
+      cup: backyard.cupQuantity != null
+          ? Cup(capacity: int.parse(backyard.cupQuantity))
+          : null,
+      animal: Animal(
+          name: backyard.name,
+          nickname: backyard.nickname,
+          birthday: TZDateTime.from(this.birthday, defaultLocation),
+          weight: double.parse(backyard.weight)),
     );
+
+    final result = await createBackyard(Params(backyard: mBackyard));
 
     return result.isRight();
   }

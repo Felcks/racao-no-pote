@@ -36,7 +36,7 @@ class HomeModule extends ChildModule {
             networkInfo: i.get<NetworkInfoImpl>(),
             localDataSource: i.get<BackyardLocalDataSourceImpl>(),
             remoteDataSource: i.get<BackyardRemoteDataSourceImpl>())),
-        Bind((i) => CreateBackyard(i.get<BackyardRepositoryImpl>(), i.get<LocationManager>().defaultLocation)),
+        Bind((i) => CreateBackyard(i.get<BackyardRepositoryImpl>())),
         Bind((i) => ListBackyard(i.get<BackyardRepositoryImpl>())),
         Bind((i) => SelectBackyard(i.get<BackyardRepositoryImpl>())),
         Bind((i) => UnselectBackyard(i.get<BackyardRepositoryImpl>())),
