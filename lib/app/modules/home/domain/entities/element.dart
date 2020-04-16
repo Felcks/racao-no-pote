@@ -15,14 +15,12 @@ class Element extends Equatable {
       @required this.incrementDate})
       : super([quantity, maxQuantity, updateDate.toIso8601String(), incrementDate.toIso8601String()]);
 
-  String get updateDateFormatted {
-    final location = getLocation("America/Sao_Paulo");
+  String getUpdateDateFormatted(Location location) {
     final date = TZDateTime.parse(location, this.updateDate.toIso8601String());
     return "Atualizado às ${date.hour}:${date.minute}";
   }
 
-   String get incrementDateFormatted {
-    final location = getLocation("America/Sao_Paulo");
+   String getIncrementDateFormatted(Location location) {
     final date = TZDateTime.parse(location, this.incrementDate.toIso8601String());
      return "Adicionado às ${date.hour}:${date.minute}";
   }

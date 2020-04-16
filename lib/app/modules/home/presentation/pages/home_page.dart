@@ -129,8 +129,8 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
             max: 100,
           ),
           Text(element.quantity.toString()),
-          Text(element.updateDateFormatted),
-          Text(element.incrementDateFormatted),
+          Text(element.getUpdateDateFormatted(controller.currentLocation)),
+          Text(element.getUpdateDateFormatted(controller.currentLocation)),
         ],
       );
     }
