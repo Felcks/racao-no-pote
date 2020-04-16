@@ -7,6 +7,7 @@ import 'package:racao_no_pote/app/modules/home/domain/usecases/view_backyard.dar
 import 'package:racao_no_pote/app/core/usecases/usecase.dart';
 
 class MockBackyardRepository extends Mock implements BackyardRepository {}
+
 class MockBackyard extends Mock implements Backyard {}
 
 void main() {
