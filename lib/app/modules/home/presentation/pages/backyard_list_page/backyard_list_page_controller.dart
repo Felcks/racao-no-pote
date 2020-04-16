@@ -34,7 +34,7 @@ abstract class _BackyardListPageControllerBase with Store {
 
   @action
   Future<bool> chooseBackyard(int id) async {
-    final result = await selectBackyard(IDParams(id));
+    final result = await selectBackyard(Params(id: id));
     return result.isRight();
   }
 

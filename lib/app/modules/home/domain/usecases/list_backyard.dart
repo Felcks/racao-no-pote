@@ -16,6 +16,4 @@ class ListBackyard extends UseCase<List<Backyard>, NoParams>{
   Future<Either<Failure, List<Backyard>>> call(NoParams params) {
     return backyardRepository.getBackyardList();
   }
-  
-
 }

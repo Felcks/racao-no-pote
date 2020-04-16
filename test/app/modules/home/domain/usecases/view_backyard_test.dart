@@ -1,51 +1,24 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:racao_no_pote/app/modules/home/domain/entities/animal.dart';
 import 'package:racao_no_pote/app/modules/home/domain/entities/backyard.dart';
-import 'package:racao_no_pote/app/modules/home/domain/entities/cup.dart';
-import 'package:racao_no_pote/app/modules/home/domain/entities/element.dart';
 import 'package:racao_no_pote/app/modules/home/domain/repositories/backyard_repository.dart';
 import 'package:racao_no_pote/app/modules/home/domain/usecases/view_backyard.dart';
-import 'package:timezone/data/latest.dart';
-import 'package:timezone/timezone.dart';
 import 'package:racao_no_pote/app/core/usecases/usecase.dart';
 
 class MockBackyardRepository extends Mock implements BackyardRepository {}
+class MockBackyard extends Mock implements Backyard {}
 
 void main() {
   ViewBackyard usecase;
   BackyardRepository backyardRepository;
+  Backyard tBackyard;
 
   setUp(() {
     backyardRepository = MockBackyardRepository();
     usecase = ViewBackyard(backyardRepository);
+    tBackyard = MockBackyard();
   });
-
-  initializeTimeZones();
-
-  final detroit = getLocation('Africa/Abidjan');
-  final Element tFood = Element(
-      quantity: 0,
-      maxQuantity: 210,
-      updateDate: TZDateTime.now(detroit),
-      incrementDate: TZDateTime.now(detroit));
-  final Element tWater = Element(
-      quantity: 0,
-      maxQuantity: 210,
-      updateDate: TZDateTime.now(detroit),
-      incrementDate: TZDateTime.now(detroit));
-
-  Cup tCup = Cup(capacity: 50);
-
-  Animal tAnimal = Animal(
-      name: "Pandora",
-      nickname: "Malucão",
-      birthday: TZDateTime.parse(detroit, "2020-04-08T09:37:57+0000"),
-      weight: 10.4);
-
-  final Backyard tBackyard =
-      Backyard(id: 1, food: tFood, water: tWater, animal: tAnimal, cup: tCup);
 
   test(
     'should return backyard from the repository',
