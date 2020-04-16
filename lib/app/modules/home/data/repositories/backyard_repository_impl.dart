@@ -25,19 +25,20 @@ class BackyardRepositoryImpl extends BackyardRepository {
     networkInfo.isConnected;
 
     try {
-      final backyard = await localDataSource.getBackyard(backyardID);
+      final backyardList = await localDataSource.getBackyardList();
+
+      BackyardModel backyard;
+      backyardList.forEach((value) {
+        if (value.id == backyardID) {
+          backyard = value;
+        }
+      });
+
+      if(backyard == null)
+        return Left(CacheFailure());
+
       return Right(backyard);
     } on CacheException {
-      return Left(CacheFailure());
-    }
-  }
-
-  @override
-  Future<Either<Failure, Backyard>> updateBackyard(Backyard backyard) async {
-    try {
-      await localDataSource.updateBackyard(BackyardModel.fromEntity(backyard));
-      return Right(backyard);
-    } on Exception {
       return Left(CacheFailure());
     }
   }
@@ -54,9 +55,63 @@ class BackyardRepositoryImpl extends BackyardRepository {
   }
 
   @override
+  Future<Either<Failure, int>> getCachedBackyardID() async {
+    try {
+      final backyardID = await localDataSource.getCachedBackyardID();
+      return Right(backyardID);
+    } on CacheException {
+      return Left(CacheFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> updateCachedBackyardID(int id) async {
+    return Right(await localDataSource.cacheBackyardID(id));
+  }
+
+  @override
+  Future<Either<Failure, Backyard>> updateBackyard(Backyard backyard) async {
+    try {
+      if (backyard.id == null) return Left(AlreadyCreatedFailure());
+
+      List<BackyardModel> backyardList =
+          await localDataSource.getBackyardList();
+      bool foundElement = false;
+
+      for (var i = 0; i < backyardList.length; i++) {
+        if (backyardList[i].id == backyard.id) {
+          backyardList[i] = backyard;
+          foundElement = true;
+        }
+      }
+
+      if (foundElement == false) return Left(AlreadyCreatedFailure());
+
+      await localDataSource.cacheBackyardList(backyardList);
+      return Right(backyard);
+    } on Exception {
+      return Left(CacheFailure());
+    }
+  }
+
+  
+
+  @override
   Future<Either<Failure, Backyard>> createBackyard(Backyard backyard) async {
     try {
-      await localDataSource.cacheBackyard(BackyardModel.fromEntity(backyard));
+      if (backyard.id != null) return Left(AlreadyCreatedFailure());
+
+      List<BackyardModel> backyardList;
+      try {
+        backyardList = await localDataSource.getBackyardList();
+        backyard.id = (backyardList.length + 1);
+        backyardList.add(backyard);
+      } on CacheException {
+        backyard.id = 1;
+        backyardList = [backyard];
+      }
+
+      await localDataSource.cacheBackyardList(backyardList);
       return Right(backyard);
     } on CacheException {
       return Left(CacheFailure());
@@ -65,8 +120,5 @@ class BackyardRepositoryImpl extends BackyardRepository {
     }
   }
 
-  @override
-  Future<Either<Failure, bool>> updateCachedBackyardID(int id) async {
-    return Right(await localDataSource.cacheBackyardID(id));
-  }
+ 
 }
