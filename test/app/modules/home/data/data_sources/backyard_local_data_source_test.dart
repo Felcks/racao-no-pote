@@ -62,47 +62,6 @@ void main() {
         cup: tCupModel);
   });
 
-  group('getCachedBackyard', () {
-    test(
-      'should return Backyard from SharedPreferences when there is one in the cache',
-      () async {
-        // arrange
-        when(mockSharedPreferences.getInt(any)).thenReturn(1);
-        when(mockSharedPreferences.getString(any))
-            .thenReturn(fixture("backyard_list.json"));
-        // act
-        final result = await localDataSource.getCachedBackyardID();
-        // assert
-        verify(mockSharedPreferences.getInt(CACHED_BACKYARD));
-        expect(result, equals(tBackyardModel.id));
-      },
-    );
-
-    test(
-      'should return CacheException when there is no lastBackyard',
-      () async {
-        // arrange
-        when(mockSharedPreferences.getInt(any)).thenReturn(null);
-        // act
-        final call = localDataSource.getCachedBackyardID;
-        // assert
-        expect(() => call(), throwsA(isA<CacheException>()));
-      },
-    );
-
-    test(
-      'should return CacheException when there is no chachedList',
-      () async {
-        // arrange
-        when(mockSharedPreferences.getString(any)).thenReturn(null);
-        // act
-        final call = localDataSource.getCachedBackyardID;
-        // assert
-        expect(() => call(), throwsA(isA<CacheException>()));
-      },
-    );
-  });
-
   group('getBackyardList', () {
     test(
       'should return Backyard List from SharedPreferences when there is one or more in cache',
@@ -131,78 +90,79 @@ void main() {
     );
   });
 
-  // group('cacheBackyard', () {
-  //   test(
-  //     'should call SharedPreferences to cache the data',
-  //     () async {
-  //       // arrange
-  //       when(mockSharedPreferences.getString(any))
-  //           .thenReturn(fixture("backyard_list.json"));
-  //       when(mockSharedPreferences.setString(any, any))
-  //           .thenAnswer((_) async => true);
-  //       // act
-  //       final result =
-  //           await localDataSource.cacheBackyard(tBackyardModelWithoutID);
-  //       // assert
-  //       verify(mockSharedPreferences.getString(CACHED_BACKYARD_LIST));
-  //       verify(mockSharedPreferences.setString(CACHED_BACKYARD_LIST, any));
-  //     },
-  //   );
+  group('cacheBackyardID', () {
+    test(
+      'should call SharedPreferences to cache the data',
+      () async {
+        // arrange
+        final tExpectedID = 2;
+        when(mockSharedPreferences.setInt(any, any))
+            .thenAnswer((_) async => true);
+        // act
+        final result = await localDataSource.cacheBackyardID(tExpectedID);
+        // assert
+        verify(mockSharedPreferences.setInt(CACHED_BACKYARD, tExpectedID));
+        expect(result, true);
+      },
+    );
 
-  //   test(
-  //     'should throw AlreadyCreatedException when backyard has ID',
-  //     () async {
-  //       // arrange
-  //       // act
-  //       final call = localDataSource.cacheBackyard;
-  //       // assert
-  //       expect(() => call(tBackyardModel),
-  //           throwsA(isA<AlreadyCreatedException>()));
-  //     },
-  //   );
+    test(
+      'should return true when cache was successful',
+      () async {
+        // arrange
+        final tExpectedID = 2;
+        when(mockSharedPreferences.setInt(any, any))
+            .thenAnswer((_) async => true);
+        // act
+        final result = await localDataSource.cacheBackyardID(tExpectedID);
+        // assert
+        expect(result, true);
+        verify(mockSharedPreferences.setInt(CACHED_BACKYARD, tExpectedID));
+        verifyNoMoreInteractions(mockSharedPreferences);
+      },
+    );
 
-  //   test(
-  //     'should return backyard with ID=1 when there is no cached backyard',
-  //     () async {
-  //       // arrange
-  //       when(mockSharedPreferences.getString(any)).thenThrow(CacheException());
-  //       // act
-  //       final result =
-  //           await localDataSource.cacheBackyard(tBackyardModelWithoutID);
-  //       // assert
-  //       verify(mockSharedPreferences.getString(CACHED_BACKYARD_LIST));
-  //       expect(result.id, 1);
-  //     },
-  //   );
-  // });
+    test(
+      'should return false when unsuccessful',
+      () async {
+        // arrange
+        final tExpectedID = 2;
+        when(mockSharedPreferences.setInt(any, any))
+            .thenAnswer((_) async => false);
+        // act
+        final result = await localDataSource.cacheBackyardID(tExpectedID);
+        // assert
+        expect(result, false);
+        verify(mockSharedPreferences.setInt(CACHED_BACKYARD, tExpectedID));
+        verifyNoMoreInteractions(mockSharedPreferences);
+      },
+    );
 
-  // group('cacheLastBackyard', (){
-  //   test(
-  //     'should return true when successful saved',
-  //     ()async {
-  //       // arrange
-  //       when(mockSharedPreferences.setInt(any, any)).thenAnswer((_) async => true);
-  //       // act
-  //       final result = await localDataSource.cacheLastBackyard(1);
-  //       // assert
-  //       expect(result, true);
-  //       verify(mockSharedPreferences.setInt(CACHED_BACKYARD, 1));
-  //       verifyNoMoreInteractions(mockSharedPreferences);
-  //     },
-  //   );
+    group('getCachedBackyardID', () {
+      test(
+        'should return BackyardID from SharedPreferences when there is one in the cache',
+        () async {
+          // arrange
+          when(mockSharedPreferences.getInt(any)).thenReturn(1);
+          // act
+          final result = await localDataSource.getCachedBackyardID();
+          // assert
+          verify(mockSharedPreferences.getInt(CACHED_BACKYARD));
+          expect(result, 1);
+        },
+      );
 
-  //   test(
-  //     'should return false when unsuccessful',
-  //     ()async {
-  //       // arrange
-  //       when(mockSharedPreferences.setInt(any, any)).thenAnswer((_) async => false);
-  //       // act
-  //       final result = await localDataSource.cacheLastBackyard(1);
-  //       // assert
-  //       expect(result, false);
-  //       verify(mockSharedPreferences.setInt(CACHED_BACKYARD, 1));
-  //       verifyNoMoreInteractions(mockSharedPreferences);
-  //     },
-  //   );
-  // });
+      test(
+        'should return CacheException when there is no cachedBackyardID',
+        () async {
+          // arrange
+          when(mockSharedPreferences.getInt(any)).thenReturn(null);
+          // act
+          final call = localDataSource.getCachedBackyardID;
+          // assert
+          expect(() => call(), throwsA(isA<CacheException>()));
+        },
+      );
+    });
+  });
 }
