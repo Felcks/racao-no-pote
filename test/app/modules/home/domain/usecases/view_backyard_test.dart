@@ -22,17 +22,17 @@ void main() {
   });
 
   test(
-    'should return backyard from the repository',
+    'should return cached backyard from the repository',
     () async {
-      // // arrange
-      // when(backyardRepository.getBackyard())
-      //     .thenAnswer((_) async => Right(tBackyard));
-      // // act
-      // final result = await usecase(NoParams());
-      // // assert
-      // expect(result, Right(tBackyard));
-      // verify(backyardRepository.getBackyard());
-      // verifyNoMoreInteractions(backyardRepository);
+      // arrange
+      when(backyardRepository.getCachedBackyard())
+          .thenAnswer((_) async => Right(tBackyard));
+      // act
+      final result = await usecase(NoParams());
+      // assert
+      expect(result, Right(tBackyard));
+      verify(backyardRepository.getCachedBackyard());
+      verifyNoMoreInteractions(backyardRepository);
     },
   );
 }

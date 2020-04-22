@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:racao_no_pote/app/core/error/failure.dart';
+import 'package:racao_no_pote/app/modules/home/domain/entities/backyard.dart';
 import 'package:racao_no_pote/app/modules/home/domain/repositories/backyard_repository.dart';
 import 'package:racao_no_pote/app/core/usecases/usecase.dart';
 import 'package:meta/meta.dart';
@@ -11,12 +12,12 @@ class SelectBackyard extends UseCase<bool, Params> {
 
   @override
   Future<Either<Failure, bool>> call(Params params) {
-    return repository.cacheBackyard(null);
+    return repository.cacheBackyard(params.backyard);
   }
 }
 
 class Params{
-  final int backyardID;
+  final Backyard backyard;
 
-  Params({@required this.backyardID});
+  Params({@required this.backyard});
 }
