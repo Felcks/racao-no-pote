@@ -61,15 +61,6 @@ mixin _$BackyardListPageController on _BackyardListPageControllerBase, Store {
     return _$chooseBackyardAsyncAction.run(() => super.chooseBackyard(id));
   }
 
-  final _$checkHasSelectedBackyardAsyncAction =
-      AsyncAction('checkHasSelectedBackyard');
-
-  @override
-  Future checkHasSelectedBackyard() {
-    return _$checkHasSelectedBackyardAsyncAction
-        .run(() => super.checkHasSelectedBackyard());
-  }
-
   @override
   String toString() {
     final string =

@@ -1,11 +1,11 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:racao_no_pote/app/modules/home/domain/usecases/view_backyard.dart';
 
 import '../../../../../core/usecases/usecase.dart';
 import '../../../domain/entities/backyard.dart';
-import '../../../domain/usecases/list_backyard.dart';
-import '../../../domain/usecases/select_backyard.dart';
+import '../../../domain/usecases/list_backyard.dart' as mListBackyard;
+import '../../../domain/usecases/select_backyard.dart' as mSelectBackyard;
+import '../../../domain/usecases/view_backyard.dart' as mViewBackyard;
 
 part 'backyard_list_page_controller.g.dart';
 
@@ -13,9 +13,9 @@ class BackyardListPageController = _BackyardListPageControllerBase
     with _$BackyardListPageController;
 
 abstract class _BackyardListPageControllerBase with Store {
-  final listBackyard = Modular.get<ListBackyard>();
-  final selectBackyard = Modular.get<SelectBackyard>();
-  final viewBackyard = Modular.get<ViewBackyard>();
+  final listBackyard = Modular.get<mListBackyard.ListBackyard>();
+  final selectBackyard = Modular.get<mSelectBackyard.SelectBackyard>();
+  final viewBackyard = Modular.get<mViewBackyard.ViewBackyard>();
 
   @observable
   ObservableList<Backyard> backyardList;
@@ -34,17 +34,7 @@ abstract class _BackyardListPageControllerBase with Store {
 
   @action
   Future<bool> chooseBackyard(int id) async {
-    //final result = await selectBackyard(Params(id: id));
-    //return result.isRight();
-  }
-
-  @action
-  checkHasSelectedBackyard() async {
-    // final result = await viewBackyard(NoParams());
-    // if(result.isRight()){
-    //   hasSelectedBackyard = true;
-    // } else{
-    //   hasSelectedBackyard = false;
-    // }
+    final result = await selectBackyard(mSelectBackyard.Params(backyardID: id));
+    return result.isRight();
   }
 }

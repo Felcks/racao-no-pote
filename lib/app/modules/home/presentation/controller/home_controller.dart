@@ -7,19 +7,19 @@ import '../../../../core/usecases/usecase.dart';
 import '../../domain/entities/backyard.dart';
 import '../../domain/entities/element.dart';
 import '../../domain/usecases/reset_backyard_when_day_passed.dart';
-import '../../domain/usecases/unselect_backyard.dart';
-import '../../domain/usecases/update_backyard.dart';
-import '../../domain/usecases/view_backyard.dart';
+import '../../domain/usecases/unselect_backyard.dart' as mUnselectBackyard;
+import '../../domain/usecases/update_backyard.dart' as mUpdateBackyard;
+import '../../domain/usecases/view_backyard.dart' as mViewBackyard;
 
 part 'home_controller.g.dart';
 
 class HomeController = _HomeControllerBase with _$HomeController;
 
 abstract class _HomeControllerBase with Store {
-  final viewBackyard = Modular.get<ViewBackyard>();
-  final unselectBackyard = Modular.get<UnselectBackyard>();
+  final viewBackyard = Modular.get<mViewBackyard.ViewBackyard>();
+  final unselectBackyard = Modular.get<mUnselectBackyard.UnselectBackyard>();
   final resetBackyardWhenDayPassed = Modular.get<ResetBackyardWhenDayPassed>();
-  final updatebackyard = Modular.get<UpdateBackyard>();
+  final updatebackyard = Modular.get<mUpdateBackyard.UpdateBackyard>();
   final _defaultLocation = Modular.get<LocationManager>().defaultLocation;
 
   @observable
@@ -30,13 +30,14 @@ abstract class _HomeControllerBase with Store {
   }
 
   checkBackyard() async {
-    //final result = await resetBackyardWhenDayPassed(NoParams());
+    // final result = await resetBackyardWhenDayPassed(NoParams());
     fetchBackyard();
   }
 
   @action
   fetchBackyard() async {
-    //final result = await viewBackyard(NoParams());
+
+    // final result = await viewBackyard(mViewBackyard.ViewBackyard());
 
     // backyard = result.fold((failure) {
     //   return null;

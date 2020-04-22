@@ -21,10 +21,11 @@ class BackyardRepositoryImpl extends BackyardRepository {
       @required this.networkInfo});
 
   @override
-  Future<Either<Failure, Backyard>> getBackyard(int backyardID) async {
+  Future<Either<Failure, Backyard>> getCachedBackyard() async {
     networkInfo.isConnected;
 
     try {
+      final backyardID = await localDataSource.getCachedBackyardID();
       final backyardList = await localDataSource.getBackyardList();
 
       BackyardModel backyard;
@@ -54,19 +55,19 @@ class BackyardRepositoryImpl extends BackyardRepository {
     }
   }
 
-  @override
-  Future<Either<Failure, int>> getCachedBackyardID() async {
-    try {
-      final backyardID = await localDataSource.getCachedBackyardID();
-      return Right(backyardID);
-    } on CacheException {
-      return Left(CacheFailure());
-    }
-  }
+  // @override
+  // Future<Either<Failure, int>> getCachedBackyardID() async {
+  //   try {
+  //     final backyardID = await localDataSource.getCachedBackyardID();
+  //     return Right(backyardID);
+  //   } on CacheException {
+  //     return Left(CacheFailure());
+  //   }
+  // }
 
   @override
-  Future<Either<Failure, bool>> updateCachedBackyardID(int id) async {
-    return Right(await localDataSource.cacheBackyardID(id));
+  Future<Either<Failure, bool>> cacheBackyard(Backyard backyard) async {
+    return Right(await localDataSource.cacheBackyardID(null));
   }
 
   @override

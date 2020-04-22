@@ -13,7 +13,7 @@ class ResetBackyardWhenDayPassed extends UseCase<bool, Params> {
 
   @override
   Future<Either<Failure, bool>> call(Params params) async {
-    final backyard = await repository.getBackyard(params.backyardID);
+    final backyard = await repository.getCachedBackyard();
     backyard.fold((failure) {
       return Left(failure);
     }, (success) async {

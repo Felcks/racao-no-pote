@@ -25,21 +25,12 @@ class _BackyardListPageState
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    checkHasSelectedBackyard();
   }
 
   @override
   void initState() {
     super.initState();
     controller.fetchBackyardList();
-    checkHasSelectedBackyard();
-  }
-
-  void checkHasSelectedBackyard() {
-    // await controller.checkHasSelectedBackyard();
-    // if (controller.hasSelectedBackyard == true) {
-    //   Modular.to.pushNamed("/backyard");
-    // }
   }
 
   @override

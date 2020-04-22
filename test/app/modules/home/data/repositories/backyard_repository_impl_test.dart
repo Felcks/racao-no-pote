@@ -65,132 +65,132 @@ void main() {
     tBackyard = tBackyardModel;
   });
 
-  test(
-    'should check if the device is online',
-    () async {
-      // arrange
-      when(networkInfo.isConnected).thenAnswer((_) async => true);
-      // act
-      repository.getBackyard();
-      // assert
-      verify(networkInfo.isConnected);
-    },
-  );
+  // test(
+  //   'should check if the device is online',
+  //   () async {
+  //     // arrange
+  //     when(networkInfo.isConnected).thenAnswer((_) async => true);
+  //     // act
+  //     repository.getBackyard();
+  //     // assert
+  //     verify(networkInfo.isConnected);
+  //   },
+  // );
 
-  test(
-    'should check if the device is online when get BackyardList',
-    () async {
-      // arrange
-      when(networkInfo.isConnected).thenAnswer((_) async => true);
-      // act
-      repository.getBackyardList();
-      // assert
-      verify(networkInfo.isConnected);
-    },
-  );
+  // test(
+  //   'should check if the device is online when get BackyardList',
+  //   () async {
+  //     // arrange
+  //     when(networkInfo.isConnected).thenAnswer((_) async => true);
+  //     // act
+  //     repository.getBackyardList();
+  //     // assert
+  //     verify(networkInfo.isConnected);
+  //   },
+  // );
 
-  group('device is offline', () {
-    setUp(() {
-      when(networkInfo.isConnected).thenAnswer((_) async => false);
-    });
+  // group('device is offline', () {
+  //   setUp(() {
+  //     when(networkInfo.isConnected).thenAnswer((_) async => false);
+  //   });
 
-    test(
-      'should return last locally data cached when the cached data is present',
-      () async {
-        // arrange
-        when(mockLocalDataSource.getLastBackyard())
-            .thenAnswer((_) async => tBackyardModel);
-        // act
-        final result = await repository.getBackyard();
-        // assert
-        expect(result, equals(Right(tBackyard)));
-        verify(mockLocalDataSource.getLastBackyard());
-        verifyZeroInteractions(mockRemoteDataSource);
-      },
-    );
+  //   test(
+  //     'should return last locally data cached when the cached data is present',
+  //     () async {
+  //       // arrange
+  //       when(mockLocalDataSource.getLastBackyard())
+  //           .thenAnswer((_) async => tBackyardModel);
+  //       // act
+  //       final result = await repository.getBackyard();
+  //       // assert
+  //       expect(result, equals(Right(tBackyard)));
+  //       verify(mockLocalDataSource.getLastBackyard());
+  //       verifyZeroInteractions(mockRemoteDataSource);
+  //     },
+  //   );
 
-    test(
-      'should throw CacheFailure when the cached data is not present',
-      () async {
-        // arrange
-        when(mockLocalDataSource.getLastBackyard()).thenThrow(CacheException());
-        // act
-        final result = await repository.getBackyard();
-        // assert
-        verifyZeroInteractions(mockRemoteDataSource);
-        verify(mockLocalDataSource.getLastBackyard());
-        expect(result, equals(Left(CacheFailure())));
-      },
-    );
+  //   test(
+  //     'should throw CacheFailure when the cached data is not present',
+  //     () async {
+  //       // arrange
+  //       when(mockLocalDataSource.getLastBackyard()).thenThrow(CacheException());
+  //       // act
+  //       final result = await repository.getBackyard();
+  //       // assert
+  //       verifyZeroInteractions(mockRemoteDataSource);
+  //       verify(mockLocalDataSource.getLastBackyard());
+  //       expect(result, equals(Left(CacheFailure())));
+  //     },
+  //   );
 
-    test(
-      'should call cacheBackyard when updateBackyard',
-      () async {
-        // act
-        final result = await repository.updateBackyard(tBackyard);
-        // assert
-        verifyNoMoreInteractions(mockRemoteDataSource);
-        verify(mockLocalDataSource.cacheBackyard(tBackyard));
-      },
-    );
+  //   test(
+  //     'should call cacheBackyard when updateBackyard',
+  //     () async {
+  //       // act
+  //       final result = await repository.updateBackyard(tBackyard);
+  //       // assert
+  //       verifyNoMoreInteractions(mockRemoteDataSource);
+  //       verify(mockLocalDataSource.cacheBackyard(tBackyard));
+  //     },
+  //   );
 
-    test(
-      'should return list of backyard when cache data is present',
-      () async {
-        // arrange
-        final List<BackyardModel> expected = [tBackyard];
-        when(mockLocalDataSource.getBackyardList())
-            .thenAnswer((_) async => expected);
-        // act
-        final result = await repository.getBackyardList();
-        // assert
-        expect(result, equals(Right(expected)));
-        verify(mockLocalDataSource.getBackyardList());
-        verifyZeroInteractions(mockRemoteDataSource);
-      },
-    );
+  //   test(
+  //     'should return list of backyard when cache data is present',
+  //     () async {
+  //       // arrange
+  //       final List<BackyardModel> expected = [tBackyard];
+  //       when(mockLocalDataSource.getBackyardList())
+  //           .thenAnswer((_) async => expected);
+  //       // act
+  //       final result = await repository.getBackyardList();
+  //       // assert
+  //       expect(result, equals(Right(expected)));
+  //       verify(mockLocalDataSource.getBackyardList());
+  //       verifyZeroInteractions(mockRemoteDataSource);
+  //     },
+  //   );
 
-    test(
-      'should throw CacheFailure when the cached data is not present on backyard List',
-      () async {
-        // arrange
-        when(mockLocalDataSource.getBackyardList()).thenThrow(CacheException());
-        // act
-        final result = await repository.getBackyardList();
-        // assert
-        expect(result, equals(Left(CacheFailure())));
-        verify(mockLocalDataSource.getBackyardList());
-        verifyZeroInteractions(mockRemoteDataSource);
-      },
-    );
+  //   test(
+  //     'should throw CacheFailure when the cached data is not present on backyard List',
+  //     () async {
+  //       // arrange
+  //       when(mockLocalDataSource.getBackyardList()).thenThrow(CacheException());
+  //       // act
+  //       final result = await repository.getBackyardList();
+  //       // assert
+  //       expect(result, equals(Left(CacheFailure())));
+  //       verify(mockLocalDataSource.getBackyardList());
+  //       verifyZeroInteractions(mockRemoteDataSource);
+  //     },
+  //   );
 
-    group('create backyard', () {
-      test(
-        'should return backyard when create is successful',
-        () async {
-          // arrange
-          when(mockLocalDataSource.cacheBackyard(tBackyardModel))
-              .thenAnswer((_) async => tBackyardModel);
-          // act
-          final result = await repository.createBackyard(tBackyardModel);
-          // assert
-          expect(result, Right(tBackyardModel));
-          verify(mockLocalDataSource.cacheBackyard(tBackyardModel));
-        },
-      );
+  //   group('create backyard', () {
+  //     test(
+  //       'should return backyard when create is successful',
+  //       () async {
+  //         // arrange
+  //         when(mockLocalDataSource.cacheBackyard(tBackyardModel))
+  //             .thenAnswer((_) async => tBackyardModel);
+  //         // act
+  //         final result = await repository.createBackyard(tBackyardModel);
+  //         // assert
+  //         expect(result, Right(tBackyardModel));
+  //         verify(mockLocalDataSource.cacheBackyard(tBackyardModel));
+  //       },
+  //     );
 
-      test(
-        'should throw AlreadyCreatedFailure when dataSource throws AlreadyCreatedException',
-        () async {
-          // arrange
-          when(mockLocalDataSource.cacheBackyard(tBackyardModel))
-              .thenThrow(AlreadyCreatedException());
-          // act
-          final result = await repository.createBackyard(tBackyardModel);
-          // assert
-          expect(result, Left(AlreadyCreatedFailure()));
-        },
-      );
-    });
-  });
+  //     test(
+  //       'should throw AlreadyCreatedFailure when dataSource throws AlreadyCreatedException',
+  //       () async {
+  //         // arrange
+  //         when(mockLocalDataSource.cacheBackyard(tBackyardModel))
+  //             .thenThrow(AlreadyCreatedException());
+  //         // act
+  //         final result = await repository.createBackyard(tBackyardModel);
+  //         // assert
+  //         expect(result, Left(AlreadyCreatedFailure()));
+  //       },
+  //     );
+  //   });
+  // });
 }
