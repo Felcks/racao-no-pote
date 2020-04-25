@@ -24,4 +24,8 @@ class Element extends Equatable {
     final date = TZDateTime.parse(location, this.incrementDate.toIso8601String());
      return "Adicionado às ${date.hour}:${date.minute}";
   }
+
+  String getQuantityText(){
+    return "$quantity/$maxQuantity g";
+  }
 }

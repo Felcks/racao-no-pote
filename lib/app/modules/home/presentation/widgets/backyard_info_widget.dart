@@ -21,7 +21,7 @@ class BackyardInfoWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  getElementWidget(context, backyard?.food, "Comida"),
+                  getElementWidget(context, backyard?.food, "Ração"),
                   SizedBox(
                     height: 10,
                   ),
@@ -43,7 +43,10 @@ class BackyardInfoWidget extends StatelessWidget {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(name, style: TextStyle(fontWeight: FontWeight.bold),),
+          Text(
+            name,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
           Expanded(
             child: SliderTheme(
               data: SliderTheme.of(context).copyWith(
@@ -79,7 +82,11 @@ class BackyardInfoWidget extends StatelessWidget {
                 max: element.maxQuantity.toDouble(),
               ),
             ),
-          )
+          ),
+          Text(
+            element.getQuantityText(),
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
         ],
       );
     }
