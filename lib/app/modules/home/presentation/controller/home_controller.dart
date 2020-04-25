@@ -32,7 +32,7 @@ abstract class _HomeControllerBase with Store {
   _checkBackyard() async {
     final result = await resetBackyardWhenDayPassed(Params(backyard.id));
     result.fold((failure) {}, (value) {
-      // if (value) fetchBackyard();
+      if (value) backyard.food.quantity = 0;
       return value;
     });
   }
@@ -44,7 +44,7 @@ abstract class _HomeControllerBase with Store {
     backyard = result.fold((failure) {
       return null;
     }, (backyard) {
-      //_checkBackyard();
+      _checkBackyard();
       this.backyard = backyard;
       return this.backyard;
     });
@@ -59,7 +59,7 @@ abstract class _HomeControllerBase with Store {
   @action
   updateElementQuantity(Element element, double value) {
     element.quantity = value.toInt();
-    //updatebackyard(Params(backyard: backyard));
+    updatebackyard(mUpdateBackyard.Params(backyard: backyard));
   }
 
   incrementFoodQuantity(double value) {

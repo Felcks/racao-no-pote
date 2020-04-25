@@ -18,15 +18,16 @@ class BackyardInfoWidget extends StatelessWidget {
           Align(
             alignment: Alignment.topRight,
             child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  getElementWidget(context, backyard?.food, "Ração"),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  // getElementWidget(context, backyard?.water, "Água"),
-                ]),
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                getElementWidget(context, backyard?.food, "Ração"),
+                SizedBox(
+                  height: 10,
+                ),
+                // getElementWidget(context, backyard?.water, "Água"),
+              ],
+            ),
           ),
         ],
       ),
