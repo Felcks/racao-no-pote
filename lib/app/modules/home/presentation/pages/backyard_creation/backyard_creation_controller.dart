@@ -57,7 +57,8 @@ abstract class _BackyardCreationControllerBase with Store {
           name: backyard.name,
           nickname: backyard.nickname,
           birthday: TZDateTime.from(this.birthday, defaultLocation),
-          weight: double.parse(backyard.weight)),
+          weight:
+              backyard.weight != null ? double.parse(backyard.weight) : null),
     );
 
     final result = await createBackyard(Params(backyard: mBackyard));

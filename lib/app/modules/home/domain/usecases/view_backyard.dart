@@ -12,6 +12,6 @@ class ViewBackyard extends UseCase<Backyard, NoParams> {
 
   @override
   Future<Either<Failure, Backyard>> call(NoParams params) {
-    return repository.getBackyard();
+    return repository.getCachedBackyard();
   }
 }

@@ -71,7 +71,7 @@ void main() {
       // arrange
       when(networkInfo.isConnected).thenAnswer((_) async => true);
       // act
-      repository.getBackyard();
+      repository.getCachedBackyard();
       // assert
       verify(networkInfo.isConnected);
     },
@@ -103,7 +103,7 @@ void main() {
         when(mockLocalDataSource.getBackyardList())
             .thenAnswer((_) async => [tBackyard]);
         // act
-        final result = await repository.getBackyard();
+        final result = await repository.getCachedBackyard();
         // assert
         expect(result, equals(Right(tBackyard)));
         verify(mockLocalDataSource.getBackyardList());
@@ -118,7 +118,7 @@ void main() {
         // arrange
         when(mockLocalDataSource.getCachedBackyardID()).thenThrow(CacheException());
         // act
-        final result = await repository.getBackyard();
+        final result = await repository.getCachedBackyard();
         // assert
         verifyZeroInteractions(mockRemoteDataSource);
         verify(mockLocalDataSource.getCachedBackyardID());

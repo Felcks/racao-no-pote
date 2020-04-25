@@ -25,13 +25,13 @@ void main() {
     'should return backyard selected from the repository',
     () async {
       // arrange
-      when(backyardRepository.getBackyard())
+      when(backyardRepository.getCachedBackyard())
           .thenAnswer((_) async => Right(tBackyard));
       // act
       final result = await usecase(NoParams());
       // assert
       expect(result, Right(tBackyard));
-      verify(backyardRepository.getBackyard());
+      verify(backyardRepository.getCachedBackyard());
       verifyNoMoreInteractions(backyardRepository);
     },
   );

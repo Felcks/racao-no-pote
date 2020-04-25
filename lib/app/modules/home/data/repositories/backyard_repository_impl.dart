@@ -32,7 +32,7 @@ class BackyardRepositoryImpl extends BackyardRepository {
   }
 
   @override
-  Future<Either<Failure, Backyard>> getBackyard() async {
+  Future<Either<Failure, Backyard>> getCachedBackyard() async {
     networkInfo.isConnected;
 
     try {
@@ -102,14 +102,15 @@ class BackyardRepositoryImpl extends BackyardRepository {
     try {
       if (backyard.id != null) return Left(AlreadyCreatedFailure());
 
+      BackyardModel backyardToAdd = BackyardModel.fromEntity(backyard);
       List<BackyardModel> backyardList;
       try {
         backyardList = await localDataSource.getBackyardList();
         backyard.id = (backyardList.length + 1);
-        backyardList.add(backyard);
+        backyardList.add(backyardToAdd);
       } on CacheException {
         backyard.id = 1;
-        backyardList = [backyard];
+        backyardList = [backyardToAdd];
       }
 
       await localDataSource.cacheBackyardList(backyardList);
