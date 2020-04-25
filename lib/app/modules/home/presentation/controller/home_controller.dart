@@ -25,23 +25,29 @@ abstract class _HomeControllerBase with Store {
   @observable
   Backyard backyard;
 
-  _HomeControllerBase() {
-    checkBackyard();
+  _HomeControllerBase(){
+    fetchBackyard();
   }
 
-  checkBackyard() async {
-    // final result = await resetBackyardWhenDayPassed(NoParams());
-    fetchBackyard();
+  _checkBackyard() async {
+    final result = await resetBackyardWhenDayPassed(Params(backyard.id));
+    result.fold((failure) {}, (value) {
+      // if (value) fetchBackyard();
+      return value;
+    });
   }
 
   @action
   fetchBackyard() async {
+    final result = await viewBackyard(NoParams());
 
-    // final result = await viewBackyard(mViewBackyard.ViewBackyard());
-
-    // backyard = result.fold((failure) {
-    //   return null;
-    // }, (backyard) => this.backyard = backyard);
+    backyard = result.fold((failure) {
+      return null;
+    }, (backyard) {
+      //_checkBackyard();
+      this.backyard = backyard;
+      return this.backyard;
+    });
   }
 
   @action
