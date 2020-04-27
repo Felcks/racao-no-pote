@@ -51,7 +51,7 @@ class HomeModule extends ChildModule {
         Router(Modular.initialRoute, child: (_, args) => BackyardListPage()),
         Router("/backyard", child: (_, args) => HomePage()),
         // Router(Modular.initialRoute, child: (_, args) => HomePage()),
-        Router("/backyard_creation", child: (_, args) => BackyardCreationPage()),
+        Router("/backyard_creation", child: (_, args) => BackyardCreationPage(backyard: args.data)),
       ];
 
   static Inject get to => Inject<HomeModule>.of();

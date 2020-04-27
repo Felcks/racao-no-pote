@@ -36,7 +36,9 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
         ),
         actions: <Widget>[
           IconButton(
-            onPressed: (){},
+            onPressed: (){
+              Modular.to.pushNamed("/backyard_creation", arguments: controller.backyard);
+            },
             icon: Icon(Icons.settings),
           )
         ],

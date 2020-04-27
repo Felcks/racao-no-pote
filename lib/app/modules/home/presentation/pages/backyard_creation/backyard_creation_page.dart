@@ -3,12 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:racao_no_pote/app/modules/home/domain/entities/backyard.dart';
 
 import 'backyard_creation_controller.dart';
 
 class BackyardCreationPage extends StatefulWidget {
   final String title;
-  const BackyardCreationPage({Key key, this.title = "Criar quintal"})
+  final Backyard backyard;
+  const BackyardCreationPage({Key key, this.title = "Criar quintal", this.backyard})
       : super(key: key);
 
   @override
@@ -23,6 +25,13 @@ class _BackyardCreationPageState
   FocusNode fcnCupQuantity;
   FocusNode fcnFoodQuantity;
 
+  TextEditingController editingControllerName = TextEditingController();
+  TextEditingController editingControllerNickName = TextEditingController();
+  TextEditingController editingControllerWeight = TextEditingController();
+  TextEditingController editingControllerBirthday = TextEditingController();
+  TextEditingController editingControllerCupQuantity = TextEditingController();
+  TextEditingController editingControllerFoodQuantity = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -32,11 +41,32 @@ class _BackyardCreationPageState
     fcnWeight = FocusNode();
     fcnCupQuantity = FocusNode();
     fcnFoodQuantity = FocusNode();
+
+
+    controller.setPresentationBackyard(widget.backyard);
+
+    editingControllerName.text = (widget.backyard.animal.name != null ? widget.backyard.animal.name : "");
+    editingControllerNickName.text = (widget.backyard.animal.nickname != null ? widget.backyard.animal.nickname : "");
+    editingControllerWeight.text = (widget.backyard.animal.weight != null ? widget.backyard.animal.weight : "");
+    // editingControllerBirthday.text = (widget.backyard.animal.weight != null ? widget.backyard.animal.weight : "");
+     
+    // editingControllerCupQuantity.text = (widget.backyard.cup != null ? widget.backyard.cup.capacity : "");
+    // editingControllerFoodQuantity.text = (widget.backyard.food.maxQuantity.toString());
+
+    //controller.setPresentationBackyard(widget.backyard);
+
+    //  if(widget.backyard != null){
+    //     // editingControllerName.text = widget.backyard.animal.name;
+    //     controller.backyard.changeName(widget.backyard.animal.nickname);
+    //             print("cc");
+
+     
+      
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    Scaffold scaffold = Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
@@ -130,6 +160,7 @@ class _BackyardCreationPageState
                               errorText: controller.showErrors == true
                                   ? controller.validateName()
                                   : null),
+                          controller: editingControllerName,
                         );
                       },
                     ),
@@ -422,6 +453,7 @@ class _BackyardCreationPageState
       //   onPressed: () {},
       // ),
     );
+    return scaffold;
   }
 }
 

@@ -110,4 +110,31 @@ abstract class _BackyardCreationControllerBase with Store {
     this.birthday = date;
     backyard.changeBirthday('${date.day}/${date.month}/${date.year}');
   }
+
+  @action
+  void setPresentationBackyard(Backyard backyard){
+    
+    //  if(backyard != null){
+    //     this.backyard.changeName(backyard.animal.name);
+    //     this.backyard.changeNickName(backyard.animal.nickname);
+    //     this.backyard.changeWeight(backyard.animal.weight != null ? backyard.animal.weight.toString() : 0);
+        
+    //     //this.backyard.changeBirthday(backyard.animal.birthday);
+
+    //     this.backyard.changeFoodQuantity(backyard.food.maxQuantity.toString());
+
+    //     this.backyard.changeCupQuantity(backyard.cup != null )
+
+    //   // editingControllerNickName.text = (widget.backyard.animal.nickname != null ? widget.backyard.animal.nickname : "");
+    //   // editingControllerWeight.text = (widget.backyard.animal.weight != null ? widget.backyard.animal.weight : "");
+    //   // editingControllerBirthday.text = (widget.backyard.animal.weight != null ? wid`get.backyard.animal.weight : "");
+    //   // // controller.backyard.changeBirthday(widget.backyard.);
+      
+    //   // controller.backyard.changeIsUsingCup(widget.backyard.cup != null);
+    //   // editingControllerCupQuantity.text = (widget.backyard.cup != null ? widget.backyard.cup.capacity : "");
+
+    //   // editingControllerFoodQuantity.text = (widget.backyard.food.maxQuantity.toString());
+    //   }
+    
+  }
 }

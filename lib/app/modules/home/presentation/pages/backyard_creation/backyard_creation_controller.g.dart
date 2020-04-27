@@ -33,6 +33,20 @@ mixin _$BackyardCreationController on _BackyardCreationControllerBase, Store {
     }, _$showErrorsAtom, name: '${_$showErrorsAtom.name}_set');
   }
 
+  final _$_BackyardCreationControllerBaseActionController =
+      ActionController(name: '_BackyardCreationControllerBase');
+
+  @override
+  void setPresentationBackyard(Backyard backyard) {
+    final _$actionInfo =
+        _$_BackyardCreationControllerBaseActionController.startAction();
+    try {
+      return super.setPresentationBackyard(backyard);
+    } finally {
+      _$_BackyardCreationControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     final string =
