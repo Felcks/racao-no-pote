@@ -10,7 +10,8 @@ import 'backyard_creation_controller.dart';
 class BackyardCreationPage extends StatefulWidget {
   final String title;
   final Backyard backyard;
-  const BackyardCreationPage({Key key, this.title = "Criar quintal", this.backyard})
+  const BackyardCreationPage(
+      {Key key, this.title = "Criar quintal", this.backyard})
       : super(key: key);
 
   @override
@@ -25,13 +26,6 @@ class _BackyardCreationPageState
   FocusNode fcnCupQuantity;
   FocusNode fcnFoodQuantity;
 
-  TextEditingController editingControllerName = TextEditingController();
-  TextEditingController editingControllerNickName = TextEditingController();
-  TextEditingController editingControllerWeight = TextEditingController();
-  TextEditingController editingControllerBirthday = TextEditingController();
-  TextEditingController editingControllerCupQuantity = TextEditingController();
-  TextEditingController editingControllerFoodQuantity = TextEditingController();
-
   @override
   void initState() {
     super.initState();
@@ -42,20 +36,9 @@ class _BackyardCreationPageState
     fcnCupQuantity = FocusNode();
     fcnFoodQuantity = FocusNode();
 
-
-    if(widget.backyard != null){
-
-    controller.setPresentationBackyard(widget.backyard);
-
-    
-    editingControllerName.text = (widget.backyard.animal.name != null ? widget.backyard.animal.name : "");
-    editingControllerNickName.text = (widget.backyard.animal.nickname != null ? widget.backyard.animal.nickname : "");
-    editingControllerWeight.text = (widget.backyard.animal.weight != null ? widget.backyard.animal.weight : "");
-    // editingControllerBirthday.text = (widget.backyard.animal.weight != null ? widget.backyard.animal.weight : "");
-     
-    editingControllerCupQuantity.text = (widget.backyard.cup != null ? widget.backyard.cup.capacity : "");
-    editingControllerFoodQuantity.text = (widget.backyard.food.maxQuantity.toString());   
-    }   
+    if (widget.backyard != null) {
+      controller.setPresentationBackyard(widget.backyard);
+    }
   }
 
   @override
@@ -139,10 +122,11 @@ class _BackyardCreationPageState
                     ),
                     Observer(
                       builder: (_) {
-                        return TextField(
+                        return TextFormField(
+                          initialValue: controller.backyard.name,
                           textCapitalization: TextCapitalization.words,
                           onChanged: controller.backyard.changeName,
-                          onSubmitted: (value) {
+                          onEditingComplete: () {
                             fcnNickName.requestFocus();
                           },
                           maxLength: 20,
@@ -154,7 +138,6 @@ class _BackyardCreationPageState
                               errorText: controller.showErrors == true
                                   ? controller.validateName()
                                   : null),
-                          controller: editingControllerName,
                         );
                       },
                     ),
@@ -172,13 +155,14 @@ class _BackyardCreationPageState
                     SizedBox(
                       height: 5,
                     ),
-                    TextField(
+                    TextFormField(
+                      initialValue: controller.backyard.nickname,
                       textCapitalization: TextCapitalization.words,
                       onChanged: controller.backyard.changeNickName,
                       maxLength: 20,
                       maxLines: 1,
                       focusNode: fcnNickName,
-                      onSubmitted: (value) {
+                      onEditingComplete: () {
                         fcnWeight.requestFocus();
                       },
                       decoration: InputDecoration(
@@ -197,7 +181,10 @@ class _BackyardCreationPageState
                     SizedBox(
                       height: 5,
                     ),
-                    TextField(
+                    TextFormField(
+                      initialValue: controller.backyard.weight != null
+                          ? controller.backyard.weight.toString()
+                          : "",
                       expands: false,
                       maxLines: 1,
                       onChanged: controller.backyard.changeWeight,
@@ -265,10 +252,11 @@ class _BackyardCreationPageState
                                         color: Colors.teal,
                                       ),
                                       Text(
-                                        controller.backyard.birthday != null ? 
-                                        "${controller.backyard.birthday.day}/"
-                                        "${controller.backyard.birthday.month}/"
-                                        "${controller.backyard.birthday.year}" : "",
+                                        controller.backyard.birthday != null
+                                            ? "${controller.backyard.birthday.day}/"
+                                                "${controller.backyard.birthday.month}/"
+                                                "${controller.backyard.birthday.year}"
+                                            : "",
                                         style: TextStyle(
                                             color: Colors.teal,
                                             fontWeight: FontWeight.bold,
@@ -294,7 +282,8 @@ class _BackyardCreationPageState
                     Observer(
                       builder: (_) {
                         if (controller.showErrors == false ||
-                            controller.backyard.birthday != null) return Container();
+                            controller.backyard.birthday != null)
+                          return Container();
 
                         return Padding(
                           padding: EdgeInsets.only(left: 16, top: 8),
@@ -340,7 +329,8 @@ class _BackyardCreationPageState
                   ),
                   Observer(
                     builder: (_) {
-                      return TextField(
+                      return TextFormField(
+                        initialValue: controller.backyard.foodQuantity != null ? controller.backyard.foodQuantity.toString() : "",
                         expands: false,
                         maxLines: 1,
                         onChanged: controller.backyard.changeFoodQuantity,
@@ -414,7 +404,8 @@ class _BackyardCreationPageState
                           SizedBox(
                             height: 5,
                           ),
-                          TextField(
+                          TextFormField(
+                            initialValue: controller.backyard.cupQuantity != null ? controller.backyard.cupQuantity.toString() : "",
                             expands: false,
                             maxLines: 1,
                             focusNode: fcnCupQuantity,
