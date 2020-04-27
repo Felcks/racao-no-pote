@@ -42,7 +42,8 @@ class HomeModule extends ChildModule {
         Bind((i) => UnselectBackyard(i.get<BackyardRepositoryImpl>())),
         Bind((i) => UpdateBackyard(i.get<BackyardRepositoryImpl>())),
         Bind((i) => ViewBackyard(i.get<BackyardRepositoryImpl>())),
-        Bind((i) => ResetBackyardWhenDayPassed(i.get<BackyardRepositoryImpl>(), i.get<LocationManager>().userLocation)),
+        Bind((i) => ResetBackyardWhenDayPassed(i.get<BackyardRepositoryImpl>(),
+            i.get<LocationManager>().userLocation)),
         Bind((i) => HomeController()),
       ];
 
@@ -51,7 +52,10 @@ class HomeModule extends ChildModule {
         Router(Modular.initialRoute, child: (_, args) => BackyardListPage()),
         Router("/backyard", child: (_, args) => HomePage()),
         // Router(Modular.initialRoute, child: (_, args) => HomePage()),
-        Router("/backyard_creation", child: (_, args) => BackyardCreationPage(backyard: args.data)),
+        Router("/backyard_creation",
+            child: (_, args) => BackyardCreationPage(
+                title: args.data != null ? args.data[0] : "Criar quintal",
+                backyard: args.data != null ? args.data[1] : null)),
       ];
 
   static Inject get to => Inject<HomeModule>.of();

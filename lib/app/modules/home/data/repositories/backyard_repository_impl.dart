@@ -73,7 +73,7 @@ class BackyardRepositoryImpl extends BackyardRepository {
 
       for (var i = 0; i < backyardList.length; i++) {
         if (backyardList[i].id == backyard.id) {
-          backyardList[i] = backyard;
+          backyardList[i] = BackyardModel.fromEntity(backyard);
           foundElement = true;
         }
       }

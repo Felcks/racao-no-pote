@@ -8,6 +8,7 @@ import '../../../domain/entities/backyard.dart';
 import '../../../domain/entities/cup.dart';
 import '../../../domain/entities/element.dart';
 import '../../../domain/usecases/create_backyard.dart';
+import '../../../domain/usecases/update_backyard.dart';
 import 'backyard_presentation.dart';
 
 part 'backyard_creation_controller.g.dart';
@@ -18,6 +19,7 @@ class BackyardCreationController = _BackyardCreationControllerBase
 abstract class _BackyardCreationControllerBase with Store {
   final backyard = BackyardPresentation();
   final _createBackyard = Modular.get<CreateBackyard>();
+  final _updateBackyard = Modular.get<UpdateBackyard>();
   final defaultLocation = Modular.get<LocationManager>().defaultLocation;
 
   @observable
@@ -33,9 +35,9 @@ abstract class _BackyardCreationControllerBase with Store {
         validateFoodQuantity() == null;
   }
 
-  Future<bool> creatingBackyard() async {
+  Future<bool> createOrUpdateBackyard(int id) async {
     final mBackyard = Backyard(
-      id: null,
+      id: id,
       food: Element(
         quantity: 0,
         maxQuantity: int.parse(backyard.foodQuantity),
@@ -59,7 +61,9 @@ abstract class _BackyardCreationControllerBase with Store {
               backyard.weight != null ? double.parse(backyard.weight) : null),
     );
 
-    final result = await _createBackyard(CreateBackyardParams(backyard: mBackyard));
+    final result = mBackyard.id == null
+        ? await _createBackyard(CreateBackyardParams(backyard: mBackyard))
+        : await _updateBackyard(UpdateBackyardParams(backyard: mBackyard));
 
     return result.isRight();
   }
@@ -81,8 +85,7 @@ abstract class _BackyardCreationControllerBase with Store {
   }
 
   String validateBirthday() {
-    if (backyard.birthday == null)
-      return "Campo obrigatório";
+    if (backyard.birthday == null) return "Campo obrigatório";
 
     return null;
   }
@@ -109,19 +112,20 @@ abstract class _BackyardCreationControllerBase with Store {
   }
 
   @action
-  void setPresentationBackyard(Backyard backyard){
-    
-     if(backyard != null){
-        this.backyard.changeName(backyard.animal.name);
-        this.backyard.changeNickName(backyard.animal.nickname);
-        this.backyard.changeWeight(backyard.animal.weight != null ? backyard.animal.weight.toString() : "");
-        this.backyard.changeBirthday(backyard.animal.birthday);
+  void setPresentationBackyard(Backyard backyard) {
+    if (backyard != null) {
+      this.backyard.changeName(backyard.animal.name);
+      this.backyard.changeNickName(backyard.animal.nickname);
+      this.backyard.changeWeight(backyard.animal.weight != null
+          ? backyard.animal.weight.toString()
+          : "");
+      this.backyard.changeBirthday(backyard.animal.birthday);
 
-        this.backyard.changeFoodQuantity(backyard.food.maxQuantity.toString());
+      this.backyard.changeFoodQuantity(backyard.food.maxQuantity.toString());
 
-        this.backyard.changeIsUsingCup(backyard.cup != null ? true : false);
-        this.backyard.changeCupQuantity(backyard.cup != null ? backyard.cup.capacity.toString() : "");
-      }
-    
+      this.backyard.changeIsUsingCup(backyard.cup != null ? true : false);
+      this.backyard.changeCupQuantity(
+          backyard.cup != null ? backyard.cup.capacity.toString() : "");
+    }
   }
 }
