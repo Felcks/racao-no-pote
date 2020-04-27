@@ -61,7 +61,7 @@ abstract class _BackyardCreationControllerBase with Store {
               backyard.weight != null ? double.parse(backyard.weight) : null),
     );
 
-    final result = await createBackyard(Params(backyard: mBackyard));
+    final result = await createBackyard(CreateBackyardParams(backyard: mBackyard));
 
     return result.isRight();
   }

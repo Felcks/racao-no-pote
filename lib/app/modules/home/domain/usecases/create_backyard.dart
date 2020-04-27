@@ -11,21 +11,21 @@ import '../../../../core/usecases/usecase.dart';
 import '../entities/backyard.dart';
 import '../repositories/backyard_repository.dart';
 
-class CreateBackyard extends UseCase<Backyard, Params> {
+class CreateBackyard extends UseCase<Backyard, CreateBackyardParams> {
   final BackyardRepository repository;
 
   CreateBackyard(this.repository);
 
   @override
-  Future<Either<Failure, Backyard>> call(Params params) {
+  Future<Either<Failure, Backyard>> call(CreateBackyardParams params) {
     params.backyard.id = null;
     return repository.createBackyard(params.backyard);
   }
 }
 
-class Params extends Equatable {
+class CreateBackyardParams extends Equatable {
   final Backyard backyard;
 
-  Params({@required this.backyard}) : super([backyard]);
+  CreateBackyardParams({@required this.backyard}) : super([backyard]);
 }
 

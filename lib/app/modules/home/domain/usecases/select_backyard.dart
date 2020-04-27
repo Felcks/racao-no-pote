@@ -5,19 +5,19 @@ import 'package:racao_no_pote/app/modules/home/domain/repositories/backyard_repo
 import 'package:racao_no_pote/app/core/usecases/usecase.dart';
 import 'package:meta/meta.dart';
 
-class SelectBackyard extends UseCase<bool, Params> {
+class SelectBackyard extends UseCase<bool, SelectBackyardParams> {
   final BackyardRepository repository;
 
   SelectBackyard(this.repository);
 
   @override
-  Future<Either<Failure, bool>> call(Params params) {
+  Future<Either<Failure, bool>> call(SelectBackyardParams params) {
     return repository.cacheBackyard(params.backyard);
   }
 }
 
-class Params{
+class SelectBackyardParams{
   final Backyard backyard;
 
-  Params({@required this.backyard});
+  SelectBackyardParams({@required this.backyard});
 }

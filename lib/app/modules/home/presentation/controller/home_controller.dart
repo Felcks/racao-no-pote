@@ -16,11 +16,11 @@ part 'home_controller.g.dart';
 class HomeController = _HomeControllerBase with _$HomeController;
 
 abstract class _HomeControllerBase with Store {
-  final viewBackyardUseCase = Modular.get<ViewBackyard>();
-  final unselectBackyardUseCase = Modular.get<UnselectBackyard>();
-  final resetBackyardWhenDayPassedUseCase =
+  final _viewBackyardUseCase = Modular.get<ViewBackyard>();
+  final _unselectBackyardUseCase = Modular.get<UnselectBackyard>();
+  final _resetBackyardWhenDayPassedUseCase =
       Modular.get<ResetBackyardWhenDayPassed>();
-  final updatebackyardUseCase = Modular.get<UpdateBackyard>();
+  final _updateBackyardUseCase = Modular.get<UpdateBackyard>();
   final _defaultLocation = Modular.get<LocationManager>().defaultLocation;
 
   @observable
@@ -31,7 +31,7 @@ abstract class _HomeControllerBase with Store {
   }
 
   _checkBackyard() async {
-    final result = await resetBackyardWhenDayPassedUseCase(
+    final result = await _resetBackyardWhenDayPassedUseCase(
         ResetBackyardWhenDayPassedParams(backyard.id));
     result.fold((failure) {}, (value) {
       if (value) backyard.food.quantity = 0;
@@ -41,7 +41,7 @@ abstract class _HomeControllerBase with Store {
 
   @action
   fetchBackyard() async {
-    final result = await viewBackyardUseCase(NoParams());
+    final result = await _viewBackyardUseCase(NoParams());
 
     backyard = result.fold((failure) {
       return null;
@@ -53,15 +53,15 @@ abstract class _HomeControllerBase with Store {
   }
 
   @action
-  unselectMyBackyard() async {
-    final result = await unselectBackyardUseCase(NoParams());
+  unselectBackyard() async {
+    final result = await _unselectBackyardUseCase(NoParams());
     return result.isRight();
   }
 
   @action
   updateElementQuantity(Element element, double value) {
     element.quantity = value.toInt();
-    updatebackyardUseCase(Params(backyard: backyard));
+    _updateBackyardUseCase(UpdateBackyardParams(backyard: backyard));
   }
 
   incrementFoodQuantity(double value) {

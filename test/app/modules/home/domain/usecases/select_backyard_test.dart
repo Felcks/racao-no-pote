@@ -25,7 +25,7 @@ void main(){
       // arrange
       when(mockBackyardRepository.cacheBackyard(any)).thenAnswer((_) async => Right(true));
       // act
-      final result = await usecase(Params(backyard: tBackyard));
+      final result = await usecase(SelectBackyardParams(backyard: tBackyard));
       // assert
       verify(mockBackyardRepository.cacheBackyard(tBackyard));
       expect(result, Right(true));

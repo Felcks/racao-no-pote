@@ -27,7 +27,7 @@ void main() {
       when(backyardRepository.createBackyard(any))
           .thenAnswer((_) async => Right(tBackyard));
       // act
-      final result = await usecase(Params(backyard: tBackyard));
+      final result = await usecase(CreateBackyardParams(backyard: tBackyard));
       // assert
       expect(result,  Right(tBackyard));
       verify(backyardRepository.createBackyard(tBackyard));

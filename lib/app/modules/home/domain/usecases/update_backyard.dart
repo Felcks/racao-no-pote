@@ -8,13 +8,13 @@ import '../../../../core/usecases/usecase.dart';
 import '../entities/backyard.dart';
 import '../repositories/backyard_repository.dart';
 
-class UpdateBackyard extends UseCase<Backyard, Params> {
+class UpdateBackyard extends UseCase<Backyard, UpdateBackyardParams> {
   final BackyardRepository repository;
 
   UpdateBackyard(this.repository);
 
   @override
-  Future<Either<Failure, Backyard>> call(Params params) {
+  Future<Either<Failure, Backyard>> call(UpdateBackyardParams params) {
     final location = getLocation("Africa/Abidjan");
     params.backyard.food.updateDate = TZDateTime.now(location);
     params.backyard.water.updateDate = TZDateTime.now(location);
@@ -22,8 +22,8 @@ class UpdateBackyard extends UseCase<Backyard, Params> {
   }
 }
 
-class Params extends Equatable {
+class UpdateBackyardParams extends Equatable {
   final Backyard backyard;
 
-  Params({@required this.backyard}) : super([backyard]);
+  UpdateBackyardParams({@required this.backyard}) : super([backyard]);
 }
