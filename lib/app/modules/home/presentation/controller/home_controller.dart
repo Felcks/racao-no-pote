@@ -30,25 +30,30 @@ abstract class _HomeControllerBase with Store {
     fetchBackyard();
   }
 
-  _checkBackyard() async {
+  @action
+  _checkBackyard(Backyard backyard) async {
     final result = await _resetBackyardWhenDayPassedUseCase(
-        ResetBackyardWhenDayPassedParams(backyard.id));
-    result.fold((failure) {}, (value) {
-      if (value) backyard.food.quantity = 0;
-      return value;
-    });
+        ResetBackyardWhenDayPassedParams(backyard));
+
+    // this.backyard = await result.fold((failure) {
+    //   print("Failure ${backyard.animal.name}");
+    //   return backyard;
+    // }, (value) {
+    //   print("SUCCESS ${value.animal.name}");
+    //   return value;
+    // });
+
+    this.backyard = result.getOrElse(() => backyard);
   }
 
   @action
   fetchBackyard() async {
     final result = await _viewBackyardUseCase(NoParams());
 
-    backyard = result.fold((failure) {
+    result.fold((failure) {
       return null;
     }, (backyard) {
-      _checkBackyard();
-      this.backyard = backyard;
-      return this.backyard;
+      _checkBackyard(backyard);
     });
   }
 

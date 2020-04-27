@@ -1,45 +1,42 @@
 import 'package:dartz/dartz.dart';
-import 'package:racao_no_pote/app/core/error/failure.dart';
-import 'package:racao_no_pote/app/core/usecases/usecase.dart';
 import 'package:timezone/timezone.dart';
 
+import '../../../../core/error/failure.dart';
+import '../../../../core/usecases/usecase.dart';
+import '../entities/backyard.dart';
 import '../repositories/backyard_repository.dart';
 
-class ResetBackyardWhenDayPassed extends UseCase<bool, ResetBackyardWhenDayPassedParams> {
+class ResetBackyardWhenDayPassed extends UseCase<Backyard, ResetBackyardWhenDayPassedParams> {
   final BackyardRepository repository;
   final Location userLocation;
 
   ResetBackyardWhenDayPassed(this.repository, this.userLocation);
 
   @override
-  Future<Either<Failure, bool>> call(ResetBackyardWhenDayPassedParams params) async {
-    final backyard = await repository.getCachedBackyard();
-    backyard.fold((failure) {
-      return Left(failure);
-    }, (success) async {
+  Future<Either<Failure, Backyard>> call(ResetBackyardWhenDayPassedParams params) async {
+
+      final backyard = params.backyard;
       final currentTime = TZDateTime.now(userLocation);
       final backyardTime = TZDateTime.parse(
-          userLocation, success.food.updateDate.toIso8601String());
+          userLocation, backyard.food.updateDate.toIso8601String());
       final dayStartTime = TZDateTime(userLocation, currentTime.year, currentTime.month, currentTime.day);
 
       Duration differenceCurrentAndBackyard = currentTime.difference(backyardTime);
       Duration differenceCurrentAndDayStartTime = currentTime.difference(dayStartTime);
 
       if (differenceCurrentAndBackyard > differenceCurrentAndDayStartTime) {
-        success.food.updateDate = currentTime;
-        success.food.quantity = 0;
-        success.water.updateDate = currentTime;
-        await repository.updateBackyard(success);
+        backyard.food.updateDate = currentTime;
+        backyard.food.quantity = 0;
+        backyard.water.updateDate = currentTime;
+        repository.updateBackyard(backyard);
+        return Right(backyard);
       }
 
-      return Future.value(Right(true));
-    });
-
-    return Future.value(Right(backyard.isRight()));
+      return Left(CacheFailure());
   }
 }
 
 class ResetBackyardWhenDayPassedParams {
-  final int backyardID;
-  ResetBackyardWhenDayPassedParams(this.backyardID);
+  final Backyard backyard;
+  ResetBackyardWhenDayPassedParams(this.backyard);
 }

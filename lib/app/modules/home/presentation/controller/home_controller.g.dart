@@ -26,6 +26,14 @@ mixin _$HomeController on _HomeControllerBase, Store {
     }, _$backyardAtom, name: '${_$backyardAtom.name}_set');
   }
 
+  final _$_checkBackyardAsyncAction = AsyncAction('_checkBackyard');
+
+  @override
+  Future _checkBackyard(Backyard backyard) {
+    return _$_checkBackyardAsyncAction
+        .run(() => super._checkBackyard(backyard));
+  }
+
   final _$fetchBackyardAsyncAction = AsyncAction('fetchBackyard');
 
   @override
