@@ -56,15 +56,16 @@ class _BackyardCreationPageState
           Observer(
             builder: (_) {
               return IconButton(
-                  onPressed: controller.isValid
-                      ? () async {
-                          final result = await controller.creatingBackyard();
-                          if (result) Modular.to.pop();
-                        }
-                      : () {
-                          controller.showErrors = true;
-                        },
-                  icon: Icon(Icons.done));
+                onPressed: controller.isValid
+                    ? () async {
+                        final result = await controller.creatingBackyard();
+                        if (result) Modular.to.pop();
+                      }
+                    : () {
+                        controller.showErrors = true;
+                      },
+                icon: Icon(Icons.done),
+              );
             },
           )
         ],

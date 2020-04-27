@@ -23,11 +23,6 @@ class _BackyardListPageState
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
-
-  @override
   void initState() {
     super.initState();
     controller.fetchBackyardList();
@@ -119,7 +114,7 @@ class _BackyardListPageState
                                       Colors.grey[350].withOpacity(0.2),
                                   onTap: () async {
                                     final result = await controller
-                                        .chooseBackyard(backyard);
+                                        .selectBackyard(backyard);
                                     if (result)
                                       Modular.to.pushNamed("/backyard");
                                   },
