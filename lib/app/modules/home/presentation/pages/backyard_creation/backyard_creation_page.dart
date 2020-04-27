@@ -43,25 +43,19 @@ class _BackyardCreationPageState
     fcnFoodQuantity = FocusNode();
 
 
+    if(widget.backyard != null){
+
     controller.setPresentationBackyard(widget.backyard);
 
+    
     editingControllerName.text = (widget.backyard.animal.name != null ? widget.backyard.animal.name : "");
     editingControllerNickName.text = (widget.backyard.animal.nickname != null ? widget.backyard.animal.nickname : "");
     editingControllerWeight.text = (widget.backyard.animal.weight != null ? widget.backyard.animal.weight : "");
     // editingControllerBirthday.text = (widget.backyard.animal.weight != null ? widget.backyard.animal.weight : "");
      
-    // editingControllerCupQuantity.text = (widget.backyard.cup != null ? widget.backyard.cup.capacity : "");
-    // editingControllerFoodQuantity.text = (widget.backyard.food.maxQuantity.toString());
-
-    //controller.setPresentationBackyard(widget.backyard);
-
-    //  if(widget.backyard != null){
-    //     // editingControllerName.text = widget.backyard.animal.name;
-    //     controller.backyard.changeName(widget.backyard.animal.nickname);
-    //             print("cc");
-
-     
-      
+    editingControllerCupQuantity.text = (widget.backyard.cup != null ? widget.backyard.cup.capacity : "");
+    editingControllerFoodQuantity.text = (widget.backyard.food.maxQuantity.toString());   
+    }   
   }
 
   @override
@@ -271,8 +265,10 @@ class _BackyardCreationPageState
                                         color: Colors.teal,
                                       ),
                                       Text(
-                                        controller.backyard.birthday ?? "",
-                                        // " $_date",
+                                        controller.backyard.birthday != null ? 
+                                        "${controller.backyard.birthday.day}/"
+                                        "${controller.backyard.birthday.month}/"
+                                        "${controller.backyard.birthday.year}" : "",
                                         style: TextStyle(
                                             color: Colors.teal,
                                             fontWeight: FontWeight.bold,
@@ -298,7 +294,7 @@ class _BackyardCreationPageState
                     Observer(
                       builder: (_) {
                         if (controller.showErrors == false ||
-                            controller.birthday != null) return Container();
+                            controller.backyard.birthday != null) return Container();
 
                         return Padding(
                           padding: EdgeInsets.only(left: 16, top: 8),

@@ -20,8 +20,6 @@ abstract class _BackyardCreationControllerBase with Store {
   final _createBackyard = Modular.get<CreateBackyard>();
   final defaultLocation = Modular.get<LocationManager>().defaultLocation;
 
-  DateTime birthday;
-
   @observable
   bool showErrors = false;
 
@@ -56,7 +54,7 @@ abstract class _BackyardCreationControllerBase with Store {
       animal: Animal(
           name: backyard.name,
           nickname: backyard.nickname,
-          birthday: TZDateTime.from(this.birthday, defaultLocation),
+          birthday: TZDateTime.from(backyard.birthday, defaultLocation),
           weight:
               backyard.weight != null ? double.parse(backyard.weight) : null),
     );
@@ -83,7 +81,7 @@ abstract class _BackyardCreationControllerBase with Store {
   }
 
   String validateBirthday() {
-    if (backyard.birthday == null || backyard.birthday.isEmpty)
+    if (backyard.birthday == null)
       return "Campo obrigatório";
 
     return null;
@@ -107,8 +105,7 @@ abstract class _BackyardCreationControllerBase with Store {
   }
 
   void confirmDateTime(DateTime date) {
-    this.birthday = date;
-    backyard.changeBirthday('${date.day}/${date.month}/${date.year}');
+    backyard.changeBirthday(date);
   }
 
   @action

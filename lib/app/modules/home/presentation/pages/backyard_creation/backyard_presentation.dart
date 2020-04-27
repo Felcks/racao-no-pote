@@ -15,9 +15,9 @@ abstract class _BackyardPresentationBase with Store {
   changeNickName(String value) => nickname = value;
 
   @observable
-  String birthday;
+  DateTime birthday;
   @action
-  changeBirthday(String value) => birthday = value;
+  changeBirthday(DateTime value) => birthday = value;
 
   @observable
   String weight;
@@ -42,5 +42,4 @@ abstract class _BackyardPresentationBase with Store {
   _BackyardPresentationBase(){
     changeIsUsingCup(false);
   }
-
 }

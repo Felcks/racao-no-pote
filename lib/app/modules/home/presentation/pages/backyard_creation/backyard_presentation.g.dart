@@ -46,14 +46,14 @@ mixin _$BackyardPresentation on _BackyardPresentationBase, Store {
   final _$birthdayAtom = Atom(name: '_BackyardPresentationBase.birthday');
 
   @override
-  String get birthday {
+  DateTime get birthday {
     _$birthdayAtom.context.enforceReadPolicy(_$birthdayAtom);
     _$birthdayAtom.reportObserved();
     return super.birthday;
   }
 
   @override
-  set birthday(String value) {
+  set birthday(DateTime value) {
     _$birthdayAtom.context.conditionallyRunInAction(() {
       super.birthday = value;
       _$birthdayAtom.reportChanged();
@@ -155,7 +155,7 @@ mixin _$BackyardPresentation on _BackyardPresentationBase, Store {
   }
 
   @override
-  dynamic changeBirthday(String value) {
+  dynamic changeBirthday(DateTime value) {
     final _$actionInfo =
         _$_BackyardPresentationBaseActionController.startAction();
     try {
