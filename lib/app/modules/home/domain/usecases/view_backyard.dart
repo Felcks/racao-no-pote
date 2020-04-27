@@ -1,8 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:racao_no_pote/app/core/error/failure.dart';
-import 'package:racao_no_pote/app/modules/home/domain/entities/backyard.dart';
-import 'package:racao_no_pote/app/modules/home/domain/repositories/backyard_repository.dart';
-import 'package:racao_no_pote/app/core/usecases/usecase.dart';
+
+import '../../../../core/error/failure.dart';
+import '../../../../core/usecases/usecase.dart';
+import '../entities/backyard.dart';
+import '../repositories/backyard_repository.dart';
 
 class ViewBackyard extends UseCase<Backyard, NoParams> {
   final BackyardRepository repository;
@@ -11,6 +12,6 @@ class ViewBackyard extends UseCase<Backyard, NoParams> {
 
   @override
   Future<Either<Failure, Backyard>> call(NoParams params) {
-    return repository.getBackyard();
+    return repository.getCachedBackyard();
   }
 }

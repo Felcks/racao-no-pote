@@ -17,7 +17,7 @@ class BackyardCreationController = _BackyardCreationControllerBase
 
 abstract class _BackyardCreationControllerBase with Store {
   final backyard = BackyardPresentation();
-  final createBackyard = Modular.get<CreateBackyard>();
+  final _createBackyard = Modular.get<CreateBackyard>();
   final defaultLocation = Modular.get<LocationManager>().defaultLocation;
 
   DateTime birthday;
@@ -57,10 +57,11 @@ abstract class _BackyardCreationControllerBase with Store {
           name: backyard.name,
           nickname: backyard.nickname,
           birthday: TZDateTime.from(this.birthday, defaultLocation),
-          weight: double.parse(backyard.weight)),
+          weight:
+              backyard.weight != null ? double.parse(backyard.weight) : null),
     );
 
-    final result = await createBackyard(Params(backyard: mBackyard));
+    final result = await _createBackyard(CreateBackyardParams(backyard: mBackyard));
 
     return result.isRight();
   }

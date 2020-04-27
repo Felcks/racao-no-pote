@@ -1,16 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:racao_no_pote/app/modules/home/domain/entities/animal.dart';
 import 'package:racao_no_pote/app/modules/home/domain/entities/backyard.dart';
-import 'package:racao_no_pote/app/modules/home/domain/entities/cup.dart';
-import 'package:racao_no_pote/app/modules/home/domain/entities/element.dart';
 import 'package:racao_no_pote/app/modules/home/domain/repositories/backyard_repository.dart';
 import 'package:racao_no_pote/app/modules/home/domain/usecases/update_backyard.dart';
-import 'package:timezone/data/latest.dart';
-import 'package:timezone/timezone.dart';
-
-import 'create_backyard_test.dart';
 
 class MockBackyardRepository extends Mock implements BackyardRepository {}
 
@@ -34,7 +27,7 @@ void main() {
       when(backyardRepository.updateBackyard(any))
           .thenAnswer((_) async => Right(tBackyard));
       // act
-      final result = await usecase(Params(backyard: tBackyard));
+      final result = await usecase(UpdateBackyardParams(backyard: tBackyard));
       // assert
       expect(result, equals(Right(tBackyard)));
       verify(backyardRepository.updateBackyard(tBackyard));

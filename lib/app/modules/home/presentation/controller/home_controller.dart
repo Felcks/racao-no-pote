@@ -1,7 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:racao_no_pote/app/core/device/location_manager.dart';
-import 'package:timezone/browser.dart';
+import 'package:timezone/timezone.dart';
 
 import '../../../../core/usecases/usecase.dart';
 import '../../domain/entities/backyard.dart';
@@ -16,43 +16,57 @@ part 'home_controller.g.dart';
 class HomeController = _HomeControllerBase with _$HomeController;
 
 abstract class _HomeControllerBase with Store {
-  final viewBackyard = Modular.get<ViewBackyard>();
-  final unselectBackyard = Modular.get<UnselectBackyard>();
-  final resetBackyardWhenDayPassed = Modular.get<ResetBackyardWhenDayPassed>();
-  final updatebackyard = Modular.get<UpdateBackyard>();
+  final _viewBackyardUseCase = Modular.get<ViewBackyard>();
+  final _unselectBackyardUseCase = Modular.get<UnselectBackyard>();
+  final _resetBackyardWhenDayPassedUseCase =
+      Modular.get<ResetBackyardWhenDayPassed>();
+  final _updateBackyardUseCase = Modular.get<UpdateBackyard>();
   final _defaultLocation = Modular.get<LocationManager>().defaultLocation;
 
   @observable
   Backyard backyard;
 
   _HomeControllerBase() {
-    checkBackyard();
-  }
-
-  checkBackyard() async {
-    final result = await resetBackyardWhenDayPassed(NoParams());
     fetchBackyard();
   }
 
   @action
-  fetchBackyard() async {
-    final result = await viewBackyard(NoParams());
+  _checkBackyard(Backyard backyard) async {
+    final result = await _resetBackyardWhenDayPassedUseCase(
+        ResetBackyardWhenDayPassedParams(backyard));
 
-    backyard = result.fold((failure) {
-      return null;
-    }, (backyard) => this.backyard = backyard);
+    // this.backyard = await result.fold((failure) {
+    //   print("Failure ${backyard.animal.name}");
+    //   return backyard;
+    // }, (value) {
+    //   print("SUCCESS ${value.animal.name}");
+    //   return value;
+    // });
+
+    this.backyard = result.getOrElse(() => backyard);
   }
 
   @action
-  unselectMyBackyard() async {
-    final result = await unselectBackyard(NoParams());
+  fetchBackyard() async {
+    final result = await _viewBackyardUseCase(NoParams());
+
+    result.fold((failure) {
+      return null;
+    }, (backyard) {
+      _checkBackyard(backyard);
+    });
+  }
+
+  @action
+  unselectBackyard() async {
+    final result = await _unselectBackyardUseCase(NoParams());
     return result.isRight();
   }
 
   @action
   updateElementQuantity(Element element, double value) {
     element.quantity = value.toInt();
-    updatebackyard(Params(backyard: backyard));
+    _updateBackyardUseCase(UpdateBackyardParams(backyard: backyard));
   }
 
   incrementFoodQuantity(double value) {

@@ -1,22 +1,24 @@
 import 'package:dartz/dartz.dart';
-import 'package:racao_no_pote/app/core/error/failure.dart';
-import 'package:racao_no_pote/app/modules/home/domain/repositories/backyard_repository.dart';
-import 'package:racao_no_pote/app/core/usecases/usecase.dart';
 import 'package:meta/meta.dart';
 
-class SelectBackyard extends UseCase<bool, Params> {
+import '../../../../core/error/failure.dart';
+import '../../../../core/usecases/usecase.dart';
+import '../entities/backyard.dart';
+import '../repositories/backyard_repository.dart';
+
+class SelectBackyard extends UseCase<bool, SelectBackyardParams> {
   final BackyardRepository repository;
 
   SelectBackyard(this.repository);
 
   @override
-  Future<Either<Failure, bool>> call(Params params) {
-    return repository.saveLastBackyard(params.id);
+  Future<Either<Failure, bool>> call(SelectBackyardParams params) {
+    return repository.cacheBackyard(params.backyard);
   }
 }
 
-class Params{
-  final int id;
+class SelectBackyardParams{
+  final Backyard backyard;
 
-  Params({@required this.id});
+  SelectBackyardParams({@required this.backyard});
 }

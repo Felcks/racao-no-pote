@@ -30,16 +30,16 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
             color: Colors.black,
           ),
           onPressed: () async {
-            final result = await controller.unselectMyBackyard();
+            final result = await controller.unselectBackyard();
             if (result) Modular.to.pop();
           },
         ),
-        // actions: <Widget>[
-        //   IconButton(
-        //     onPressed: (){},
-        //     icon: Icon(Icons.settings),
-        //   )
-        // ],
+        actions: <Widget>[
+          IconButton(
+            onPressed: (){},
+            icon: Icon(Icons.settings),
+          )
+        ],
       ),
       body: Stack(
         children: [

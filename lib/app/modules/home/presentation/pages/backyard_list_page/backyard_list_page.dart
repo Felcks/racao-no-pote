@@ -23,23 +23,9 @@ class _BackyardListPageState
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    checkHasSelectedBackyard();
-  }
-
-  @override
   void initState() {
     super.initState();
     controller.fetchBackyardList();
-    checkHasSelectedBackyard();
-  }
-
-  void checkHasSelectedBackyard() {
-    // await controller.checkHasSelectedBackyard();
-    // if (controller.hasSelectedBackyard == true) {
-    //   Modular.to.pushNamed("/backyard");
-    // }
   }
 
   @override
@@ -128,7 +114,7 @@ class _BackyardListPageState
                                       Colors.grey[350].withOpacity(0.2),
                                   onTap: () async {
                                     final result = await controller
-                                        .chooseBackyard(backyard.id);
+                                        .selectBackyard(backyard);
                                     if (result)
                                       Modular.to.pushNamed("/backyard");
                                   },

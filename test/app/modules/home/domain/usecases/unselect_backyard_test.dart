@@ -20,11 +20,11 @@ void main(){
     'should call save last backyard from the repository',
     ()async {
       // arrange
-      when(mockBackyardRepository.saveLastBackyard(any)).thenAnswer((_) async => Right(true));
+      when(mockBackyardRepository.cacheBackyard(any)).thenAnswer((_) async => Right(true));
       // act
       final result = await usecase(NoParams());
       // assert
-      verify(mockBackyardRepository.saveLastBackyard(null));
+      verify(mockBackyardRepository.cacheBackyard(null));
       expect(result, Right(true));
       verifyNoMoreInteractions(mockBackyardRepository);
     },

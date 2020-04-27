@@ -18,15 +18,16 @@ class BackyardInfoWidget extends StatelessWidget {
           Align(
             alignment: Alignment.topRight,
             child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  getElementWidget(context, backyard?.food, "Comida"),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  // getElementWidget(context, backyard?.water, "Água"),
-                ]),
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                getElementWidget(context, backyard?.food, "Ração"),
+                SizedBox(
+                  height: 10,
+                ),
+                // getElementWidget(context, backyard?.water, "Água"),
+              ],
+            ),
           ),
         ],
       ),
@@ -43,7 +44,10 @@ class BackyardInfoWidget extends StatelessWidget {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(name, style: TextStyle(fontWeight: FontWeight.bold),),
+          Text(
+            name,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
           Expanded(
             child: SliderTheme(
               data: SliderTheme.of(context).copyWith(
@@ -79,7 +83,11 @@ class BackyardInfoWidget extends StatelessWidget {
                 max: element.maxQuantity.toDouble(),
               ),
             ),
-          )
+          ),
+          Text(
+            element.getQuantityText(),
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
         ],
       );
     }

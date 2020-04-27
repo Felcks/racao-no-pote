@@ -1,10 +1,9 @@
 import 'package:dartz/dartz.dart';
 
-import 'package:racao_no_pote/app/core/error/failure.dart';
-import 'package:racao_no_pote/app/modules/home/domain/repositories/backyard_repository.dart';
-
+import '../../../../core/error/failure.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../entities/backyard.dart';
+import '../repositories/backyard_repository.dart';
 
 class ListBackyard extends UseCase<List<Backyard>, NoParams>{
 
