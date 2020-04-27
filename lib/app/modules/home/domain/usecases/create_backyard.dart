@@ -1,9 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:racao_no_pote/app/modules/home/domain/entities/cup.dart';
-import 'package:racao_no_pote/app/modules/home/domain/entities/element.dart';
-import 'package:racao_no_pote/app/modules/home/domain/entities/animal.dart';
-import 'package:timezone/timezone.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../core/error/failure.dart';

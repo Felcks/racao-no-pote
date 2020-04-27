@@ -62,16 +62,6 @@ class BackyardRepositoryImpl extends BackyardRepository {
     return Right(await localDataSource.cacheBackyardID(backyard != null ? backyard.id : null));
   }
 
-  // @override
-  // Future<Either<Failure, int>> getCachedBackyardID() async {
-  //   try {
-  //     final backyardID = await localDataSource.getCachedBackyardID();
-  //     return Right(backyardID);
-  //   } on CacheException {
-  //     return Left(CacheFailure());
-  //   }
-  // }
-
   @override
   Future<Either<Failure, Backyard>> updateBackyard(Backyard backyard) async {
     try {

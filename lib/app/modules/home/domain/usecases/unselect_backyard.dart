@@ -1,7 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:racao_no_pote/app/core/error/failure.dart';
-import 'package:racao_no_pote/app/modules/home/domain/repositories/backyard_repository.dart';
-import 'package:racao_no_pote/app/core/usecases/usecase.dart';
+
+import '../../../../core/error/failure.dart';
+import '../../../../core/usecases/usecase.dart';
+import '../repositories/backyard_repository.dart';
 
 class UnselectBackyard extends UseCase<bool, NoParams> {
   final BackyardRepository repository;
