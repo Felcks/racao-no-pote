@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:md2_tab_indicator/md2_tab_indicator.dart';
-import 'package:racao_no_pote/app/modules/home/domain/entities/element.dart'
-    as mElement;
-import 'package:racao_no_pote/app/modules/home/presentation/widgets/action_info_widget.dart';
-import 'package:racao_no_pote/app/modules/home/presentation/widgets/animal_info_widget.dart';
-import 'package:racao_no_pote/app/modules/home/presentation/widgets/backyard_info_widget.dart';
 
 import '../controller/home_controller.dart';
+import '../widgets/action_info_widget.dart';
+import '../widgets/animal_info_widget.dart';
+import '../widgets/backyard_info_widget.dart';
 
 class AboutPage extends StatefulWidget {
   @override
@@ -15,7 +13,7 @@ class AboutPage extends StatefulWidget {
 }
 
 class _AboutPageState extends ModularState<AboutPage, HomeController>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   TabController _tabController;
   PageController _pageController;
 
@@ -32,8 +30,10 @@ class _AboutPageState extends ModularState<AboutPage, HomeController>
     controller.fetchBackyard();
   }
 
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -82,10 +82,7 @@ class _AboutPageState extends ModularState<AboutPage, HomeController>
       return Stack(
         children: <Widget>[
           Positioned(
-            top: 150,
-            left: 400/2 - 25,
-            child:  CircularProgressIndicator()
-          )
+              top: 150, left: 400 / 2 - 25, child: CircularProgressIndicator())
         ],
       );
 
@@ -95,7 +92,8 @@ class _AboutPageState extends ModularState<AboutPage, HomeController>
         _tabController.animateTo(index, duration: Duration(milliseconds: 300));
       },
       children: [
-        AnimalInfoWidget(controller.backyard.animal.getAttributes(controller.currentDate, controller.currentLocation)),
+        AnimalInfoWidget(controller.backyard.animal
+            .getAttributes(controller.currentDate, controller.currentLocation)),
         BackyardInfoWidget(controller.backyard),
         ActionInfoWidget(controller)
       ],

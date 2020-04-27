@@ -26,23 +26,11 @@ abstract class _HomeControllerBase with Store {
   @observable
   Backyard backyard;
 
-  _HomeControllerBase() {
-    fetchBackyard();
-  }
-
   @action
   _checkBackyard(Backyard backyard) async {
     final result = await _resetBackyardWhenDayPassedUseCase(
         ResetBackyardWhenDayPassedParams(backyard));
-
-    // this.backyard = await result.fold((failure) {
-    //   print("Failure ${backyard.animal.name}");
-    //   return backyard;
-    // }, (value) {
-    //   print("SUCCESS ${value.animal.name}");
-    //   return value;
-    // });
-
+        
     this.backyard = result.getOrElse(() => backyard);
   }
 
