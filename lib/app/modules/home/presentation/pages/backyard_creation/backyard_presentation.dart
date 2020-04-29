@@ -4,6 +4,7 @@ part 'backyard_presentation.g.dart';
 class BackyardPresentation = _BackyardPresentationBase with _$BackyardPresentation;
 
 abstract class _BackyardPresentationBase with Store {
+  
   @observable
   String name;
   @action

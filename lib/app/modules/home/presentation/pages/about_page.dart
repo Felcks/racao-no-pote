@@ -26,8 +26,8 @@ class _AboutPageState extends ModularState<AboutPage, HomeController>
 
   @override
   void didChangeDependencies() {
-    super.didChangeDependencies();
     controller.fetchBackyard();
+    super.didChangeDependencies();
   }
 
 

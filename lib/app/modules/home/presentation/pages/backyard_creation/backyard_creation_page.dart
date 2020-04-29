@@ -123,9 +123,9 @@ class _BackyardCreationPageState
                     Observer(
                       builder: (_) {
                         return TextFormField(
-                          initialValue: controller.backyard.name,
+                          initialValue: controller.model.backyard.animal.name,
                           textCapitalization: TextCapitalization.words,
-                          onChanged: controller.backyard.changeName,
+                          onChanged: controller.model.changeName,
                           onEditingComplete: () {
                             fcnNickName.requestFocus();
                           },
@@ -156,9 +156,9 @@ class _BackyardCreationPageState
                       height: 5,
                     ),
                     TextFormField(
-                      initialValue: controller.backyard.nickname,
+                      initialValue: controller.model.backyard.animal.nickname,
                       textCapitalization: TextCapitalization.words,
-                      onChanged: controller.backyard.changeNickName,
+                      onChanged: controller.model.changeNickName,
                       maxLength: 20,
                       maxLines: 1,
                       focusNode: fcnNickName,
@@ -182,12 +182,12 @@ class _BackyardCreationPageState
                       height: 5,
                     ),
                     TextFormField(
-                      initialValue: controller.backyard.weight != null
-                          ? controller.backyard.weight.toString()
+                      initialValue: controller.model.backyard.animal.weight != null
+                          ? controller.model.backyard.animal.weight.toString()
                           : "",
                       expands: false,
                       maxLines: 1,
-                      onChanged: controller.backyard.changeWeight,
+                      onChanged: controller.model.changeWeight,
                       focusNode: fcnWeight,
                       keyboardType:
                           TextInputType.numberWithOptions(decimal: true),
@@ -252,10 +252,10 @@ class _BackyardCreationPageState
                                         color: Colors.teal,
                                       ),
                                       Text(
-                                        controller.backyard.birthday != null
-                                            ? "${controller.backyard.birthday.day}/"
-                                                "${controller.backyard.birthday.month}/"
-                                                "${controller.backyard.birthday.year}"
+                                        controller.model.backyard.animal.birthday != null
+                                            ? "${controller.model.backyard.animal.birthday.day}/"
+                                                "${controller.model.backyard.animal.birthday.month}/"
+                                                "${controller.model.backyard.animal.birthday.year}"
                                             : "",
                                         style: TextStyle(
                                             color: Colors.teal,
@@ -282,7 +282,7 @@ class _BackyardCreationPageState
                     Observer(
                       builder: (_) {
                         if (controller.showErrors == false ||
-                            controller.backyard.birthday != null)
+                            controller.model.backyard.animal.birthday != null)
                           return Container();
 
                         return Padding(
@@ -330,10 +330,10 @@ class _BackyardCreationPageState
                   Observer(
                     builder: (_) {
                       return TextFormField(
-                        initialValue: controller.backyard.foodQuantity != null ? controller.backyard.foodQuantity.toString() : "",
+                        initialValue: controller.model.backyard.food.maxQuantity > 0 ? controller.model.backyard.food.maxQuantity.toString() : "",
                         expands: false,
                         maxLines: 1,
-                        onChanged: controller.backyard.changeFoodQuantity,
+                        onChanged: controller.model.changeFoodQuantity,
                         focusNode: fcnFoodQuantity,
                         keyboardType:
                             TextInputType.numberWithOptions(decimal: true),
@@ -378,8 +378,8 @@ class _BackyardCreationPageState
                       Observer(
                         builder: (context) {
                           return Switch(
-                            value: controller.backyard.isUsingCup,
-                            onChanged: controller.backyard.changeIsUsingCup,
+                            value: controller.model.isUsingCup,
+                            onChanged: controller.model.changeIsUsingCup,
                           );
                         },
                       )
@@ -387,7 +387,7 @@ class _BackyardCreationPageState
                   ),
                   Observer(
                     builder: (context) {
-                      if (controller.backyard.isUsingCup == false)
+                      if (controller.model.isUsingCup == false)
                         return Container();
 
                       return Column(
@@ -405,7 +405,7 @@ class _BackyardCreationPageState
                             height: 5,
                           ),
                           TextFormField(
-                            initialValue: controller.backyard.cupQuantity != null ? controller.backyard.cupQuantity.toString() : "",
+                            initialValue: controller.model.backyard.cup != null ? controller.model.backyard.cup.capacity.toString() : "",
                             expands: false,
                             maxLines: 1,
                             focusNode: fcnCupQuantity,
@@ -416,7 +416,7 @@ class _BackyardCreationPageState
                                   activatedNegativeValues: false,
                                   decimalRange: 2),
                             ],
-                            onChanged: controller.backyard.changeCupQuantity,
+                            onChanged: controller.model.changeCupQuantity,
                             decoration: InputDecoration(
                                 contentPadding: EdgeInsets.all(8),
                                 border: OutlineInputBorder(),
