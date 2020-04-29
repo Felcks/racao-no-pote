@@ -1,12 +1,12 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:racao_no_pote/app/modules/home/presentation/pages/backyard_creation/backyard_creation_model.dart';
 import 'package:timezone/timezone.dart';
 
 import '../../../../../core/device/location_manager.dart';
 import '../../../domain/entities/backyard.dart';
 import '../../../domain/usecases/create_backyard.dart';
 import '../../../domain/usecases/update_backyard.dart';
+import 'backyard_creation_model.dart';
 
 part 'backyard_creation_controller.g.dart';
 
@@ -40,7 +40,8 @@ abstract class _BackyardCreationControllerBase with Store {
   }
 
   String validateName() {
-    if (model.backyard.animal.name == null || model.backyard.animal.name.isEmpty) {
+    if (model.backyard.animal.name == null ||
+        model.backyard.animal.name.isEmpty) {
       return "Campo obrigatório";
     }
 
@@ -80,19 +81,5 @@ abstract class _BackyardCreationControllerBase with Store {
   @action
   void setPresentationBackyard(Backyard backyard) {
     model.setBackyard(backyard);
-    // if (backyard != null) {
-    //   this.backyard.changeName(backyard.animal.name);
-    //   this.backyard.changeNickName(backyard.animal.nickname);
-    //   this.backyard.changeWeight(backyard.animal.weight != null
-    //       ? backyard.animal.weight.toString()
-    //       : "");
-    //   this.backyard.changeBirthday(backyard.animal.birthday);
-
-    //   this.backyard.changeFoodQuantity(backyard.food.maxQuantity.toString());
-
-    //   this.backyard.changeIsUsingCup(backyard.cup != null ? true : false);
-    //   this.backyard.changeCupQuantity(
-    //       backyard.cup != null ? backyard.cup.capacity.toString() : "");
-    // }
   }
 }

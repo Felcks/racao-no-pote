@@ -1,11 +1,13 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:racao_no_pote/app/core/device/location_manager.dart';
-import 'package:racao_no_pote/app/modules/home/domain/entities/animal.dart';
-import 'package:racao_no_pote/app/modules/home/domain/entities/backyard.dart';
-import 'package:racao_no_pote/app/modules/home/domain/entities/cup.dart';
-import 'package:racao_no_pote/app/modules/home/domain/entities/element.dart';
 import 'package:timezone/timezone.dart';
+
+import '../../../../../core/device/location_manager.dart';
+import '../../../domain/entities/animal.dart';
+import '../../../domain/entities/backyard.dart';
+import '../../../domain/entities/cup.dart';
+import '../../../domain/entities/element.dart';
+
 part 'backyard_creation_model.g.dart';
 
 class BackyardCreationModel = _BackyardCreationModelBase

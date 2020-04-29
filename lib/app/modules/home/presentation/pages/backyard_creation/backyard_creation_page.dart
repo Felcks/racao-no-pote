@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:racao_no_pote/app/modules/home/domain/entities/backyard.dart';
 
+import '../../../domain/entities/backyard.dart';
 import 'backyard_creation_controller.dart';
 
 class BackyardCreationPage extends StatefulWidget {
@@ -65,7 +65,10 @@ class _BackyardCreationPageState
               return IconButton(
                 onPressed: controller.isValid
                     ? () async {
-                        final result = await controller.createOrUpdateBackyard(widget.backyard != null ? widget.backyard.id : null);
+                        final result = await controller.createOrUpdateBackyard(
+                            widget.backyard != null
+                                ? widget.backyard.id
+                                : null);
                         if (result) Modular.to.pop();
                       }
                     : () {
@@ -182,7 +185,8 @@ class _BackyardCreationPageState
                       height: 5,
                     ),
                     TextFormField(
-                      initialValue: controller.model.backyard.animal.weight != null
+                      initialValue: controller.model.backyard.animal.weight !=
+                              null
                           ? controller.model.backyard.animal.weight.toString()
                           : "",
                       expands: false,
@@ -252,7 +256,9 @@ class _BackyardCreationPageState
                                         color: Colors.teal,
                                       ),
                                       Text(
-                                        controller.model.backyard.animal.birthday != null
+                                        controller.model.backyard.animal
+                                                    .birthday !=
+                                                null
                                             ? "${controller.model.backyard.animal.birthday.day}/"
                                                 "${controller.model.backyard.animal.birthday.month}/"
                                                 "${controller.model.backyard.animal.birthday.year}"
@@ -330,7 +336,11 @@ class _BackyardCreationPageState
                   Observer(
                     builder: (_) {
                       return TextFormField(
-                        initialValue: controller.model.backyard.food.maxQuantity > 0 ? controller.model.backyard.food.maxQuantity.toString() : "",
+                        initialValue:
+                            controller.model.backyard.food.maxQuantity > 0
+                                ? controller.model.backyard.food.maxQuantity
+                                    .toString()
+                                : "",
                         expands: false,
                         maxLines: 1,
                         onChanged: controller.model.changeFoodQuantity,
@@ -405,7 +415,10 @@ class _BackyardCreationPageState
                             height: 5,
                           ),
                           TextFormField(
-                            initialValue: controller.model.backyard.cup != null ? controller.model.backyard.cup.capacity.toString() : "",
+                            initialValue: controller.model.backyard.cup != null
+                                ? controller.model.backyard.cup.capacity
+                                    .toString()
+                                : "",
                             expands: false,
                             maxLines: 1,
                             focusNode: fcnCupQuantity,

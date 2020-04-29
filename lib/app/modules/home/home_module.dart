@@ -1,7 +1,5 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:racao_no_pote/app/modules/home/domain/usecases/reset_backyard_when_day_passed.dart';
-import 'package:racao_no_pote/app/modules/home/domain/usecases/unselect_backyard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../main.dart';
@@ -12,7 +10,9 @@ import 'data/data_sources/backyard_remote_data_source.dart';
 import 'data/repositories/backyard_repository_impl.dart';
 import 'domain/usecases/create_backyard.dart';
 import 'domain/usecases/list_backyard.dart';
+import 'domain/usecases/reset_backyard_when_day_passed.dart';
 import 'domain/usecases/select_backyard.dart';
+import 'domain/usecases/unselect_backyard.dart';
 import 'domain/usecases/update_backyard.dart';
 import 'domain/usecases/view_backyard.dart';
 import 'presentation/controller/home_controller.dart';
