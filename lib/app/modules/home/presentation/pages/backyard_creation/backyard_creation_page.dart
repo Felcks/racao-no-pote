@@ -58,7 +58,10 @@ class _BackyardCreationPageState
           ),
           onPressed: () {
             FocusScope.of(context).requestFocus(FocusNode());
-            Modular.to.pushReplacementNamed("/backyard");
+            if (widget.backyard != null)
+              Modular.to.pushReplacementNamed("/backyard");
+            else
+              Modular.to.pop();
           },
         ),
         actions: <Widget>[
@@ -66,16 +69,21 @@ class _BackyardCreationPageState
             builder: (_) {
               return IconButton(
                 onPressed: controller.isValid
-                    ? () async {
+                    ? () {
                         FocusScope.of(context).requestFocus(FocusNode());
-                        final result = await controller.createOrUpdateBackyard(
-                            widget.backyard != null
+                        controller
+                            .createOrUpdateBackyard(widget.backyard != null
                                 ? widget.backyard.id
-                                : null);
-                        if (result)
-                          Modular.to.pushReplacementNamed("/backyard");
+                                : null)
+                            .then((result) {
+                          if (result) if (widget.backyard != null)
+                            Modular.to.pushReplacementNamed("/backyard");
+                          else
+                            Modular.to.pop();
+                        });
                       }
                     : () {
+                        FocusScope.of(context).requestFocus(FocusNode());
                         controller.showErrors = true;
                       },
                 icon: Icon(Icons.done),

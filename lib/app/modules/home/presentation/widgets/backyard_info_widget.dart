@@ -42,9 +42,6 @@ class BackyardInfoWidget extends StatelessWidget {
         ? element.quantity.toDouble()
         : element.maxQuantity.toDouble();
       
-      print(element.maxQuantity);
-      print(sliderValue);
-
     if (element == null) {
       return Center(
         child: CircularProgressIndicator(),
