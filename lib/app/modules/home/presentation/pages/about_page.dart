@@ -10,6 +10,8 @@ import '../widgets/backyard_info_widget.dart';
 class AboutPage extends StatefulWidget {
   @override
   _AboutPageState createState() => _AboutPageState();
+
+  static int lastPage = 0;
 }
 
 class _AboutPageState extends ModularState<AboutPage, HomeController>
@@ -20,8 +22,8 @@ class _AboutPageState extends ModularState<AboutPage, HomeController>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
-    _pageController = PageController(initialPage: 0);
+    _tabController = TabController(length: 3, vsync: this,initialIndex: AboutPage.lastPage);
+    _pageController = PageController(initialPage: AboutPage.lastPage);
   }
 
   @override
@@ -89,6 +91,7 @@ class _AboutPageState extends ModularState<AboutPage, HomeController>
     return PageView(
       controller: _pageController,
       onPageChanged: (index) {
+        AboutPage.lastPage = index;
         _tabController.animateTo(index, duration: Duration(milliseconds: 300));
       },
       children: [

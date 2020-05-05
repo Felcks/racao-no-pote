@@ -67,7 +67,8 @@ abstract class _BackyardCreationControllerBase with Store {
   }
 
   String validateFoodQuantity() {
-    if (model.backyard.food.maxQuantity == null) {
+    if (model.backyard.food.maxQuantity == null ||
+        model.backyard.food.maxQuantity == 0) {
       return "Campo obrigatório";
     }
 

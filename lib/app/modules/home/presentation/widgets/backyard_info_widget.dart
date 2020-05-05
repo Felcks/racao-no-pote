@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:racao_no_pote/app/modules/home/domain/entities/backyard.dart';
 import 'package:racao_no_pote/app/modules/home/domain/entities/element.dart'
     as mElement;
 
 class BackyardInfoWidget extends StatelessWidget {
   final Backyard backyard;
+  int count = 0;
 
   BackyardInfoWidget(this.backyard);
 
   @override
   Widget build(BuildContext context) {
+    count++;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
       child: Stack(
@@ -36,6 +37,14 @@ class BackyardInfoWidget extends StatelessWidget {
 
   Widget getElementWidget(
       BuildContext context, mElement.Element element, String name) {
+
+    double sliderValue = element.quantity < element.maxQuantity
+        ? element.quantity.toDouble()
+        : element.maxQuantity.toDouble();
+      
+      print(element.maxQuantity);
+      print(sliderValue);
+
     if (element == null) {
       return Center(
         child: CircularProgressIndicator(),
@@ -70,16 +79,14 @@ class BackyardInfoWidget extends StatelessWidget {
                 ),
               ),
               child: Slider(
-                value: element.quantity < element.maxQuantity
-                    ? element.quantity.toDouble()
-                    : element.maxQuantity.toDouble(),
+                value: sliderValue,
                 onChanged: (value) {
                   // setState(() {
-                  //   controller.updateElementQuantity(element, value);
+                  //   sliderValue = 10
                   // });
                 },
                 divisions: 1,
-                min: 0,
+                min: 0.0,
                 max: element.maxQuantity.toDouble(),
               ),
             ),

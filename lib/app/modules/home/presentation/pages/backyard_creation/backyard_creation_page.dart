@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:racao_no_pote/app/modules/home/presentation/pages/about_page.dart';
 
 import '../../../domain/entities/backyard.dart';
 import 'backyard_creation_controller.dart';
@@ -56,7 +57,8 @@ class _BackyardCreationPageState
             Icons.arrow_back,
           ),
           onPressed: () {
-            Modular.to.pop();
+            FocusScope.of(context).requestFocus(FocusNode());
+            Modular.to.pushReplacementNamed("/backyard");
           },
         ),
         actions: <Widget>[
@@ -65,11 +67,13 @@ class _BackyardCreationPageState
               return IconButton(
                 onPressed: controller.isValid
                     ? () async {
+                        FocusScope.of(context).requestFocus(FocusNode());
                         final result = await controller.createOrUpdateBackyard(
                             widget.backyard != null
                                 ? widget.backyard.id
                                 : null);
-                        if (result) Modular.to.pop();
+                        if (result)
+                          Modular.to.pushReplacementNamed("/backyard");
                       }
                     : () {
                         controller.showErrors = true;

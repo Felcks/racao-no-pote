@@ -37,7 +37,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
         actions: <Widget>[
           IconButton(
             onPressed: () {
-              Modular.to.pushNamed("/backyard_creation",
+              Modular.to.pushReplacementNamed("/backyard_creation",
                   arguments: ["Atualizar quintal", controller.backyard]);
             },
             icon: Icon(Icons.settings),
@@ -107,35 +107,5 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
         ],
       ),
     );
-  }
-
-  Widget getElementWidget(mElement.Element element, String image) {
-    if (element == null) {
-      return Column(
-        children: <Widget>[
-          Image.asset(image),
-        ],
-      );
-    } else {
-      return Column(
-        children: [
-          Image.asset(image),
-          Slider(
-            value: element.quantity.toDouble(),
-            onChanged: (value) {
-              setState(() {
-                controller.updateElementQuantity(element, value);
-              });
-            },
-            divisions: 4,
-            min: 0,
-            max: 100,
-          ),
-          Text(element.quantity.toString()),
-          Text(element.getUpdateDateFormatted(controller.currentLocation)),
-          Text(element.getUpdateDateFormatted(controller.currentLocation)),
-        ],
-      );
-    }
   }
 }
