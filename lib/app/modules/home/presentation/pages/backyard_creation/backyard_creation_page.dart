@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+// import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:racao_no_pote/app/modules/home/presentation/pages/about_page.dart';
 
 import '../../../domain/entities/backyard.dart';
 import 'backyard_creation_controller.dart';
@@ -240,16 +239,16 @@ class _BackyardCreationPageState
                         fcnWeight.unfocus();
                         fcnCupQuantity.unfocus();
                         fcnFoodQuantity.unfocus();
-                        DatePicker.showDatePicker(context,
-                            theme: DatePickerTheme(
-                              containerHeight: 210.0,
-                            ),
-                            showTitleActions: true,
-                            minTime: DateTime(2000, 1, 1),
-                            maxTime: DateTime(2022, 12, 31), onConfirm: (date) {
-                          controller.confirmDateTime(date);
-                          setState(() {});
-                        }, currentTime: DateTime.now(), locale: LocaleType.en);
+                        // DatePicker.showDatePicker(context,
+                        //     theme: DatePickerTheme(
+                        //       containerHeight: 210.0,
+                        //     ),
+                        //     showTitleActions: true,
+                        //     minTime: DateTime(2000, 1, 1),
+                        //     maxTime: DateTime(2022, 12, 31), onConfirm: (date) {
+                        //   controller.confirmDateTime(date);
+                        //   setState(() {});
+                        // }, currentTime: DateTime.now(), locale: LocaleType.en);
                       },
                       child: Container(
                         alignment: Alignment.center,
