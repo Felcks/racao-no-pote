@@ -239,16 +239,20 @@ class _BackyardCreationPageState
                         fcnWeight.unfocus();
                         fcnCupQuantity.unfocus();
                         fcnFoodQuantity.unfocus();
-                        // DatePicker.showDatePicker(context,
-                        //     theme: DatePickerTheme(
-                        //       containerHeight: 210.0,
-                        //     ),
-                        //     showTitleActions: true,
-                        //     minTime: DateTime(2000, 1, 1),
-                        //     maxTime: DateTime(2022, 12, 31), onConfirm: (date) {
-                        //   controller.confirmDateTime(date);
-                        //   setState(() {});
-                        // }, currentTime: DateTime.now(), locale: LocaleType.en);
+                        showDatePicker(
+                          context: context,
+                          initialDate: controller.model.backyard.animal.birthday
+                                  .toLocal() ??
+                              DateTime.now(),
+                          firstDate: DateTime(2000, 1, 1),
+                          lastDate: DateTime.now(),
+                        ).then(
+                          (value) {
+                            print(value.toIso8601String());
+                            controller.confirmDateTime(value);
+                            setState(() {});
+                          },
+                        );
                       },
                       child: Container(
                         alignment: Alignment.center,
@@ -266,19 +270,23 @@ class _BackyardCreationPageState
                                         size: 18.0,
                                         color: Colors.teal,
                                       ),
-                                      Text(
-                                        controller.model.backyard.animal
-                                                    .birthday !=
-                                                null
-                                            ? "${controller.model.backyard.animal.birthday.day}/"
-                                                "${controller.model.backyard.animal.birthday.month}/"
-                                                "${controller.model.backyard.animal.birthday.year}"
-                                            : "",
-                                        style: TextStyle(
-                                            color: Colors.teal,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18.0),
-                                      ),
+                                      Observer(
+                                        builder: (_) {
+                                          return Text(
+                                            controller.model.backyard.animal
+                                                        .birthday !=
+                                                    null
+                                                ? "${controller.model.backyard.animal.birthday.day}/"
+                                                    "${controller.model.backyard.animal.birthday.month}/"
+                                                    "${controller.model.backyard.animal.birthday.year}"
+                                                : "",
+                                            style: TextStyle(
+                                                color: Colors.teal,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18.0),
+                                          );
+                                        },
+                                      )
                                     ],
                                   ),
                                 )

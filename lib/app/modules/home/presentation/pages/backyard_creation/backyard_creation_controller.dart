@@ -77,6 +77,7 @@ abstract class _BackyardCreationControllerBase with Store {
 
   void confirmDateTime(DateTime date) {
     model.changeBirthday(TZDateTime.from(date, defaultLocation));
+    print(model.backyard.animal.birthday.toIso8601String());
   }
 
   @action

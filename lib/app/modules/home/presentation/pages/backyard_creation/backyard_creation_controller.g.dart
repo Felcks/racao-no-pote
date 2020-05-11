@@ -31,6 +31,17 @@ mixin _$BackyardCreationController on _BackyardCreationControllerBase, Store {
       ActionController(name: '_BackyardCreationControllerBase');
 
   @override
+  void confirmDateTime(DateTime date) {
+    final _$actionInfo =
+        _$_BackyardCreationControllerBaseActionController.startAction();
+    try {
+      return super.confirmDateTime(date);
+    } finally {
+      _$_BackyardCreationControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setPresentationBackyard(Backyard backyard) {
     final _$actionInfo =
         _$_BackyardCreationControllerBaseActionController.startAction();
