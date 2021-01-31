@@ -6,7 +6,7 @@ part of 'backyard_creation_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$BackyardCreationController on _BackyardCreationControllerBase, Store {
   final _$showErrorsAtom =
@@ -14,17 +14,15 @@ mixin _$BackyardCreationController on _BackyardCreationControllerBase, Store {
 
   @override
   bool get showErrors {
-    _$showErrorsAtom.context.enforceReadPolicy(_$showErrorsAtom);
-    _$showErrorsAtom.reportObserved();
+    _$showErrorsAtom.reportRead();
     return super.showErrors;
   }
 
   @override
   set showErrors(bool value) {
-    _$showErrorsAtom.context.conditionallyRunInAction(() {
+    _$showErrorsAtom.reportWrite(value, super.showErrors, () {
       super.showErrors = value;
-      _$showErrorsAtom.reportChanged();
-    }, _$showErrorsAtom, name: '${_$showErrorsAtom.name}_set');
+    });
   }
 
   final _$_BackyardCreationControllerBaseActionController =
@@ -33,7 +31,8 @@ mixin _$BackyardCreationController on _BackyardCreationControllerBase, Store {
   @override
   void setPresentationBackyard(Backyard backyard) {
     final _$actionInfo =
-        _$_BackyardCreationControllerBaseActionController.startAction();
+        _$_BackyardCreationControllerBaseActionController.startAction(
+            name: '_BackyardCreationControllerBase.setPresentationBackyard');
     try {
       return super.setPresentationBackyard(backyard);
     } finally {
@@ -43,7 +42,8 @@ mixin _$BackyardCreationController on _BackyardCreationControllerBase, Store {
 
   @override
   String toString() {
-    final string = 'showErrors: ${showErrors.toString()}';
-    return '{$string}';
+    return '''
+showErrors: ${showErrors}
+    ''';
   }
 }

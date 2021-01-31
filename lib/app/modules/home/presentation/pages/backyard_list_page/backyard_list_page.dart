@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mobx/mobx.dart';
 import '../../../domain/entities/backyard.dart';
 import 'backyard_list_page_controller.dart';
 
@@ -41,7 +40,6 @@ class _BackyardListPageState
       ),
       body: Observer(
         builder: (_) {
-
           if (controller.backyardList == null) {
             return Center(
               child: CircularProgressIndicator(),
@@ -51,7 +49,7 @@ class _BackyardListPageState
           if (controller.backyardList.isEmpty) {
             return Center(
               child: Text(
-                "Nenhum quintal criado.",
+                "Nenhum quintal criadoooo.",
                 style: TextStyle(fontSize: 18),
               ),
             );

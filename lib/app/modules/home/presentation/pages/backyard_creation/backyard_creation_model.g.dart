@@ -6,41 +6,37 @@ part of 'backyard_creation_model.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$BackyardCreationModel on _BackyardCreationModelBase, Store {
   final _$backyardAtom = Atom(name: '_BackyardCreationModelBase.backyard');
 
   @override
   Backyard get backyard {
-    _$backyardAtom.context.enforceReadPolicy(_$backyardAtom);
-    _$backyardAtom.reportObserved();
+    _$backyardAtom.reportRead();
     return super.backyard;
   }
 
   @override
   set backyard(Backyard value) {
-    _$backyardAtom.context.conditionallyRunInAction(() {
+    _$backyardAtom.reportWrite(value, super.backyard, () {
       super.backyard = value;
-      _$backyardAtom.reportChanged();
-    }, _$backyardAtom, name: '${_$backyardAtom.name}_set');
+    });
   }
 
   final _$isUsingCupAtom = Atom(name: '_BackyardCreationModelBase.isUsingCup');
 
   @override
   bool get isUsingCup {
-    _$isUsingCupAtom.context.enforceReadPolicy(_$isUsingCupAtom);
-    _$isUsingCupAtom.reportObserved();
+    _$isUsingCupAtom.reportRead();
     return super.isUsingCup;
   }
 
   @override
   set isUsingCup(bool value) {
-    _$isUsingCupAtom.context.conditionallyRunInAction(() {
+    _$isUsingCupAtom.reportWrite(value, super.isUsingCup, () {
       super.isUsingCup = value;
-      _$isUsingCupAtom.reportChanged();
-    }, _$isUsingCupAtom, name: '${_$isUsingCupAtom.name}_set');
+    });
   }
 
   final _$_BackyardCreationModelBaseActionController =
@@ -48,8 +44,8 @@ mixin _$BackyardCreationModel on _BackyardCreationModelBase, Store {
 
   @override
   dynamic changeIsUsingCup(bool value) {
-    final _$actionInfo =
-        _$_BackyardCreationModelBaseActionController.startAction();
+    final _$actionInfo = _$_BackyardCreationModelBaseActionController
+        .startAction(name: '_BackyardCreationModelBase.changeIsUsingCup');
     try {
       return super.changeIsUsingCup(value);
     } finally {
@@ -59,8 +55,8 @@ mixin _$BackyardCreationModel on _BackyardCreationModelBase, Store {
 
   @override
   dynamic changeName(String value) {
-    final _$actionInfo =
-        _$_BackyardCreationModelBaseActionController.startAction();
+    final _$actionInfo = _$_BackyardCreationModelBaseActionController
+        .startAction(name: '_BackyardCreationModelBase.changeName');
     try {
       return super.changeName(value);
     } finally {
@@ -70,8 +66,8 @@ mixin _$BackyardCreationModel on _BackyardCreationModelBase, Store {
 
   @override
   dynamic changeNickName(String value) {
-    final _$actionInfo =
-        _$_BackyardCreationModelBaseActionController.startAction();
+    final _$actionInfo = _$_BackyardCreationModelBaseActionController
+        .startAction(name: '_BackyardCreationModelBase.changeNickName');
     try {
       return super.changeNickName(value);
     } finally {
@@ -81,8 +77,8 @@ mixin _$BackyardCreationModel on _BackyardCreationModelBase, Store {
 
   @override
   dynamic changeBirthday(TZDateTime value) {
-    final _$actionInfo =
-        _$_BackyardCreationModelBaseActionController.startAction();
+    final _$actionInfo = _$_BackyardCreationModelBaseActionController
+        .startAction(name: '_BackyardCreationModelBase.changeBirthday');
     try {
       return super.changeBirthday(value);
     } finally {
@@ -92,8 +88,8 @@ mixin _$BackyardCreationModel on _BackyardCreationModelBase, Store {
 
   @override
   dynamic changeWeight(String value) {
-    final _$actionInfo =
-        _$_BackyardCreationModelBaseActionController.startAction();
+    final _$actionInfo = _$_BackyardCreationModelBaseActionController
+        .startAction(name: '_BackyardCreationModelBase.changeWeight');
     try {
       return super.changeWeight(value);
     } finally {
@@ -103,8 +99,8 @@ mixin _$BackyardCreationModel on _BackyardCreationModelBase, Store {
 
   @override
   dynamic changeCupQuantity(String value) {
-    final _$actionInfo =
-        _$_BackyardCreationModelBaseActionController.startAction();
+    final _$actionInfo = _$_BackyardCreationModelBaseActionController
+        .startAction(name: '_BackyardCreationModelBase.changeCupQuantity');
     try {
       return super.changeCupQuantity(value);
     } finally {
@@ -114,8 +110,8 @@ mixin _$BackyardCreationModel on _BackyardCreationModelBase, Store {
 
   @override
   dynamic changeFoodQuantity(String value) {
-    final _$actionInfo =
-        _$_BackyardCreationModelBaseActionController.startAction();
+    final _$actionInfo = _$_BackyardCreationModelBaseActionController
+        .startAction(name: '_BackyardCreationModelBase.changeFoodQuantity');
     try {
       return super.changeFoodQuantity(value);
     } finally {
@@ -125,8 +121,8 @@ mixin _$BackyardCreationModel on _BackyardCreationModelBase, Store {
 
   @override
   dynamic setBackyard(Backyard backyard) {
-    final _$actionInfo =
-        _$_BackyardCreationModelBaseActionController.startAction();
+    final _$actionInfo = _$_BackyardCreationModelBaseActionController
+        .startAction(name: '_BackyardCreationModelBase.setBackyard');
     try {
       return super.setBackyard(backyard);
     } finally {
@@ -136,8 +132,9 @@ mixin _$BackyardCreationModel on _BackyardCreationModelBase, Store {
 
   @override
   String toString() {
-    final string =
-        'backyard: ${backyard.toString()},isUsingCup: ${isUsingCup.toString()}';
-    return '{$string}';
+    return '''
+backyard: ${backyard},
+isUsingCup: ${isUsingCup}
+    ''';
   }
 }

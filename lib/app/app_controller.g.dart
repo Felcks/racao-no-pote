@@ -6,24 +6,22 @@ part of 'app_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$AppController on _AppControllerBase, Store {
   final _$valueAtom = Atom(name: '_AppControllerBase.value');
 
   @override
   int get value {
-    _$valueAtom.context.enforceReadPolicy(_$valueAtom);
-    _$valueAtom.reportObserved();
+    _$valueAtom.reportRead();
     return super.value;
   }
 
   @override
   set value(int value) {
-    _$valueAtom.context.conditionallyRunInAction(() {
+    _$valueAtom.reportWrite(value, super.value, () {
       super.value = value;
-      _$valueAtom.reportChanged();
-    }, _$valueAtom, name: '${_$valueAtom.name}_set');
+    });
   }
 
   final _$_AppControllerBaseActionController =
@@ -31,7 +29,8 @@ mixin _$AppController on _AppControllerBase, Store {
 
   @override
   void increment() {
-    final _$actionInfo = _$_AppControllerBaseActionController.startAction();
+    final _$actionInfo = _$_AppControllerBaseActionController.startAction(
+        name: '_AppControllerBase.increment');
     try {
       return super.increment();
     } finally {
@@ -41,7 +40,8 @@ mixin _$AppController on _AppControllerBase, Store {
 
   @override
   String toString() {
-    final string = 'value: ${value.toString()}';
-    return '{$string}';
+    return '''
+value: ${value}
+    ''';
   }
 }

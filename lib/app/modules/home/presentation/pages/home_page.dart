@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:racao_no_pote/app/modules/home/domain/entities/element.dart'
-    as mElement;
 import 'package:racao_no_pote/app/modules/home/presentation/pages/about_page.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 

@@ -6,27 +6,26 @@ part of 'home_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$HomeController on _HomeControllerBase, Store {
   final _$backyardAtom = Atom(name: '_HomeControllerBase.backyard');
 
   @override
   Backyard get backyard {
-    _$backyardAtom.context.enforceReadPolicy(_$backyardAtom);
-    _$backyardAtom.reportObserved();
+    _$backyardAtom.reportRead();
     return super.backyard;
   }
 
   @override
   set backyard(Backyard value) {
-    _$backyardAtom.context.conditionallyRunInAction(() {
+    _$backyardAtom.reportWrite(value, super.backyard, () {
       super.backyard = value;
-      _$backyardAtom.reportChanged();
-    }, _$backyardAtom, name: '${_$backyardAtom.name}_set');
+    });
   }
 
-  final _$_checkBackyardAsyncAction = AsyncAction('_checkBackyard');
+  final _$_checkBackyardAsyncAction =
+      AsyncAction('_HomeControllerBase._checkBackyard');
 
   @override
   Future _checkBackyard(Backyard backyard) {
@@ -34,14 +33,16 @@ mixin _$HomeController on _HomeControllerBase, Store {
         .run(() => super._checkBackyard(backyard));
   }
 
-  final _$fetchBackyardAsyncAction = AsyncAction('fetchBackyard');
+  final _$fetchBackyardAsyncAction =
+      AsyncAction('_HomeControllerBase.fetchBackyard');
 
   @override
   Future fetchBackyard() {
     return _$fetchBackyardAsyncAction.run(() => super.fetchBackyard());
   }
 
-  final _$unselectBackyardAsyncAction = AsyncAction('unselectBackyard');
+  final _$unselectBackyardAsyncAction =
+      AsyncAction('_HomeControllerBase.unselectBackyard');
 
   @override
   Future unselectBackyard() {
@@ -53,7 +54,8 @@ mixin _$HomeController on _HomeControllerBase, Store {
 
   @override
   dynamic updateElementQuantity(Element element, double value) {
-    final _$actionInfo = _$_HomeControllerBaseActionController.startAction();
+    final _$actionInfo = _$_HomeControllerBaseActionController.startAction(
+        name: '_HomeControllerBase.updateElementQuantity');
     try {
       return super.updateElementQuantity(element, value);
     } finally {
@@ -63,7 +65,8 @@ mixin _$HomeController on _HomeControllerBase, Store {
 
   @override
   String toString() {
-    final string = 'backyard: ${backyard.toString()}';
-    return '{$string}';
+    return '''
+backyard: ${backyard}
+    ''';
   }
 }

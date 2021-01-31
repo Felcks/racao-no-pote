@@ -6,7 +6,7 @@ part of 'backyard_list_page_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$BackyardListPageController on _BackyardListPageControllerBase, Store {
   final _$backyardListAtom =
@@ -14,27 +14,27 @@ mixin _$BackyardListPageController on _BackyardListPageControllerBase, Store {
 
   @override
   ObservableList<Backyard> get backyardList {
-    _$backyardListAtom.context.enforceReadPolicy(_$backyardListAtom);
-    _$backyardListAtom.reportObserved();
+    _$backyardListAtom.reportRead();
     return super.backyardList;
   }
 
   @override
   set backyardList(ObservableList<Backyard> value) {
-    _$backyardListAtom.context.conditionallyRunInAction(() {
+    _$backyardListAtom.reportWrite(value, super.backyardList, () {
       super.backyardList = value;
-      _$backyardListAtom.reportChanged();
-    }, _$backyardListAtom, name: '${_$backyardListAtom.name}_set');
+    });
   }
 
-  final _$fetchBackyardListAsyncAction = AsyncAction('fetchBackyardList');
+  final _$fetchBackyardListAsyncAction =
+      AsyncAction('_BackyardListPageControllerBase.fetchBackyardList');
 
   @override
   Future fetchBackyardList() {
     return _$fetchBackyardListAsyncAction.run(() => super.fetchBackyardList());
   }
 
-  final _$selectBackyardAsyncAction = AsyncAction('selectBackyard');
+  final _$selectBackyardAsyncAction =
+      AsyncAction('_BackyardListPageControllerBase.selectBackyard');
 
   @override
   Future<bool> selectBackyard(Backyard backyard) {
@@ -44,7 +44,8 @@ mixin _$BackyardListPageController on _BackyardListPageControllerBase, Store {
 
   @override
   String toString() {
-    final string = 'backyardList: ${backyardList.toString()}';
-    return '{$string}';
+    return '''
+backyardList: ${backyardList}
+    ''';
   }
 }
